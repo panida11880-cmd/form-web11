@@ -23,6 +23,21 @@ justify-content:center;
 padding:20px;
 }
 
+  .toast{
+
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:#2e8b57;
+color:white;
+padding:12px 20px;
+border-radius:8px;
+display:none;
+z-index:999;
+
+}
+
 .app{
 
 width:100%;
@@ -195,7 +210,9 @@ color:#2e8b57;
 </head>
 
 <body>
-
+  
+<div class="toast" id="toast"></div>
+  
 <div class="app">
 
 <div class="card">
@@ -318,7 +335,7 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 <script>
 
-const scriptURL="https://script.google.com/macros/s/AKfycbwtYgSEgdxgP9Z7Icc2Wci3U7WKChz-C4xzMiSE9BSU9t2UTuXT9bNkpHuHizy5gB3k/exec";
+const scriptURL="https://script.google.com/macros/s/AKfycbwfj9lubwjXsQHWTvo9RaDs4h5yiCdJ_rrUX_t9cUmVnoI8an3gydoOQ0JXiqbWNkaZ/exec";
 
 const radios=document.querySelectorAll("input[type=radio]")
 
@@ -365,19 +382,44 @@ function send(){
 const form=document.getElementById("form")
 
 document.getElementById("popup").style.display="none"
-document.getElementById("success").style.display="block"
 
 fetch(scriptURL,{
 method:"POST",
 body:new FormData(form)
 })
+.then(res=>res.json())
+.then(data=>{
 
-setTimeout(()=>{
+const id=data.requestId
 
-document.getElementById("success").style.display="none"
+document.getElementById("success").innerHTML=
+
+"<div class='check'>✔</div>"+
+"<p>ส่งคำขอเรียบร้อย</p>"+
+"<b>เลขคำขอ : "+id+"</b>"
+
+document.getElementById("success").style.display="block"
+
+showTopPopup(id)
+
 form.reset()
 
-},2500)
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+})
+}
+
+  function showTopPopup(id){
+
+const toast=document.getElementById("toast")
+
+toast.innerHTML="ส่งคำขอสำเร็จ เลขคำขอ : "+id
+toast.style.display="block"
+
+setTimeout(()=>{
+toast.style.display="none"
+},4000)
 
 }
 
@@ -385,6 +427,7 @@ form.reset()
 
 </body>
 </html>
+
 
 
 
