@@ -23,8 +23,7 @@ justify-content:center;
 padding:20px;
 }
 
-  .toast{
-
+.toast{
 position:fixed;
 top:20px;
 left:50%;
@@ -35,38 +34,28 @@ padding:12px 20px;
 border-radius:8px;
 display:none;
 z-index:999;
-
 }
 
 .app{
-
 width:100%;
 max-width:420px;
-
 }
 
 .card{
-
 background:white;
 border-radius:16px;
 padding:25px;
 box-shadow:0 10px 25px rgba(0,0,0,0.1);
-
 }
 
-/* step */
-
 .step{
-
 display:flex;
 justify-content:center;
 margin-bottom:25px;
 gap:10px;
-
 }
 
 .circle{
-
 width:34px;
 height:34px;
 border-radius:50%;
@@ -75,36 +64,64 @@ display:flex;
 align-items:center;
 justify-content:center;
 font-weight:500;
-
 }
 
 .circle.active{
-
 background:#2e8b57;
 color:white;
-
 }
 
 .line{
-
 width:40px;
 height:3px;
 background:#ddd;
 margin-top:15px;
-
 }
 
-/* form */
+.flavor-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
+}
+
+.flavor-card{
+background:#f4f6f5;
+border-radius:14px;
+padding:10px;
+cursor:pointer;
+text-align:center;
+border:2px solid transparent;
+transition:0.2s;
+}
+
+.flavor-card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:6px;
+}
+
+.flavor-card span{
+font-weight:500;
+}
+
+.flavor-card input{
+display:none;
+}
+
+.flavor-card:has(input:checked){
+border:2px solid #2e8b57;
+background:#eaf5ee;
+}
 
 label{
-
 font-size:14px;
 font-weight:500;
-
 }
 
 input,select{
-
 width:100%;
 padding:12px;
 margin-top:6px;
@@ -112,40 +129,14 @@ margin-bottom:12px;
 border-radius:8px;
 border:1px solid #ddd;
 font-size:15px;
-
 }
 
 input:focus{
-
 outline:none;
 border:1px solid #2e8b57;
-
 }
-
-.radio{
-
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-
-}
-
-.radio label{
-
-background:#f4f6f5;
-padding:10px;
-border-radius:8px;
-display:flex;
-align-items:center;
-gap:6px;
-cursor:pointer;
-
-}
-
-/* button */
 
 button{
-
 width:100%;
 padding:14px;
 border:none;
@@ -154,13 +145,9 @@ background:#2e8b57;
 color:white;
 font-size:16px;
 margin-top:10px;
-
 }
 
-/* popup */
-
 .popup{
-
 position:fixed;
 top:0;
 left:0;
@@ -170,23 +157,17 @@ background:rgba(0,0,0,0.4);
 display:none;
 align-items:center;
 justify-content:center;
-
 }
 
 .popup-card{
-
 background:white;
 padding:20px;
 border-radius:14px;
 width:90%;
 max-width:350px;
-
 }
 
-/* success */
-
 .success{
-
 position:fixed;
 top:50%;
 left:50%;
@@ -196,23 +177,20 @@ padding:30px;
 border-radius:16px;
 display:none;
 text-align:center;
-
 }
 
 .check{
-
 font-size:60px;
 color:#2e8b57;
-
 }
 
 </style>
 </head>
 
 <body>
-  
+
 <div class="toast" id="toast"></div>
-  
+
 <div class="app">
 
 <div class="card">
@@ -233,23 +211,63 @@ color:#2e8b57;
 
 <h3>เลือกรสชาติสินค้า</h3>
 
-<div class="radio">
+<p><b>กล่องที่ 1</b></p>
 
-<label><input type="radio" name="flavor1" value="เบอร์รี่">เบอร์รี่</label>
-<label><input type="radio" name="flavor1" value="กาแฟ">กาแฟ</label>
-<label><input type="radio" name="flavor1" value="โกโก้">โกโก้</label>
-<label><input type="radio" name="flavor1" value="ชาไทย">ชาไทย</label>
+<div class="flavor-grid">
+
+<label class="flavor-card">
+<input type="radio" name="flavor1" value="เบอร์รี่">
+<img src="images/berry.jpg">
+<span>เบอร์รี่</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor1" value="กาแฟ">
+<img src="images/coffee.jpg">
+<span>กาแฟ</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor1" value="โกโก้">
+<img src="images/cocoa.jpg">
+<span>โกโก้</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor1" value="ชาไทย">
+<img src="images/thaitea.jpg">
+<span>ชาไทย</span>
+</label>
 
 </div>
 
 <h4>กล่องที่ 2</h4>
 
-<div class="radio">
+<div class="flavor-grid">
 
-<label><input type="radio" name="flavor2" value="เบอร์รี่">เบอร์รี่</label>
-<label><input type="radio" name="flavor2" value="กาแฟ">กาแฟ</label>
-<label><input type="radio" name="flavor2" value="โกโก้">โกโก้</label>
-<label><input type="radio" name="flavor2" value="ชาไทย">ชาไทย</label>
+<label class="flavor-card">
+<input type="radio" name="flavor2" value="เบอร์รี่">
+<img src="images/berry.jpg">
+<span>เบอร์รี่</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor2" value="กาแฟ">
+<img src="images/coffee.jpg">
+<span>กาแฟ</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor2" value="โกโก้">
+<img src="images/cocoa.jpg">
+<span>โกโก้</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="flavor2" value="ชาไทย">
+<img src="images/thaitea.jpg">
+<span>ชาไทย</span>
+</label>
 
 </div>
 
@@ -262,31 +280,25 @@ color:#2e8b57;
 <h3>ข้อมูลผู้รับสิทธิ์</h3>
 
 <label>ชื่อ</label>
-<input name="firstname" required pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
+<input name="firstname" required>
 
 <label>นามสกุล</label>
-<input name="lastname" required pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
+<input name="lastname" required>
 
 <label>ชื่อเล่น</label>
-<input name="nickname" pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
+<input name="nickname">
 
 <label>อายุ</label>
-<input name="age" type="number" min="1" max="120" required>
+<input name="age" type="number" required>
 
 <label>เบอร์โทร</label>
-<input name="phone"
-pattern="[0-9]{10}"
-maxlength="10"
-required
-oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input name="phone" maxlength="10" required>
 
 <label>เลขที่บ้าน</label>
-<input name="house" required
-oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input name="house" required>
 
 <label>หมู่ที่</label>
-<input name="village"
-oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+<input name="village">
 
 <label>ตำบล</label>
 <input name="subdistrict" required>
@@ -307,31 +319,15 @@ oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 </div>
 
-<!-- POPUP -->
-
 <div class="popup" id="popup">
-
 <div class="popup-card">
-
 <h3>ตรวจสอบข้อมูล</h3>
-
 <div id="preview"></div>
-
 <button onclick="send()">ยืนยันข้อมูล</button>
-
+</div>
 </div>
 
-</div>
-
-<!-- SUCCESS -->
-
-<div class="success" id="success">
-
-<div class="check">✔</div>
-
-<p>ส่งคำขอลงทะเบียนใช้สิทธิ์รับสินค้าฟรีเรียบร้อย</p>
-
-</div>
+<div class="success" id="success"></div>
 
 <script>
 
@@ -367,9 +363,7 @@ const data=new FormData(document.getElementById("form"))
 let html=""
 
 for(let [k,v] of data){
-
 html+=k+" : "+v+"<br>"
-
 }
 
 document.getElementById("preview").innerHTML=html
@@ -408,9 +402,10 @@ document.getElementById("step1").style.display="block"
 document.getElementById("step2").style.display="none"
 
 })
+
 }
 
-  function showTopPopup(id){
+function showTopPopup(id){
 
 const toast=document.getElementById("toast")
 
@@ -427,10 +422,3 @@ toast.style.display="none"
 
 </body>
 </html>
-
-
-
-
-
-
-
