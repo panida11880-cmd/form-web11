@@ -245,27 +245,30 @@ color:#2e8b57;
 <h3>ข้อมูลผู้รับสิทธิ์</h3>
 
 <label>ชื่อ</label>
-<input name="firstname" required>
+<input name="firstname" required pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
 
 <label>นามสกุล</label>
-<input name="lastname" required>
+<input name="lastname" required pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
 
 <label>ชื่อเล่น</label>
-<input name="nickname">
+<input name="nickname" pattern="[ก-๙a-zA-Z\s]+" oninput="this.value=this.value.replace(/[^ก-๙a-zA-Z\s]/g,'')">
 
 <label>อายุ</label>
-<input name="age" type="number" min="10" max="100" required>
+<input name="age" type="number" min="1" max="120" required>
 
-<label>เบอร์โทร</label>
-<input name="phone" type="tel" pattern="[0-9]{10}" required>
-
-<h4>ที่อยู่จัดส่ง</h4>
+<input name="phone"
+pattern="[0-9]{10}"
+maxlength="10"
+required
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 <label>เลขที่บ้าน</label>
-<input name="house" required>
+<input name="house" required
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 <label>หมู่ที่</label>
-<input name="village">
+<input name="village"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 <label>ตำบล</label>
 <input name="subdistrict" required>
@@ -381,3 +384,4 @@ form.reset()
 
 </body>
 </html>
+
