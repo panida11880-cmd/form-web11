@@ -2,11 +2,11 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ลงทะเบียนรับ BodyKey ฟรี</title>
+<title>ลงทะเบียนรับ BodyKey</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,143 +17,200 @@ font-family:'Prompt',sans-serif;
 
 body{
 margin:0;
-background:#eef5ef;
+background:linear-gradient(180deg,#eaf5ee,#dbe8e0);
 display:flex;
 justify-content:center;
+padding:20px;
 }
 
-.container{
+.app{
+
 width:100%;
 max-width:420px;
-padding:20px;
+
 }
 
 .card{
+
 background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 5px 15px rgba(0,0,0,0.08);
+border-radius:16px;
+padding:25px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+
 }
 
+/* step */
+
 .step{
+
 display:flex;
 justify-content:center;
-align-items:center;
-margin-bottom:20px;
+margin-bottom:25px;
+gap:10px;
+
 }
 
 .circle{
-width:32px;
-height:32px;
+
+width:34px;
+height:34px;
 border-radius:50%;
-background:#ddd;
+background:#d9d9d9;
 display:flex;
 align-items:center;
 justify-content:center;
+font-weight:500;
+
 }
 
 .circle.active{
+
 background:#2e8b57;
 color:white;
+
 }
 
 .line{
+
 width:40px;
-height:2px;
-background:#ccc;
+height:3px;
+background:#ddd;
+margin-top:15px;
+
 }
 
-input{
+/* form */
+
+label{
+
+font-size:14px;
+font-weight:500;
+
+}
+
+input,select{
+
 width:100%;
 padding:12px;
-margin-top:10px;
-border:1px solid #ccc;
-border-radius:6px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:15px;
+
+}
+
+input:focus{
+
+outline:none;
+border:1px solid #2e8b57;
+
+}
+
+.radio{
+
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+
 }
 
 .radio label{
-display:block;
-margin:6px 0;
+
+background:#f4f6f5;
+padding:10px;
+border-radius:8px;
+display:flex;
+align-items:center;
+gap:6px;
+cursor:pointer;
+
 }
 
+/* button */
+
 button{
+
 width:100%;
-margin-top:15px;
 padding:14px;
 border:none;
-border-radius:6px;
+border-radius:10px;
 background:#2e8b57;
 color:white;
 font-size:16px;
-}
+margin-top:10px;
 
-button:hover{
-background:#20663f;
 }
 
 /* popup */
 
 .popup{
+
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.4);
 display:none;
 align-items:center;
 justify-content:center;
+
 }
 
-.popup-content{
+.popup-card{
+
 background:white;
 padding:20px;
-border-radius:10px;
+border-radius:14px;
 width:90%;
 max-width:350px;
+
 }
 
 /* success */
 
 .success{
+
 position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 background:white;
 padding:30px;
-border-radius:12px;
-text-align:center;
+border-radius:16px;
 display:none;
-box-shadow:0 5px 20px rgba(0,0,0,0.2);
+text-align:center;
+
 }
 
 .check{
-font-size:50px;
-color:green;
+
+font-size:60px;
+color:#2e8b57;
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
 <div class="card">
 
 <div class="step">
 
 <div id="s1" class="circle active">1</div>
-
 <div class="line"></div>
-
 <div id="s2" class="circle">2</div>
 
 </div>
 
 <form id="form">
+
+<!-- STEP1 -->
 
 <div id="step1">
 
@@ -161,10 +218,10 @@ color:green;
 
 <div class="radio">
 
-<label><input type="radio" name="flavor1" value="เบอร์รี่"> เบอร์รี่</label>
-<label><input type="radio" name="flavor1" value="กาแฟ"> กาแฟ</label>
-<label><input type="radio" name="flavor1" value="โกโก้"> โกโก้</label>
-<label><input type="radio" name="flavor1" value="ชาไทย"> ชาไทย</label>
+<label><input type="radio" name="flavor1" value="เบอร์รี่">เบอร์รี่</label>
+<label><input type="radio" name="flavor1" value="กาแฟ">กาแฟ</label>
+<label><input type="radio" name="flavor1" value="โกโก้">โกโก้</label>
+<label><input type="radio" name="flavor1" value="ชาไทย">ชาไทย</label>
 
 </div>
 
@@ -172,26 +229,52 @@ color:green;
 
 <div class="radio">
 
-<label><input type="radio" name="flavor2" value="เบอร์รี่"> เบอร์รี่</label>
-<label><input type="radio" name="flavor2" value="กาแฟ"> กาแฟ</label>
-<label><input type="radio" name="flavor2" value="โกโก้"> โกโก้</label>
-<label><input type="radio" name="flavor2" value="ชาไทย"> ชาไทย</label>
+<label><input type="radio" name="flavor2" value="เบอร์รี่">เบอร์รี่</label>
+<label><input type="radio" name="flavor2" value="กาแฟ">กาแฟ</label>
+<label><input type="radio" name="flavor2" value="โกโก้">โกโก้</label>
+<label><input type="radio" name="flavor2" value="ชาไทย">ชาไทย</label>
 
 </div>
 
 </div>
+
+<!-- STEP2 -->
 
 <div id="step2" style="display:none">
 
 <h3>ข้อมูลผู้รับสิทธิ์</h3>
 
-<input name="name" placeholder="ชื่อ - นามสกุล" required>
+<label>ชื่อ</label>
+<input name="firstname" required>
 
-<input name="age" placeholder="อายุ" required>
+<label>นามสกุล</label>
+<input name="lastname" required>
 
-<input name="phone" placeholder="เบอร์โทร" required>
+<label>ชื่อเล่น</label>
+<input name="nickname">
 
-<input name="address" placeholder="ที่อยู่จัดส่ง" required>
+<label>อายุ</label>
+<input name="age" type="number" min="10" max="100" required>
+
+<label>เบอร์โทร</label>
+<input name="phone" type="tel" pattern="[0-9]{10}" required>
+
+<h4>ที่อยู่จัดส่ง</h4>
+
+<label>เลขที่บ้าน</label>
+<input name="house" required>
+
+<label>หมู่ที่</label>
+<input name="village">
+
+<label>ตำบล</label>
+<input name="subdistrict" required>
+
+<label>อำเภอ</label>
+<input name="district" required>
+
+<label>จังหวัด</label>
+<input name="province" required>
 
 <button type="button" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
 
@@ -203,11 +286,11 @@ color:green;
 
 </div>
 
-<!-- popup -->
+<!-- POPUP -->
 
 <div class="popup" id="popup">
 
-<div class="popup-content">
+<div class="popup-card">
 
 <h3>ตรวจสอบข้อมูล</h3>
 
@@ -219,7 +302,7 @@ color:green;
 
 </div>
 
-<!-- success -->
+<!-- SUCCESS -->
 
 <div class="success" id="success">
 
@@ -231,7 +314,7 @@ color:green;
 
 <script>
 
-const scriptURL="https://script.google.com/macros/s/AKfycbxooYTxO89drD4yvwMl30WtFCtyTLz0kgUjEilZs2Uj_cvSwYr-DsQofKEHdMDusHU/exec";
+const scriptURL="https://script.google.com/macros/s/AKfycbxNxH8sCnbnMQlPsSF2Ndd2ScZDAIodpQJbiaoAsrXj-oqPCZup7NRqBCxPPb3_9Pcs/exec";
 
 const radios=document.querySelectorAll("input[type=radio]")
 
@@ -245,11 +328,9 @@ const f2=document.querySelector("input[name=flavor2]:checked")
 if(f1 && f2){
 
 document.getElementById("step1").style.display="none"
-
 document.getElementById("step2").style.display="block"
 
 document.getElementById("s1").classList.remove("active")
-
 document.getElementById("s2").classList.add("active")
 
 }
@@ -271,7 +352,6 @@ html+=k+" : "+v+"<br>"
 }
 
 document.getElementById("preview").innerHTML=html
-
 document.getElementById("popup").style.display="flex"
 
 }
@@ -280,31 +360,20 @@ function send(){
 
 const form=document.getElementById("form")
 
-fetch(scriptURL,{
-
-method:"POST",
-
-body:new FormData(form)
-
-})
-
-.then(()=>{
-
 document.getElementById("popup").style.display="none"
-
 document.getElementById("success").style.display="block"
+
+fetch(scriptURL,{
+method:"POST",
+body:new FormData(form)
+})
 
 setTimeout(()=>{
 
 document.getElementById("success").style.display="none"
-
 form.reset()
 
-location.reload()
-
-},3000)
-
-})
+},2500)
 
 }
 
