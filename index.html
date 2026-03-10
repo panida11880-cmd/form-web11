@@ -17,10 +17,17 @@ font-family:'Prompt',sans-serif;
 
 body{
 margin:0;
-background:linear-gradient(180deg,#eaf5ee,#dbe8e0);
+
+background:
+radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
+radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
+linear-gradient(180deg,#eaf5ee,#dbe8e0);
+
 display:flex;
 justify-content:center;
 padding:20px;
+
+backdrop-filter: blur(20px);
 }
 
 .toast{
@@ -42,12 +49,23 @@ max-width:420px;
 }
 
 .card{
-background:white;
-border-radius:16px;
-padding:25px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
 
+background: rgba(255,255,255,0.35);
+
+border-radius:22px;
+
+padding:25px;
+
+backdrop-filter: blur(25px);
+-webkit-backdrop-filter: blur(25px);
+
+border:1px solid rgba(255,255,255,0.6);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.15),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+}
 .step{
 display:flex;
 justify-content:center;
@@ -86,13 +104,35 @@ margin-bottom:15px;
 }
 
 .flavor-card{
-background:#f4f6f5;
-border-radius:14px;
+
+background: rgba(255,255,255,0.35);
+
+border-radius:16px;
+
 padding:10px;
+
 cursor:pointer;
+
 text-align:center;
-border:2px solid transparent;
-transition:0.2s;
+
+border:1px solid rgba(255,255,255,0.5);
+
+backdrop-filter: blur(15px);
+
+transition: all .25s ease;
+
+box-shadow:
+0 6px 15px rgba(0,0,0,0.08);
+
+}
+
+.flavor-card:hover{
+
+transform: translateY(-3px);
+
+box-shadow:
+0 12px 25px rgba(0,0,0,0.15);
+
 }
 
 .flavor-card img{
@@ -138,11 +178,11 @@ border:1px solid #2e8b57;
 
 button{
 width:100%;
-padding:14px;
+padding:6px;
 border:none;
 border-radius:10px;
 background:#2e8b57;
-color:white;
+color:#4e4e4e;
 font-size:16px;
 margin-top:10px;
 }
@@ -183,6 +223,162 @@ text-align:center;
 font-size:60px;
 color:#2e8b57;
 }
+.center-card{
+  grid-column: 1 / span 2;
+  justify-self: center;
+  max-width: 200px;
+}
+
+.info-buttons{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.glass-btn{
+
+flex:1;
+
+padding:12px;
+
+border-radius:16px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+font-weight:600;
+
+color:#111;
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+box-shadow:
+0 8px 20px rgba(0,0,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+}
+
+.glass-btn:hover{
+
+transform: translateY(-2px);
+
+box-shadow:
+0 12px 30px rgba(0,0,0,0.18);
+
+}
+
+.glass-btn:hover{
+transform:scale(1.03);
+}
+
+
+.glass-popup{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.25);
+
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+
+z-index:9999;
+
+padding:20px;
+
+}
+
+
+.glass-content{
+
+position:relative;
+
+width:100%;
+max-width:380px;
+
+max-height:80vh;
+
+overflow:auto;
+
+margin:auto;
+
+padding:25px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,0.35);
+
+backdrop-filter:blur(30px);
+
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
+
+text-align:center;
+
+animation:popup 0.25s ease;
+
+}
+
+@keyframes popup{
+
+from{
+transform:scale(0.9);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+
+.close-btn{
+
+position:absolute;
+
+top:10px;
+right:10px;
+
+width:32px;
+height:32px;
+
+border-radius:50%;
+
+border:none;
+
+background: rgba(255,255,255,0.5);
+
+backdrop-filter: blur(10px);
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+.popup-img{
+
+width:100%;
+border-radius:12px;
+margin:10px 0;
+
+}
 
 </style>
 </head>
@@ -209,7 +405,19 @@ color:#2e8b57;
 
 <div id="step1">
 
-<h3>เลือกรสชาติสินค้า</h3>
+<h3>เลือกรสชาติชาติสินค้า</h3>
+
+<div class="info-buttons">
+
+<button class="glass-btn" onclick="openPopup('benefitPopup')">
+ประโยชน์ของ 𝐁𝐨𝐝𝐲𝐊𝐞𝐲
+</button>
+
+<button class="glass-btn" onclick="openPopup('howPopup')">
+วิธีรับประทาน 𝐁𝐨𝐝𝐲𝐊𝐞𝐲
+</button>
+
+</div>
 
 <p><b>กล่องที่ 1</b></p>
 
@@ -217,26 +425,32 @@ color:#2e8b57;
 
 <label class="flavor-card">
 <input type="radio" name="flavor1" value="เบอร์รี่">
-<img src="images/berry.jpg">
-<span>เบอร์รี่</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/berry.jpg">
+<span>บอดี้คีย์รสชาติเบอร์รี่</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor1" value="กาแฟ">
-<img src="images/coffee.jpg">
-<span>กาแฟ</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/coffee.jpg">
+<span>บอดี้คีย์รสชาติกาแฟ</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor1" value="โกโก้">
-<img src="images/cocoa.jpg">
-<span>โกโก้</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/cocoa.jpg">
+<span>บอดี้คีย์รสชาติโกโก้</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor1" value="ชาไทย">
-<img src="images/thaitea.jpg">
-<span>ชาไทย</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/thaitea.jpg">
+<span>บอดี้คีย์รสชาติชานม</span>
+</label>
+
+<label class="flavor-card center-card">
+<input type="radio" name="flavor1" value="กล้วย">
+<img src="https://panida11880-cmd.github.io/form-web11/images/banana.jpg">
+<span>บอดี้คีย์รสชาติกล้วย</span>
 </label>
 
 </div>
@@ -247,26 +461,32 @@ color:#2e8b57;
 
 <label class="flavor-card">
 <input type="radio" name="flavor2" value="เบอร์รี่">
-<img src="images/berry.jpg">
-<span>เบอร์รี่</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/berry.jpg">
+<span>บอดี้คีย์รสชาติเบอร์รี่</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor2" value="กาแฟ">
-<img src="images/coffee.jpg">
-<span>กาแฟ</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/coffee.jpg">
+<span>บอดี้คีย์รสชาติกาแฟ</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor2" value="โกโก้">
-<img src="images/cocoa.jpg">
-<span>โกโก้</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/cocoa.jpg">
+<span>บอดี้คีย์รสชาติโกโก้</span>
 </label>
 
 <label class="flavor-card">
 <input type="radio" name="flavor2" value="ชาไทย">
-<img src="images/thaitea.jpg">
-<span>ชาไทย</span>
+<img src="https://panida11880-cmd.github.io/form-web11/images/thaitea.jpg">
+<span>บอดี้คีย์รสชาติชานม</span>
+</label>
+
+<label class="flavor-card center-card">
+<input type="radio" name="flavor2" value="กล้วย">
+<img src="https://panida11880-cmd.github.io/form-web11/images/banana.jpg">
+<span>บอดี้คีย์รสชาติกล้วย</span>
 </label>
 
 </div>
@@ -418,7 +638,70 @@ toast.style.display="none"
 
 }
 
+
+function openPopup(id){
+
+document.getElementById(id).style.display="flex"
+
+}
+
+function closePopup(){
+
+document.querySelectorAll(".glass-popup").forEach(p=>{
+p.style.display="none"
+})
+
+}
+
+
+
 </script>
+
+<!-- POPUP BENEFIT -->
+
+<div id="benefitPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>ประโยชน์ BodyKey</h3>
+
+<!--<img src="images/benefit.jpg" class="popup-img"> -->
+
+<h5>
+ควบคุมน้ำหนัก อิ่มนาน ใยอาหารสูง<br>
+ให้สารอาหารครบ โปรตีน วิตามิน แร่ธาตุ<br>
+ช่วยขับถ่าย ลดท้องผูก<br>
+ลดความเสี่ยงโรคหัวใจ,เบาหวาน,ระบบทางเดินอาหาร<br>
+ปราศจากสีและวัตถุกันเสีย
+</h5>
+
+</div>
+
+</div>
+
+
+<!-- POPUP HOW TO EAT -->
+
+<div id="howPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>วิธีรับประทาน BodyKey</h3>
+
+<img src="images/how.jpg" class="popup-img">
+
+<p>
+ใส่วิธีรับประทานได้ที่นี่
+</p>
+
+</div>
+
+</div>
+
 
 </body>
 </html>
