@@ -2,73 +2,139 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ลงทะเบียนรับ BodyKey</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>ลงทะเบียนรับ BodyKey ฟรี</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+box-sizing:border-box;
+font-family:'Prompt',sans-serif;
+}
+
 body{
-font-family: Arial;
-background:#d9e6d7;
 margin:0;
-padding:20px;
+background:#eef5ef;
+display:flex;
+justify-content:center;
 }
 
 .container{
-max-width:700px;
-margin:auto;
+width:100%;
+max-width:420px;
+padding:20px;
 }
 
 .card{
 background:white;
 padding:20px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.step{
+display:flex;
+justify-content:center;
+align-items:center;
 margin-bottom:20px;
-border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-h1{
-margin:0;
+.circle{
+width:32px;
+height:32px;
+border-radius:50%;
+background:#ddd;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-label{
-display:block;
-margin-top:10px;
+.circle.active{
+background:#2e8b57;
+color:white;
 }
 
-input[type=text],input[type=number]{
+.line{
+width:40px;
+height:2px;
+background:#ccc;
+}
+
+input{
 width:100%;
-padding:10px;
+padding:12px;
+margin-top:10px;
 border:1px solid #ccc;
-border-radius:5px;
-margin-top:5px;
+border-radius:6px;
 }
 
-.radio-group{
-margin-top:10px;
+.radio label{
+display:block;
+margin:6px 0;
 }
 
 button{
-background:#0f9d58;
-color:white;
+width:100%;
+margin-top:15px;
+padding:14px;
 border:none;
-padding:12px 20px;
+border-radius:6px;
+background:#2e8b57;
+color:white;
 font-size:16px;
-border-radius:5px;
-cursor:pointer;
 }
 
 button:hover{
-background:#0b7d45;
+background:#20663f;
 }
 
-img{
+/* popup */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
 width:100%;
-border-radius:8px;
-margin-top:10px;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popup-content{
+background:white;
+padding:20px;
+border-radius:10px;
+width:90%;
+max-width:350px;
+}
+
+/* success */
+
+.success{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:12px;
+text-align:center;
+display:none;
+box-shadow:0 5px 20px rgba(0,0,0,0.2);
+}
+
+.check{
+font-size:50px;
+color:green;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -76,95 +142,173 @@ margin-top:10px;
 <div class="container">
 
 <div class="card">
-<h1>ลงทะเบียนเข้ารับ BodyKey by NUTRILITE ฟรี</h1>
-<p>ชุดทดลองฟรี 2 กล่อง ทานได้ 1 เดือน</p>
+
+<div class="step">
+
+<div id="s1" class="circle active">1</div>
+
+<div class="line"></div>
+
+<div id="s2" class="circle">2</div>
+
 </div>
 
 <form id="form">
 
-<div class="card">
+<div id="step1">
 
-<label>รสชาติที่ต้องการทดลอง กล่องที่ 1 *</label>
+<h3>เลือกรสชาติสินค้า</h3>
 
-<img src="https://i.imgur.com/Q7b6KpA.png">
+<div class="radio">
 
-<div class="radio-group">
-<label><input type="radio" name="flavor1" value="เบอร์รี่"> รสเบอร์รี่</label>
-<label><input type="radio" name="flavor1" value="กาแฟ"> รสกาแฟ</label>
-<label><input type="radio" name="flavor1" value="โกโก้"> รสโกโก้</label>
-<label><input type="radio" name="flavor1" value="ชาไทย"> รสชาไทย</label>
-<label><input type="radio" name="flavor1" value="กล้วย"> รสกล้วย</label>
+<label><input type="radio" name="flavor1" value="เบอร์รี่"> เบอร์รี่</label>
+<label><input type="radio" name="flavor1" value="กาแฟ"> กาแฟ</label>
+<label><input type="radio" name="flavor1" value="โกโก้"> โกโก้</label>
+<label><input type="radio" name="flavor1" value="ชาไทย"> ชาไทย</label>
+
+</div>
+
+<h4>กล่องที่ 2</h4>
+
+<div class="radio">
+
+<label><input type="radio" name="flavor2" value="เบอร์รี่"> เบอร์รี่</label>
+<label><input type="radio" name="flavor2" value="กาแฟ"> กาแฟ</label>
+<label><input type="radio" name="flavor2" value="โกโก้"> โกโก้</label>
+<label><input type="radio" name="flavor2" value="ชาไทย"> ชาไทย</label>
+
 </div>
 
 </div>
 
-<div class="card">
+<div id="step2" style="display:none">
 
-<label>รสชาติที่ต้องการทดลอง กล่องที่ 2 *</label>
+<h3>ข้อมูลผู้รับสิทธิ์</h3>
 
-<div class="radio-group">
-<label><input type="radio" name="flavor2" value="เบอร์รี่"> รสเบอร์รี่</label>
-<label><input type="radio" name="flavor2" value="กาแฟ"> รสกาแฟ</label>
-<label><input type="radio" name="flavor2" value="โกโก้"> รสโกโก้</label>
-<label><input type="radio" name="flavor2" value="ชาไทย"> รสชาไทย</label>
-<label><input type="radio" name="flavor2" value="กล้วย"> รสกล้วย</label>
-</div>
+<input name="name" placeholder="ชื่อ - นามสกุล" required>
 
-</div>
+<input name="age" placeholder="อายุ" required>
 
-<div class="card">
+<input name="phone" placeholder="เบอร์โทร" required>
 
-<label>ชื่อ - นามสกุล *</label>
-<input type="text" name="name" required>
+<input name="address" placeholder="ที่อยู่จัดส่ง" required>
 
-<label>อายุ *</label>
-<input type="number" name="age" required>
+<button type="button" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
 
-<label>เบอร์โทร *</label>
-<input type="text" name="phone" required>
-
-<label>ที่อยู่จัดส่ง *</label>
-<input type="text" name="address" required>
-
-</div>
-
-<div class="card">
-<button type="submit">ส่ง</button>
 </div>
 
 </form>
 
 </div>
 
+</div>
+
+<!-- popup -->
+
+<div class="popup" id="popup">
+
+<div class="popup-content">
+
+<h3>ตรวจสอบข้อมูล</h3>
+
+<div id="preview"></div>
+
+<button onclick="send()">ยืนยันข้อมูล</button>
+
+</div>
+
+</div>
+
+<!-- success -->
+
+<div class="success" id="success">
+
+<div class="check">✔</div>
+
+<p>ส่งคำขอลงทะเบียนใช้สิทธิ์รับสินค้าฟรีเรียบร้อย</p>
+
+</div>
+
 <script>
 
-const scriptURL="https://script.google.com/macros/s/AKfycbxorfNTa34RUTYqD_nt6QpgagQPOo8Z3G9kS6GasfhiKpaiA_fWxNj9MZxyh-xBZTTb/exec";
+const scriptURL="ใส่AppsScriptURL";
 
-document.getElementById("form").addEventListener("submit",e=>{
+const radios=document.querySelectorAll("input[type=radio]")
 
-e.preventDefault()
+radios.forEach(r=>{
+
+r.addEventListener("change",()=>{
+
+const f1=document.querySelector("input[name=flavor1]:checked")
+const f2=document.querySelector("input[name=flavor2]:checked")
+
+if(f1 && f2){
+
+document.getElementById("step1").style.display="none"
+
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+
+document.getElementById("s2").classList.add("active")
+
+}
+
+})
+
+})
+
+function preview(){
+
+const data=new FormData(document.getElementById("form"))
+
+let html=""
+
+for(let [k,v] of data){
+
+html+=k+" : "+v+"<br>"
+
+}
+
+document.getElementById("preview").innerHTML=html
+
+document.getElementById("popup").style.display="flex"
+
+}
+
+function send(){
+
+const form=document.getElementById("https://script.google.com/macros/s/AKfycbxorfNTa34RUTYqD_nt6QpgagQPOo8Z3G9kS6GasfhiKpaiA_fWxNj9MZxyh-xBZTTb/exec")
 
 fetch(scriptURL,{
+
 method:"POST",
-body:new FormData(e.target)
+
+body:new FormData(form)
+
 })
+
 .then(()=>{
 
-alert("ส่งข้อมูลเรียบร้อยแล้ว")
-document.getElementById("form").reset()
+document.getElementById("popup").style.display="none"
+
+document.getElementById("success").style.display="block"
+
+setTimeout(()=>{
+
+document.getElementById("success").style.display="none"
+
+form.reset()
+
+location.reload()
+
+},3000)
 
 })
-.catch(()=>{
 
-alert("เกิดข้อผิดพลาด")
-
-})
-
-})
+}
 
 </script>
 
 </body>
 </html>
-
-
