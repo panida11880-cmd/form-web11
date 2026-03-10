@@ -3,76 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>แบบฟอร์มลงทะเบียน</title>
+<title>ลงทะเบียนรับ BodyKey</title>
 
 <style>
 
 body{
 font-family: Arial;
-background:#f4f6fb;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+background:#d9e6d7;
+margin:0;
+padding:20px;
 }
 
-.box{
+.container{
+max-width:700px;
+margin:auto;
+}
+
+.card{
 background:white;
-padding:30px;
-width:350px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-}
-
-h2{
-text-align:center;
+padding:20px;
 margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-input,textarea{
+h1{
+margin:0;
+}
+
+label{
+display:block;
+margin-top:10px;
+}
+
+input[type=text],input[type=number]{
 width:100%;
 padding:10px;
-margin-bottom:10px;
 border:1px solid #ccc;
 border-radius:5px;
+margin-top:5px;
+}
+
+.radio-group{
+margin-top:10px;
 }
 
 button{
-width:100%;
-padding:12px;
-border:none;
-background:#2f6df6;
+background:#0f9d58;
 color:white;
+border:none;
+padding:12px 20px;
 font-size:16px;
-border-radius:6px;
+border-radius:5px;
 cursor:pointer;
 }
 
 button:hover{
-background:#1d4ed8;
+background:#0b7d45;
+}
+
+img{
+width:100%;
+border-radius:8px;
+margin-top:10px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="box">
+<div class="container">
 
-<h2>ลงทะเบียน</h2>
+<div class="card">
+<h1>ลงทะเบียนเข้ารับ BodyKey by NUTRILITE ฟรี</h1>
+<p>ชุดทดลองฟรี 2 กล่อง ทานได้ 1 เดือน</p>
+</div>
 
 <form id="form">
 
-<input name="name" placeholder="ชื่อ" required>
+<div class="card">
 
-<input name="phone" placeholder="เบอร์โทร" required>
+<label>รสชาติที่ต้องการทดลอง กล่องที่ 1 *</label>
 
-<input name="email" placeholder="Email">
+<img src="https://i.imgur.com/Q7b6KpA.png">
 
-<textarea name="message" placeholder="ข้อความ"></textarea>
+<div class="radio-group">
+<label><input type="radio" name="flavor1" value="เบอร์รี่"> รสเบอร์รี่</label>
+<label><input type="radio" name="flavor1" value="กาแฟ"> รสกาแฟ</label>
+<label><input type="radio" name="flavor1" value="โกโก้"> รสโกโก้</label>
+<label><input type="radio" name="flavor1" value="ชาไทย"> รสชาไทย</label>
+<label><input type="radio" name="flavor1" value="กล้วย"> รสกล้วย</label>
+</div>
 
-<button type="submit">ส่งข้อมูล</button>
+</div>
+
+<div class="card">
+
+<label>รสชาติที่ต้องการทดลอง กล่องที่ 2 *</label>
+
+<div class="radio-group">
+<label><input type="radio" name="flavor2" value="เบอร์รี่"> รสเบอร์รี่</label>
+<label><input type="radio" name="flavor2" value="กาแฟ"> รสกาแฟ</label>
+<label><input type="radio" name="flavor2" value="โกโก้"> รสโกโก้</label>
+<label><input type="radio" name="flavor2" value="ชาไทย"> รสชาไทย</label>
+<label><input type="radio" name="flavor2" value="กล้วย"> รสกล้วย</label>
+</div>
+
+</div>
+
+<div class="card">
+
+<label>ชื่อ - นามสกุล *</label>
+<input type="text" name="name" required>
+
+<label>อายุ *</label>
+<input type="number" name="age" required>
+
+<label>เบอร์โทร *</label>
+<input type="text" name="phone" required>
+
+<label>ที่อยู่จัดส่ง *</label>
+<input type="text" name="address" required>
+
+</div>
+
+<div class="card">
+<button type="submit">ส่ง</button>
+</div>
 
 </form>
 
@@ -80,30 +138,31 @@ background:#1d4ed8;
 
 <script>
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbxf0KSckmnWwzJWKbIfbRwXM7OU5-SQOfrnYLw9dsVAKDNDEfdvh2FTF974Eq6LrbJS/exec";
+const scriptURL="https://script.google.com/macros/s/AKfycbxf0KSckmnWwzJWKbIfbRwXM7OU5-SQOfrnYLw9dsVAKDNDEfdvh2FTF974Eq6LrbJS/exec";
 
-document.getElementById("form").addEventListener("submit", e => {
+document.getElementById("form").addEventListener("submit",e=>{
 
-e.preventDefault();
+e.preventDefault()
 
 fetch(scriptURL,{
 method:"POST",
 body:new FormData(e.target)
 })
-.then(response=>{
-alert("ส่งข้อมูลเรียบร้อยแล้ว");
-document.getElementById("form").reset();
-})
-.catch(error=>{
-alert("เกิดข้อผิดพลาด");
-});
+.then(()=>{
 
-});
+alert("ส่งข้อมูลเรียบร้อยแล้ว")
+document.getElementById("form").reset()
+
+})
+.catch(()=>{
+
+alert("เกิดข้อผิดพลาด")
+
+})
+
+})
 
 </script>
 
 </body>
-
 </html>
-
-
