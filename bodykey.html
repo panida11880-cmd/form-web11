@@ -6,13 +6,12 @@
 
 <title>ลงทะเบียนรับ BodyKey</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
 *{
 box-sizing:border-box;
-font-family:'Prompt',sans-serif;
+font-family:'SFThonburi',sans-serif;
 }
 
 body{
@@ -30,17 +29,23 @@ padding:20px;
 backdrop-filter: blur(20px);
 }
 
+@font-face{
+font-family:'SFThonburi';
+src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
+}
+
 .toast{
 position:fixed;
 top:20px;
 left:50%;
 transform:translateX(-50%);
-background:#2e8b57;
+background:#ff4d4f;   /* สีแดง */
 color:white;
 padding:12px 20px;
 border-radius:8px;
 display:none;
 z-index:999;
+font-weight:500;
 }
 
 .app{
@@ -176,13 +181,23 @@ outline:none;
 border:1px solid #2e8b57;
 }
 
+input:invalid{
+border:1px solid #ff4d4f;
+background:#fff5f5;
+}
+
+input.error{
+border:2px solid #ff4d4f;
+background:#fff1f0;
+}
+
 button{
 width:100%;
 padding:6px;
 border:none;
 border-radius:10px;
 background:#2e8b57;
-color:#4e4e4e;
+color:#ffffff;
 font-size:16px;
 margin-top:10px;
 }
@@ -361,7 +376,7 @@ border-radius:50%;
 
 border:none;
 
-background: rgba(255,255,255,0.5);
+background: rgba(63, 63, 63, 0.5);
 
 backdrop-filter: blur(10px);
 
@@ -402,10 +417,144 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 
 }
 
+.pro-loader{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.35);
+
+z-index:99999;
+
+}
+
+.loader-card{
+
+background: rgba(255,255,255,0.85);
+
+padding:35px;
+
+border-radius:22px;
+
+text-align:center;
+
+box-shadow:0 20px 60px rgba(0,0,0,0.25);
+
+width:260px;
+
+}
+
+.loader-logo{
+
+width:90px;
+margin-bottom:10px;
+
+}
+
+.loader-spinner{
+
+width:48px;
+height:48px;
+
+border:4px solid #e3e3e3;
+border-top:4px solid #2e8b57;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:10px;
+
+}
+
+@keyframes spin{
+
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+
+}
+
+.loader-check{
+
+font-size:55px;
+color:#2e8b57;
+
+animation:pop .4s ease;
+
+}
+
+@keyframes pop{
+
+0%{transform:scale(.6);opacity:0}
+100%{transform:scale(1);opacity:1}
+
+}
+
+.loader {
+  width: 60px;
+  height: 16px;
+  display: grid;
+    margin:auto;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  --c:no-repeat linear-gradient(#00ffdd 0 0);
+  background: var(--c), var(--c), var(--c);
+  animation: l16-1 1.5s infinite linear, l16-2 1.5s infinite linear;
+  transform: scale(var(--s,1)) translate(3px,-3px);
+}
+.loader:after {
+  --s:-1;
+}
+@keyframes l16-1 {
+  0%,3%{background-size:0 4px,4px 0,0 4px}
+  16.67%{background-size:100% 4px,4px 0,0 4px}
+  33.33%{background-size:100% 4px,4px 100%,0 4px}
+  46%,54%{background-size:100% 4px,4px 100%,100% 4px}
+  66.67%{background-size:0 4px,4px 100%,100% 4px}
+  83.33%{background-size:0 4px,4px 0,100% 4px}
+  96%,100%{background-size:0 4px,4px 0,0 4px}
+}
+@keyframes l16-2 {
+  0%,49.9%{background-position:0 0,100% 0,100% 100%}
+  50%,100%{background-position:100% 0,100% 100%,0 100%}
+}
+
+
+
 </style>
 </head>
 
 <body>
+
+<div id="proLoader" class="pro-loader">
+
+<div class="loader-card">
+
+<img src="https://panida11880-cmd.github.io/form-web11/images/logo.png" class="loader-logo">
+
+<div class="loader-spinner"></div>
+
+<div id="loaderMessage">กำลังประมวลผล...</div>
+
+</div>
+
+</div>
+  
 
 <div class="toast" id="toast"></div>
 
@@ -427,21 +576,21 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 
 <div id="step1">
 
-<h3>เลือกรสชาติชาติสินค้า</h3>
+<center><h3>เลือกรสชาติสินค้า</h3> </center>
 
 <div class="info-buttons">
 
 <button class="glass-btn" onclick="openPopup('benefitPopup')">
-ประโยชน์ของ 𝐁𝐨𝐝𝐲𝐊𝐞𝐲
+ประโยชน์ของ Bodykey
 </button>
 
 <button class="glass-btn" onclick="openPopup('howPopup')">
-วิธีรับประทาน 𝐁𝐨𝐝𝐲𝐊𝐞𝐲
+วิธีรับประทาน Bodykey
 </button>
 
 </div>
 
-<p><b>กล่องที่ 1</b></p>
+<center><p><b>กล่องที่ 1</b></p></center>
 
 <div class="flavor-grid">
 
@@ -477,7 +626,7 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 
 </div>
 
-<h4>กล่องที่ 2</h4>
+<center><h4>กล่องที่ 2</h4></center>
 
 <div class="flavor-grid">
 
@@ -518,8 +667,8 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 <!-- STEP2 -->
 
 <div id="step2" style="display:none">
-
-<h3>ข้อมูลผู้รับสิทธิ์</h3>
+<center>
+<h3>ข้อมูลผู้รับสิทธิ์</h3></center>
 
 <label>ชื่อ</label>
 <input name="firstname" required>
@@ -531,15 +680,15 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 <input name="nickname">
 
 <label>อายุ</label>
-<input name="age" type="number" required>
+<input name="age" maxlength="2" required>
 
 <label>เบอร์โทร</label>
 <input name="phone" maxlength="10" required>
 
-<label>เลขที่บ้าน</label>
+<label>บ้านเลขที่</label>
 <input name="house" required>
 
-<label>หมู่ที่</label>
+<label>หมู่ที่ (กรอกเพิ่มเติมได้ที่นี่)</label>
 <input name="village">
 
 <label>ตำบล</label>
@@ -586,21 +735,42 @@ const f2=document.querySelector("input[name=flavor2]:checked")
 
 if(f1 && f2){
 
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
 document.getElementById("step1").style.display="none"
 document.getElementById("step2").style.display="block"
 
 document.getElementById("s1").classList.remove("active")
 document.getElementById("s2").classList.add("active")
 
+hideLoader()
+
+},800)
+
 }
-
 })
-
-})
+}); 
 
 function preview(){
 
-const data=new FormData(document.getElementById("form"))
+const form=document.getElementById("form")
+
+if(!form.checkValidity()){
+
+showTopPopup("กรุณากรอกข้อมูลให้ครบ")
+
+form.querySelectorAll("input").forEach(i=>{
+if(!i.checkValidity()){
+i.classList.add("error")
+}
+})
+
+return
+}
+
+const data=new FormData(form)
 
 let html=""
 
@@ -614,7 +784,7 @@ document.getElementById("popup").style.display="flex"
 }
 
 function send(){
-
+showProLoader("กำลังส่งข้อมูล...")
 const form=document.getElementById("form")
 
 document.getElementById("popup").style.display="none"
@@ -626,6 +796,8 @@ body:new FormData(form)
 .then(res=>res.json())
 .then(data=>{
 
+successProLoader()
+
 const id=data.requestId
 
 document.getElementById("success").innerHTML=
@@ -633,6 +805,12 @@ document.getElementById("success").innerHTML=
 "<div class='check'>✔</div>"+
 "<p>ส่งคำขอเรียบร้อย</p>"+
 "<b>เลขคำขอ : "+id+"</b>"
+
+.catch(err=>{
+alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
+document.getElementById("proLoader").style.display="none"
+})
+
 
 document.getElementById("success").style.display="block"
 
@@ -675,7 +853,44 @@ p.style.display="none"
 
 }
 
+function showProLoader(text){
 
+document.getElementById("proLoader").style.display="flex"
+document.getElementById("loaderMessage").innerHTML=text
+
+}
+
+function successProLoader(){
+
+document.querySelector(".loader-spinner").style.display="none"
+
+document.getElementById("loaderMessage").innerHTML=
+"<div class='loader-check'>✔</div>สำเร็จ"
+
+setTimeout(()=>{
+
+document.getElementById("proLoader").style.display="none"
+
+document.querySelector(".loader-spinner").style.display="block"
+
+document.getElementById("loaderMessage").innerHTML="กำลังประมวลผล..."
+
+},1200)
+
+}
+
+function showLoader(text){
+
+document.getElementById("loaderText").innerText=text
+document.getElementById("loaderBox").style.display="flex"
+
+}
+
+function hideLoader(){
+
+document.getElementById("loaderBox").style.display="none"
+
+}
 
 </script>
 
@@ -714,16 +929,50 @@ p.style.display="none"
 
 <h3>วิธีรับประทาน BodyKey</h3>
 
-<img src="images/how.jpg" class="popup-img">
+<!-- <img src="images/how.jpg" class="popup-img"> -->
 
 <p>
-ใส่วิธีรับประทานได้ที่นี่
+1.เท 1 ซอง ลงในน้ำหรือนมพร่องมันเนย 250 มล.<br>
+2.คนหรือเขย่าให้ละลายเป็นเนื้อเดียว<br>
+3.ดื่มแทนมื้ออาหารได้เลย<br>
 </p>
 
 </div>
 
 </div>
+<div id="loaderBox" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.4);
+z-index:99999;
+">
 
+<div style="
+padding:30px 40px;
+border-radius:16px;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:12px;
+">
+
+<div class="loader"></div>
+
+<p id="loaderText" style="color: #ffffff;margin-top:10px;font-weight:500">
+กำลังประมวลผล...
+</p>
+
+</div>
+
+</div>
 
 </body>
 </html>
