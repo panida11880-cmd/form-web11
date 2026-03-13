@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ลงทะเบียนรับ BodyKey</title>
+<title>ลงทะเบียนรับ Choize</title>
 
 
 <style>
@@ -627,7 +627,20 @@ animation:pop .4s ease;
   0%,49.9%{background-position:0 0,100% 0,100% 100%}
   50%,100%{background-position:100% 0,100% 100%,0 100%}
 }
-
+.request-bar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#2e8b57;
+color:#fff;
+font-weight:600;
+text-align:center;
+padding:14px;
+z-index:9999;
+font-size:18px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
 
 
 </style>
@@ -635,22 +648,7 @@ animation:pop .4s ease;
 
 <body>
 
-<div id="requestBar" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:#2e8b57;
-color:white;
-text-align:center;
-padding:14px;
-font-size:18px;
-font-weight:bold;
-z-index:9999;
-box-shadow:0 3px 10px rgba(0,0,0,0.2);
-
-">
+<div id="requestBar" class="request-bar" style="display:none;">
 คุณได้ใช้สิทธิ์แล้ว • เลขคำขอ : <span id="requestIdText"></span>
 </div>
 
@@ -693,6 +691,17 @@ box-shadow:0 3px 10px rgba(0,0,0,0.2);
 <div id="step1">
 
 <center><h3>เลือกรสชาติ Choize Clean Meal Drink</h3></center>
+<div class="info-buttons">
+
+<button class="glass-btn" onclick="openPopup('benefitPopup')">
+ประโยชน์ Choize
+</button>
+
+<button class="glass-btn" onclick="openPopup('howPopup')">
+วิธีรับประทาน Choize
+</button>
+
+</div>
 
 <p style="text-align:center">
 เลือกได้ทั้งหมด <b>12 ขวด</b> (เลือกรสซ้ำได้)
@@ -851,6 +860,9 @@ box-shadow:0 3px 10px rgba(0,0,0,0.2);
 
 <script>
 
+let total = 0
+let max = 12
+
   document.addEventListener("copy", function(e){
 
 let text = window.getSelection().toString();
@@ -912,6 +924,16 @@ hideLoader()
 
 }
 
+function showRequestBar(id){
+
+const bar = document.getElementById("requestBar")
+const text = document.getElementById("requestIdText")
+
+text.innerText = id
+bar.style.display = "block"
+
+}
+
 function goStep2(){
 
 document.getElementById("step1").style.display="none"
@@ -921,7 +943,7 @@ document.getElementById("s1").classList.remove("active")
 document.getElementById("s2").classList.add("active")
 
 }
-const scriptURL="https://script.google.com/macros/s/AKfycbzxEMr8UOBQA5p1VDBab2SHhrYT9_92kxTelEf2Qz2McPLoACwBAmfp-qxB_WoDfIOM/exec";
+const scriptURL="https://script.google.com/macros/s/AKfycbzWJzT6LNg-641tRWECvcIIXJaAvZbHW9lYO7h8pfcG_gsVLl5Owguy_KzAxq0i9Rg/exec";
 
 const radios=document.querySelectorAll("input[type=radio]")
 
@@ -1173,7 +1195,7 @@ showTopPopup(oldId)
 
 <button class="close-btn" onclick="closePopup()">✕</button>
 
-<h3>ประโยชน์ BodyKey</h3>
+<h3>ประโยชน์ Choize</h3>
 
 <!--<img src="images/benefit.jpg" class="popup-img"> -->
 
@@ -1197,7 +1219,7 @@ showTopPopup(oldId)
 
 <button class="close-btn" onclick="closePopup()">✕</button>
 
-<h3>วิธีรับประทาน BodyKey</h3>
+<h3>วิธีรับประทาน Choize</h3>
 
 <!-- <img src="images/how.jpg" class="popup-img"> -->
 
@@ -1250,4 +1272,3 @@ gap:12px;
 </body>
 
 </html>
-
