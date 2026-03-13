@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ลงทะเบียนรับ BodyKey</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:'SFThonburi',sans-serif;
+}
+
+body{
+margin:0;
+
+background:
+radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
+radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
+linear-gradient(180deg,#eaf5ee,#dbe8e0);
+
+display:flex;
+justify-content:center;
+padding:20px;
+
+backdrop-filter: blur(20px);
+}
+
+@font-face{
+font-family:'SFThonburi';
+src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
+}
+
+p {
+  line-height: 1.7;
+}
+.glass-back{
+
+width:100%;
+
+padding:12px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+font-weight:600;
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+margin-bottom:10px;
+
+}
+
+.glass-back:hover{
+
+transform: translateY(-2px);
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+.glass-back2{
+
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgb(16 16 16 / 60%);
+    background: rgb(152 152 152 / 35%);
+    backdrop-filter: blur(20px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
+    margin-bottom: 10px;
+
+}
+
+.toast{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ff4d4f;   /* สีแดง */
+color:white;
+padding:12px 20px;
+border-radius:8px;
+display:none;
+z-index:999;
+font-weight:500;
+}
+
+.app{
+width:100%;
+max-width:420px;
+}
+
+.card{
+
+background: rgba(255,255,255,0.35);
+
+border-radius:22px;
+
+padding:25px;
+
+backdrop-filter: blur(25px);
+-webkit-backdrop-filter: blur(25px);
+
+border:1px solid rgba(255,255,255,0.6);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.15),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+}
+.step{
+display:flex;
+justify-content:center;
+margin-bottom:25px;
+gap:10px;
+}
+
+.circle{
+width:34px;
+height:34px;
+border-radius:50%;
+background:#d9d9d9;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:500;
+}
+
+.circle.active{
+background:#2e8b57;
+color:white;
+}
+
+.line{
+width:40px;
+height:3px;
+background:#ddd;
+margin-top:15px;
+}
+
+.flavor-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
+}
+
+.flavor-card{
+
+background: rgba(255,255,255,0.35);
+
+border-radius:16px;
+
+padding:10px;
+
+cursor:pointer;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,0.5);
+
+backdrop-filter: blur(15px);
+
+transition: all .25s ease;
+
+box-shadow:
+0 6px 15px rgba(0,0,0,0.08);
+
+}
+
+.flavor-card:hover{
+
+transform: translateY(-3px);
+
+box-shadow:
+0 12px 25px rgba(0,0,0,0.15);
+
+}
+
+.flavor-card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:6px;
+}
+
+.flavor-card span{
+font-weight:500;
+}
+
+.flavor-card input{
+display:none;
+}
+
+.flavor-card:has(input:checked){
+border:2px solid #2e8b57;
+background:#eaf5ee;
+}
+
+label{
+font-size:14px;
+font-weight:500;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:15px;
+}
+
+input:focus{
+outline:none;
+border:1px solid #2e8b57;
+}
+
+input:invalid{
+border:1px solid #ff4d4f;
+background:#fff5f5;
+}
+
+input.error{
+border:2px solid #ff4d4f;
+background:#fff1f0;
+}
+
+button{
+width:100%;
+padding:6px;
+border:none;
+border-radius:10px;
+background:#2e8b57;
+color:#000000;
+font-size:16px;
+margin-top:10px;
+}
+/* ปุ่ม + - */
+
+.qty-btn{
+
+width:60px;
+height:35px;
+
+border-radius:8px;
+
+border:none;
+
+background:#2e8b57;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition: all .15s ease;
+
+}
+
+/* กดแล้วเด้ง */
+
+.qty-btn:active{
+
+transform:scale(0.85);
+
+box-shadow: inset 0 3px 6px rgba(0,0,0,0.25);
+
+}
+
+/* hover */
+
+.qty-btn:hover{
+
+transform:translateY(-2px);
+
+}
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popup-card{
+background:white;
+padding:20px;
+border-radius:14px;
+width:90%;
+max-width:350px;
+}
+
+.success{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:16px;
+display:none;
+text-align:center;
+}
+
+.check{
+font-size:60px;
+color:#2e8b57;
+}
+.center-card{
+  grid-column: 1 / span 2;
+  justify-self: center;
+  max-width: 200px;
+}
+
+.info-buttons{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.glass-btn{
+
+flex:1;
+
+padding:12px;
+
+border-radius:16px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+font-weight:600;
+
+color:#111;
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+box-shadow:
+0 8px 20px rgba(0,0,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+}
+
+.glass-btn:hover{
+
+transform: translateY(-2px);
+
+box-shadow:
+0 12px 30px rgba(0,0,0,0.18);
+
+}
+
+.glass-btn:hover{
+transform:scale(1.03);
+}
+
+
+.glass-popup{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.25);
+
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+
+z-index:9999;
+
+padding:20px;
+
+}
+
+
+.glass-content{
+
+position:relative;
+
+width:100%;
+max-width:380px;
+
+max-height:80vh;
+
+overflow:auto;
+
+margin:auto;
+
+padding:25px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,0.35);
+
+backdrop-filter:blur(30px);
+
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
+
+text-align:center;
+
+animation:popup 0.25s ease;
+
+}
+
+@keyframes popup{
+
+from{
+transform:scale(0.9);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+
+.close-btn{
+
+position:absolute;
+
+top:10px;
+right:10px;
+
+width:32px;
+height:32px;
+
+border-radius:50%;
+
+border:none;
+
+background: rgba(63, 63, 63, 0.5);
+
+backdrop-filter: blur(10px);
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+.popup-img{
+
+width:100%;
+border-radius:12px;
+margin:10px 0;
+
+}
+
+/* สำหรับมือถือ */
+@media (max-width:768px){
+
+.glass-popup{
+backdrop-filter:none;
+-webkit-backdrop-filter:none;
+background:rgba(0,0,0,0.45);
+}
+
+.glass-content{
+
+background:white;
+
+backdrop-filter:none;
+-webkit-backdrop-filter:none;
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+
+}
+
+.pro-loader{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.35);
+
+z-index:99999;
+
+}
+
+.loader-card{
+
+background: rgba(255,255,255,0.85);
+
+padding:35px;
+
+border-radius:22px;
+
+text-align:center;
+
+box-shadow:0 20px 60px rgba(0,0,0,0.25);
+
+width:260px;
+
+}
+
+.loader-logo{
+
+width:90px;
+margin-bottom:10px;
+
+}
+
+.loader-spinner{
+
+width:48px;
+height:48px;
+
+border:4px solid #e3e3e3;
+border-top:4px solid #2e8b57;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:10px;
+
+}
+
+@keyframes spin{
+
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+
+}
+
+.loader-check{
+
+font-size:55px;
+color:#2e8b57;
+
+animation:pop .4s ease;
+
+}
+
+@keyframes pop{
+
+0%{transform:scale(.6);opacity:0}
+100%{transform:scale(1);opacity:1}
+
+}
+
+.loader {
+  width: 60px;
+  height: 16px;
+  display: grid;
+    margin:auto;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  --c:no-repeat linear-gradient(#00ffdd 0 0);
+  background: var(--c), var(--c), var(--c);
+  animation: l16-1 1.5s infinite linear, l16-2 1.5s infinite linear;
+  transform: scale(var(--s,1)) translate(3px,-3px);
+}
+.loader:after {
+  --s:-1;
+}
+@keyframes l16-1 {
+  0%,3%{background-size:0 4px,4px 0,0 4px}
+  16.67%{background-size:100% 4px,4px 0,0 4px}
+  33.33%{background-size:100% 4px,4px 100%,0 4px}
+  46%,54%{background-size:100% 4px,4px 100%,100% 4px}
+  66.67%{background-size:0 4px,4px 100%,100% 4px}
+  83.33%{background-size:0 4px,4px 0,100% 4px}
+  96%,100%{background-size:0 4px,4px 0,0 4px}
+}
+@keyframes l16-2 {
+  0%,49.9%{background-position:0 0,100% 0,100% 100%}
+  50%,100%{background-position:100% 0,100% 100%,0 100%}
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div id="proLoader" class="pro-loader">
+
+<div class="loader-card">
+
+<img src="https://panida11880-cmd.github.io/form-web11/images/logo.png" class="loader-logo">
+
+<div class="loader-spinner"></div>
+
+<div id="loaderMessage">กำลังประมวลผล...</div>
+
+</div>
+
+</div>
+  
+
+<div class="toast" id="toast"></div>
+
+<div class="app">
+
+<div class="card">
+
+<div class="step">
+
+<div id="s1" class="circle active">1</div>
+<div class="line"></div>
+<div id="s2" class="circle">2</div>
+
+</div>
+
+<form id="form">
+<input type="hidden" name="product" value="Choize">
+<input type="hidden" name="source" value="choize_12_flavor">
+<input type="hidden" name="flavors" id="flavors">
+
+<!-- STEP1 -->
+
+<div id="step1">
+
+<center><h3>เลือกรสชาติ Choize Clean Meal Drink</h3></center>
+
+<p style="text-align:center">
+เลือกได้ทั้งหมด <b>12 ขวด</b> (เลือกรสซ้ำได้)
+</p>
+
+<div id="counter" style="text-align:center;margin-bottom:15px;font-weight:bold">
+เลือกแล้ว 0 / 12
+</div>
+
+<div class="flavor-grid">
+
+<div class="flavor-card">
+<img src="images/choizechocolate.jpg">
+<span>ช็อกโกแลต</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('choco')">-</button>
+<span id="choco">0</span>
+<button type="button" class="qty-btn" onclick="plus('choco')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizestrawberries.jpg">
+<span>สตรอเบอร์รี่</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('straw')">-</button>
+<span id="straw">0</span>
+<button type="button" class="qty-btn" onclick="plus('straw')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizematcha.jpg">
+<span>มัทฉะ</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('matcha')">-</button>
+<span id="matcha">0</span>
+<button type="button"class="qty-btn" onclick="plus('matcha')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizevanilla.jpg">
+<span>วานิลลา</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('vanilla')">-</button>
+<span id="vanilla">0</span>
+<button type="button" class="qty-btn"onclick="plus('vanilla')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizecoffee.jpg">
+<span>กาแฟ</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('coffee')">-</button>
+<span id="coffee">0</span>
+<button type="button" class="qty-btn"onclick="plus('coffee')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizerichcocoa.jpg">
+<span>โกโก้เข้มข้น</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('cocoa')">-</button>
+<span id="cocoa">0</span>
+<button type="button" class="qty-btn"onclick="plus('cocoa')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizemixedberries.jpg">
+<span>มิกซ์เบอร์รี่</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('mixberry')">-</button>
+<span id="mixberry">0</span>
+<button type="button" class="qty-btn"onclick="plus('mixberry')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizethaitea.jpg">
+<span>ชาไทย</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('thaitea')">-</button>
+<span id="thaitea">0</span>
+<button type="button" class="qty-btn"onclick="plus('thaitea')">+</button>
+</div>
+</div>
+
+</div>
+
+<button type="button" id="nextBtn" style="display:none" onclick="goStep2()">
+ไปกรอกข้อมูล
+</button>
+
+</div>
+
+<!-- STEP2 -->
+
+<div id="step2" style="display:none">
+  <button type="button" class="glass-back"  onclick="backStep()">← กลับไปเลือกรสชาติ</button>
+<center>
+<h3>ข้อมูลผู้รับสิทธิ์</h3></center>
+
+<label>ชื่อ</label>
+<input name="firstname" required>
+
+<label>นามสกุล</label>
+<input name="lastname" required>
+
+<label>ชื่อเล่น</label>
+<input name="nickname">
+
+<label>อายุ</label>
+<input name="age" maxlength="2" required>
+
+<label>เบอร์โทร</label>
+<input name="phone" maxlength="10" required>
+
+<label>บ้านเลขที่</label>
+<input name="house" required>
+
+<label>หมู่ที่ (กรอกเพิ่มเติมได้ที่นี่)</label>
+<input name="village">
+
+<label>ตำบล</label>
+<input name="subdistrict" required>
+
+<label>อำเภอ</label>
+<input name="district" required>
+
+<label>จังหวัด</label>
+<input name="province" required>
+
+<button type="button" class="glass-back" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="popup" id="popup">
+<div class="popup-card">
+<h3>ตรวจสอบข้อมูล</h3>
+<div id="preview"></div>
+<button class="glass-back2" onclick="send()">ยืนยันข้อมูล</button>
+</div>
+</div>
+
+<div class="success" id="success"></div>
+
+<script>
+let total = 0
+const max = 12
+
+
+function minus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(val <= 0) return
+
+val--
+total--
+
+el.innerText = val
+updateCounter()
+
+}
+
+function updateCounter(){
+
+document.getElementById("counter").innerText =
+"เลือกแล้ว "+total+" / 12"
+
+if(total === 12){
+
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+hideLoader()
+
+},1000)
+
+}
+
+}
+
+function goStep2(){
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+}
+const scriptURL="https://script.google.com/macros/s/AKfycbzWJzT6LNg-641tRWECvcIIXJaAvZbHW9lYO7h8pfcG_gsVLl5Owguy_KzAxq0i9Rg/exec";
+
+const radios=document.querySelectorAll("input[type=radio]")
+
+radios.forEach(r=>{
+
+r.addEventListener("change",()=>{
+
+const f1=document.querySelector("input[name=flavor1]:checked")
+const f2=document.querySelector("input[name=flavor2]:checked")
+
+if(f1 && f2){
+
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+hideLoader()
+
+},800)
+
+}
+})
+}); 
+
+
+function plus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(total >= max) return
+
+val++
+total++
+
+el.innerText = val
+
+navigator.vibrate(30)
+
+updateCounter()
+
+}
+
+
+function preview(){
+
+const form=document.getElementById("form")
+
+if(!form.checkValidity()){
+
+showTopPopup("กรุณากรอกข้อมูลให้ครบ")
+
+form.querySelectorAll("input").forEach(i=>{
+if(!i.checkValidity()){
+i.classList.add("error")
+}
+})
+
+return
+}
+
+const data=new FormData(form)
+
+let html=""
+
+for(let [k,v] of data){
+html+=k+" : "+v+"<br>"
+}
+
+document.getElementById("preview").innerHTML=html
+document.getElementById("popup").style.display="flex"
+
+}
+
+function send(){
+
+showProLoader("กำลังส่งข้อมูล...")
+
+const form=document.getElementById("form")
+
+let flavorText =
+"ช็อกโกแลต:"+document.getElementById("choco").innerText+" "+
+"สตรอเบอร์รี่:"+document.getElementById("straw").innerText+" "+
+"มัทฉะ:"+document.getElementById("matcha").innerText+" "+
+"วานิลลา:"+document.getElementById("vanilla").innerText+" "+
+"กาแฟ:"+document.getElementById("coffee").innerText+" "+
+"โกโก้เข้ม:"+document.getElementById("cocoa").innerText+" "+
+"มิกซ์เบอร์รี่:"+document.getElementById("mixberry").innerText+" "+
+"ชาไทย:"+document.getElementById("thaitea").innerText
+
+document.getElementById("flavors").value = flavorText
+
+fetch(scriptURL,{
+method:"POST",
+body:new FormData(form)
+})
+.then(res=>res.json())
+.then(data=>{
+
+successProLoader()
+
+const id=data.requestId
+
+document.getElementById("success").innerHTML=
+"<div class='check'>✔</div>"+
+"<p>ส่งคำขอเรียบร้อย</p>"+
+"<b>เลขคำขอ : "+id+"</b>"
+
+document.getElementById("success").style.display="block"
+
+showTopPopup(id)
+
+form.reset()
+
+})
+.catch(err=>{
+alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
+document.getElementById("proLoader").style.display="none"
+})
+
+}
+
+
+document.getElementById("success").style.display="block"
+
+showTopPopup(id)
+
+form.reset()
+
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+
+
+function showTopPopup(id){
+
+const toast=document.getElementById("toast")
+
+toast.innerHTML="ส่งคำขอสำเร็จ เลขคำขอ : "+id
+toast.style.display="block"
+
+setTimeout(()=>{
+toast.style.display="none"
+},4000)
+
+}
+
+
+function openPopup(id){
+
+document.getElementById(id).style.display="flex"
+
+}
+
+function closePopup(){
+
+document.querySelectorAll(".glass-popup").forEach(p=>{
+p.style.display="none"
+})
+
+}
+
+function showProLoader(text){
+
+document.getElementById("proLoader").style.display="flex"
+document.getElementById("loaderMessage").innerHTML=text
+
+}
+
+function backStep(){
+
+document.getElementById("step2").style.display="none"
+document.getElementById("step1").style.display="block"
+
+document.getElementById("s2").classList.remove("active")
+document.getElementById("s1").classList.add("active")
+
+}
+
+function successProLoader(){
+
+document.querySelector(".loader-spinner").style.display="none"
+
+document.getElementById("loaderMessage").innerHTML=
+"<div class='loader-check'>✔</div>สำเร็จ"
+
+setTimeout(()=>{
+
+document.getElementById("proLoader").style.display="none"
+
+document.querySelector(".loader-spinner").style.display="block"
+
+document.getElementById("loaderMessage").innerHTML="กำลังประมวลผล..."
+
+},1200)
+
+}
+
+function showLoader(text){
+
+document.getElementById("loaderText").innerText=text
+document.getElementById("loaderBox").style.display="flex"
+
+}
+
+function hideLoader(){
+
+document.getElementById("loaderBox").style.display="none"
+
+}
+
+</script>
+
+<!-- POPUP BENEFIT -->
+
+<div id="benefitPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>ประโยชน์ BodyKey</h3>
+
+<!--<img src="images/benefit.jpg" class="popup-img"> -->
+
+<p>ช่วยคุมน้ำหนักได้อย่างสมดุล อิ่มท้องนาน ลดความอยากอาหารจุกจิก<br>
+อุดมไปด้วยโปรตีนและสารอาหารที่ครบครัน ส่งเสริมการสร้างกล้ามเนื้อ<br>
+เติมพลังงานระหว่างวัน ให้ความสดชื่น กระปรี้กระเปร่า หมดกังวลเรื่องความเหนื่อยล้า<br>
+มีไฟเบอร์สูง ช่วยให้ระบบย่อยอาหารทำงานได้อย่างมีประสิทธิภาพ<br>
+เสริมวิตามินและสารต้านอนุมูลอิสระ ดูแลเซลล์ พร้อมช่วยชะลอวัย<br>
+ปลอดสารอันตราย มั่นใจได้ทั้งมาตรฐาน อย. และ ฮาลาล</p>
+
+</div>
+
+</div>
+
+
+<!-- POPUP HOW TO EAT -->
+
+<div id="howPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>วิธีรับประทาน BodyKey</h3>
+
+<!-- <img src="images/how.jpg" class="popup-img"> -->
+
+<p>
+1.เปิดฝา: เปิดขวด Choize ออก<br>
+2.เติมน้ำ: เติมน้ำเย็นหรือน้ำอุณหภูมิห้อง ลงไปจนถึงขีดที่กำหนด (ขีดที่ 1)<br>
+3.คว่ำขวด: เทคนิคสำคัญ ให้คว่ำขวดลงแล้วเขย่า เพื่อไม่ให้ผงติดก้นขวด<br>
+4.เขย่า: เขย่าให้เข้ากันจนเนื้อเนียน<br>
+5.เติมน้ำเพิ่ม: เติมน้ำอีกครั้งจนถึงขีดที่ 2 แล้วเขย่าตามปกติ<br>
+6.ดื่ม: ดื่มได้ทันที ควรดื่มให้หมดภายในครั้งเดียว หรือเก็บในตู้เย็นได้ไม่เกิน 24 ชั่วโมง<br>
+</p>
+
+</div>
+
+</div>
+<div id="loaderBox" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.4);
+z-index:99999;
+">
+
+<div style="
+padding:30px 40px;
+border-radius:16px;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:12px;
+">
+
+<div class="loader"></div>
+
+<p id="loaderText" style="color: #ffffff;margin-top:10px;font-weight:500">
+กำลังประมวลผล...
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
