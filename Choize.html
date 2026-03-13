@@ -304,6 +304,10 @@ align-items:center;
 justify-content:center;
 }
 
+  input:-webkit-autofill{
+-webkit-box-shadow:0 0 0px 1000px white inset;
+}
+
 .popup-card{
 background:white;
 padding:20px;
@@ -664,7 +668,7 @@ animation:pop .4s ease;
 <input type="hidden" name="product" value="Choize">
 <input type="hidden" name="source" value="choize_12_flavor">
 <input type="hidden" name="flavors" id="flavors">
-
+<input type="text" autocomplete="new-password">
 <!-- STEP1 -->
 
 <div id="step1">
@@ -1183,4 +1187,5 @@ gap:12px;
 </div>
 
 </body>
+
 </html>
