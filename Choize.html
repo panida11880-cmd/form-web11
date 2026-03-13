@@ -16,7 +16,7 @@ font-family:'SFThonburi',sans-serif;
 
 body{
 margin:0;
-
+padding-top:100px;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -85,10 +85,10 @@ box-shadow:0 10px 20px rgba(0,0,0,0.15);
 
 .toast{
 position:fixed;
-top:20px;
+top:10px;
 left:50%;
 transform:translateX(-50%);
-background:#ff4d4f;   /* สีแดง */
+background:#ff0000d8;   /* สีแดง */
 color:white;
 padding:12px 20px;
 border-radius:8px;
@@ -635,6 +635,23 @@ animation:pop .4s ease;
 
 <body>
 
+<div id="requestBar" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#2e8b57;
+color:white;
+text-align:center;
+padding:14px;
+font-size:18px;
+font-weight:bold;
+z-index:9999;
+">
+คุณได้ใช้สิทธิ์แล้ว • เลขคำขอ : <span id="requestIdText"></span>
+</div>
+
 <div id="proLoader" class="pro-loader">
 
 <div class="loader-card">
@@ -668,7 +685,7 @@ animation:pop .4s ease;
 <input type="hidden" name="product" value="Choize">
 <input type="hidden" name="source" value="choize_12_flavor">
 <input type="hidden" name="flavors" id="flavors">
-<input type="text" autocomplete="new-password">
+
 <!-- STEP1 -->
 
 <div id="step1">
@@ -914,7 +931,12 @@ hideLoader()
 }
 })
 }); 
+function showRequestBar(id){
 
+document.getElementById("requestBar").style.display="block"
+document.getElementById("requestIdText").innerText=id
+
+}
 
 function plus(id){
 
@@ -994,35 +1016,43 @@ successProLoader()
 
 const id=data.requestId
 
-document.getElementById("success").innerHTML=
-"<div class='check'>✔</div>"+
-"<p>ส่งคำขอเรียบร้อย</p>"+
-"<b>เลขคำขอ : "+id+"</b>"
+localStorage.setItem("choize_request_id", id)
 
-document.getElementById("success").style.display="block"
+showRequestBar(id)
 
 showTopPopup(id)
-
+/* รีเซ็ตฟอร์ม */
 form.reset()
 
+/* รีเซ็ตจำนวนรสชาติ */
+const ids = ["choco","straw","matcha","vanilla","coffee","cocoa","mixberry","thaitea"]
+
+ids.forEach(i=>{
+document.getElementById(i).innerText = "0"
 })
+
+/* รีเซ็ตตัวนับ */
+total = 0
+updateCounter()
+
+/* กลับไปหน้าเลือกรสชาติ */
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+document.getElementById("s1").classList.add("active")
+document.getElementById("s2").classList.remove("active")
+
+/* ปิด popup */
+document.getElementById("popup").style.display="none"
+
+})
+
 .catch(err=>{
 alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
 document.getElementById("proLoader").style.display="none"
 })
 
 }
-
-
-document.getElementById("success").style.display="block"
-
-showTopPopup(id)
-
-form.reset()
-
-document.getElementById("step1").style.display="block"
-document.getElementById("step2").style.display="none"
-
 
 
 function showTopPopup(id){
@@ -1101,6 +1131,18 @@ function hideLoader(){
 document.getElementById("loaderBox").style.display="none"
 
 }
+
+window.addEventListener("load",function(){
+
+const oldId = localStorage.getItem("choize_request_id")
+
+if(oldId){
+
+showTopPopup(oldId)
+
+}
+
+})
 
 </script>
 
