@@ -16,7 +16,7 @@ font-family:'SFThonburi',sans-serif;
 
 body{
 margin:0;
-padding-top:100px;
+padding-top:60px;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -648,6 +648,8 @@ padding:14px;
 font-size:18px;
 font-weight:bold;
 z-index:9999;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+
 ">
 คุณได้ใช้สิทธิ์แล้ว • เลขคำขอ : <span id="requestIdText"></span>
 </div>
@@ -848,8 +850,13 @@ z-index:9999;
 <div class="success" id="success"></div>
 
 <script>
-let total = 0
-const max = 12
+function showRequestBar(id){
+
+document.getElementById("requestBar").style.display="block"
+document.getElementById("requestIdText").innerText=id
+
+}
+
 
 
 function minus(id){
@@ -931,12 +938,7 @@ hideLoader()
 }
 })
 }); 
-function showRequestBar(id){
 
-document.getElementById("requestBar").style.display="block"
-document.getElementById("requestIdText").innerText=id
-
-}
 
 function plus(id){
 
@@ -1020,7 +1022,7 @@ localStorage.setItem("choize_request_id", id)
 
 showRequestBar(id)
 
-showTopPopup(id)
+
 /* รีเซ็ตฟอร์ม */
 form.reset()
 
@@ -1059,7 +1061,7 @@ function showTopPopup(id){
 
 const toast=document.getElementById("toast")
 
-toast.innerHTML="ส่งคำขอสำเร็จ เลขคำขอ : "+id
+toast.innerHTML="คุณได้ใช้สิทธิ์แล้ว<br>เลขคำขอ : "+id
 toast.style.display="block"
 
 setTimeout(()=>{
@@ -1097,7 +1099,11 @@ document.getElementById("step1").style.display="block"
 
 document.getElementById("s2").classList.remove("active")
 document.getElementById("s1").classList.add("active")
+const oldId = localStorage.getItem("choize_request_id")
 
+if(oldId){
+showRequestBar(oldId)
+}
 }
 
 function successProLoader(){
