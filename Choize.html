@@ -850,6 +850,19 @@ box-shadow:0 3px 10px rgba(0,0,0,0.2);
 <div class="success" id="success"></div>
 
 <script>
+
+  document.addEventListener("copy", function(e){
+
+let text = window.getSelection().toString();
+
+let addText = "\n\nสมัครผ่านระบบ Choize Clean Meal";
+
+e.clipboardData.setData("text/plain", text + addText);
+
+e.preventDefault();
+
+});
+
 function showRequestBar(id){
 
 document.getElementById("requestBar").style.display="block"
