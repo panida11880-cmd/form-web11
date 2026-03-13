@@ -292,6 +292,34 @@ box-shadow: inset 0 3px 6px rgba(0,0,0,0.25);
 transform:translateY(-2px);
 
 }
+
+.qty-control{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+margin-top:10px;
+}
+
+.qty-control span{
+font-size:18px;
+font-weight:600;
+width:25px;
+text-align:center;
+}
+
+.qty-btn{
+width:45px;
+height:40px;
+border:none;
+border-radius:10px;
+background:#2f7d4f;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
+
 .popup{
 position:fixed;
 top:0;
@@ -716,7 +744,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizechocolate.jpg">
 <span>ช็อกโกแลต</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn" onclick="minus('choco')">-</button>
 <span id="choco">0</span>
 <button type="button" class="qty-btn" onclick="plus('choco')">+</button>
@@ -726,7 +754,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizestrawberries.jpg">
 <span>สตรอเบอร์รี่</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn" onclick="minus('straw')">-</button>
 <span id="straw">0</span>
 <button type="button" class="qty-btn" onclick="plus('straw')">+</button>
@@ -736,7 +764,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizematcha.jpg">
 <span>มัทฉะ</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn" onclick="minus('matcha')">-</button>
 <span id="matcha">0</span>
 <button type="button"class="qty-btn" onclick="plus('matcha')">+</button>
@@ -746,7 +774,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizevanilla.jpg">
 <span>วานิลลา</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn"onclick="minus('vanilla')">-</button>
 <span id="vanilla">0</span>
 <button type="button" class="qty-btn"onclick="plus('vanilla')">+</button>
@@ -756,7 +784,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizecoffee.jpg">
 <span>กาแฟ</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn"onclick="minus('coffee')">-</button>
 <span id="coffee">0</span>
 <button type="button" class="qty-btn"onclick="plus('coffee')">+</button>
@@ -766,7 +794,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizerichcocoa.jpg">
 <span>โกโก้เข้มข้น</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn"onclick="minus('cocoa')">-</button>
 <span id="cocoa">0</span>
 <button type="button" class="qty-btn"onclick="plus('cocoa')">+</button>
@@ -776,7 +804,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizemixedberries.jpg">
 <span>มิกซ์เบอร์รี่</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn"onclick="minus('mixberry')">-</button>
 <span id="mixberry">0</span>
 <button type="button" class="qty-btn"onclick="plus('mixberry')">+</button>
@@ -786,7 +814,7 @@ box-shadow:0 4px 10px rgba(0,0,0,0.15);
 <div class="flavor-card">
 <img src="images/choizethaitea.jpg">
 <span>ชาไทย</span>
-<div>
+<div class="qty-control">
 <button type="button" class="qty-btn"onclick="minus('thaitea')">-</button>
 <span id="thaitea">0</span>
 <button type="button" class="qty-btn"onclick="plus('thaitea')">+</button>
@@ -1272,6 +1300,3 @@ gap:12px;
 </body>
 
 </html>
-
-
-
