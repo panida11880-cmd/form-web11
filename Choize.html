@@ -17,7 +17,6 @@ font-family:'SFThonburi',sans-serif;
 body{
 margin:0;
 padding-top:60px;
-overflow-x:hidden;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -153,11 +152,9 @@ margin-top:15px;
 
 .flavor-grid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-max-width:420px;
-margin:auto;
-padding:0 12px;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
 }
 
 .flavor-card{
@@ -165,7 +162,7 @@ padding:0 12px;
 background: rgba(255,255,255,0.35);
 
 border-radius:16px;
-width:100px;
+
 padding:10px;
 
 cursor:pointer;
@@ -300,16 +297,15 @@ transform:translateY(-2px);
 display:flex;
 justify-content:center;
 align-items:center;
-gap:10px;
-margin-top:12px;
+gap:12px;
+margin-top:10px;
 }
 
 .qty-control span{
 font-size:18px;
 font-weight:600;
-width:40px;
+width:25px;
 text-align:center;
-display:inline-block;
 }
 
 .qty-btn{
@@ -672,15 +668,6 @@ padding:14px;
 z-index:9999;
 font-size:18px;
 box-shadow:0 4px 10px rgba(0,0,0,0.15);
-}
-
-@media (max-width:480px){
-
-.flavor-grid{
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-
 }
 
 
