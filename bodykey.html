@@ -16,7 +16,7 @@ font-family:'SFThonburi',sans-serif;
 
 body{
 margin:0;
-
+padding-top:60px;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -29,21 +29,66 @@ padding:20px;
 backdrop-filter: blur(20px);
 }
 
-p {
-  line-height: 1.7;
-}
-
 @font-face{
 font-family:'SFThonburi';
 src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
 }
 
+p {
+  line-height: 1.7;
+}
+.glass-back{
+
+width:100%;
+
+padding:12px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+font-weight:600;
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+margin-bottom:10px;
+
+}
+
+.glass-back:hover{
+
+transform: translateY(-2px);
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+.glass-back2{
+
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgb(16 16 16 / 60%);
+    background: rgb(152 152 152 / 35%);
+    backdrop-filter: blur(20px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
+    margin-bottom: 10px;
+
+}
+
 .toast{
 position:fixed;
-top:20px;
+top:10px;
 left:50%;
 transform:translateX(-50%);
-background:#ff4d4f;   /* สีแดง */
+background:#ff0000d8;   /* สีแดง */
 color:white;
 padding:12px 20px;
 border-radius:8px;
@@ -135,38 +180,6 @@ box-shadow:
 
 }
 
-.glass-back{
-
-width:100%;
-
-padding:12px;
-
-border-radius:14px;
-
-border:1px solid rgba(255,255,255,0.6);
-
-background: rgba(255,255,255,0.35);
-
-backdrop-filter: blur(20px);
-
-font-weight:600;
-
-cursor:pointer;
-
-transition: all .25s ease;
-
-margin-bottom:10px;
-
-}
-
-.glass-back:hover{
-
-transform: translateY(-2px);
-
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-
-}
-
 .flavor-card:hover{
 
 transform: translateY(-3px);
@@ -237,7 +250,48 @@ color:#000000;
 font-size:16px;
 margin-top:10px;
 }
+/* ปุ่ม + - */
 
+.qty-btn{
+
+width:60px;
+height:35px;
+
+border-radius:8px;
+
+border:none;
+
+background:#2e8b57;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition: all .15s ease;
+
+}
+
+/* กดแล้วเด้ง */
+
+.qty-btn:active{
+
+transform:scale(0.85);
+
+box-shadow: inset 0 3px 6px rgba(0,0,0,0.25);
+
+}
+
+/* hover */
+
+.qty-btn:hover{
+
+transform:translateY(-2px);
+
+}
 .popup{
 position:fixed;
 top:0;
@@ -248,6 +302,10 @@ background:rgba(0,0,0,0.4);
 display:none;
 align-items:center;
 justify-content:center;
+}
+
+  input:-webkit-autofill{
+-webkit-box-shadow:0 0 0px 1000px white inset;
 }
 
 .popup-card{
@@ -577,6 +635,25 @@ animation:pop .4s ease;
 
 <body>
 
+<div id="requestBar" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#2e8b57;
+color:white;
+text-align:center;
+padding:14px;
+font-size:18px;
+font-weight:bold;
+z-index:9999;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+
+">
+คุณได้ใช้สิทธิ์แล้ว • เลขคำขอ : <span id="requestIdText"></span>
+</div>
+
 <div id="proLoader" class="pro-loader">
 
 <div class="loader-card">
@@ -607,104 +684,118 @@ animation:pop .4s ease;
 </div>
 
 <form id="form">
-<input type="hidden" name="product" value="BodyKey">
-<input type="hidden" name="source" value="BodyKeyflavor">
+<input type="hidden" name="product" value="Choize">
+<input type="hidden" name="source" value="choize_12_flavor">
 <input type="hidden" name="flavors" id="flavors">
+
 <!-- STEP1 -->
 
 <div id="step1">
 
-<center><h3>เลือกรสชาติสินค้า</h3> </center>
+<center><h3>เลือกรสชาติ Choize Clean Meal Drink</h3></center>
 
-<div class="info-buttons">
+<p style="text-align:center">
+เลือกได้ทั้งหมด <b>12 ขวด</b> (เลือกรสซ้ำได้)
+</p>
 
-<button class="glass-btn" onclick="openPopup('benefitPopup')">
-ประโยชน์ของ Bodykey
-</button>
-
-<button class="glass-btn" onclick="openPopup('howPopup')">
-วิธีรับประทาน Bodykey
-</button>
-
+<div id="counter" style="text-align:center;margin-bottom:15px;font-weight:bold">
+เลือกแล้ว 0 / 12
 </div>
-
-<center><p><b>กล่องที่ 1</b></p></center>
 
 <div class="flavor-grid">
 
-<label class="flavor-card">
-<input type="radio" name="flavor1" value="เบอร์รี่">
-<img src="https://panida11880-cmd.github.io/form-web11/images/berry.jpg">
-<span>บอดี้คีย์รสชาติเบอร์รี่</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizechocolate.jpg">
+<span>ช็อกโกแลต</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('choco')">-</button>
+<span id="choco">0</span>
+<button type="button" class="qty-btn" onclick="plus('choco')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="flavor1" value="กาแฟ">
-<img src="https://panida11880-cmd.github.io/form-web11/images/coffee.jpg">
-<span>บอดี้คีย์รสชาติกาแฟ</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizestrawberries.jpg">
+<span>สตรอเบอร์รี่</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('straw')">-</button>
+<span id="straw">0</span>
+<button type="button" class="qty-btn" onclick="plus('straw')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="flavor1" value="โกโก้">
-<img src="https://panida11880-cmd.github.io/form-web11/images/cocoa.jpg">
-<span>บอดี้คีย์รสชาติโกโก้</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizematcha.jpg">
+<span>มัทฉะ</span>
+<div>
+<button type="button" class="qty-btn" onclick="minus('matcha')">-</button>
+<span id="matcha">0</span>
+<button type="button"class="qty-btn" onclick="plus('matcha')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="flavor1" value="ชาไทย">
-<img src="https://panida11880-cmd.github.io/form-web11/images/thaitea.jpg">
-<span>บอดี้คีย์รสชาติชานม</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizevanilla.jpg">
+<span>วานิลลา</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('vanilla')">-</button>
+<span id="vanilla">0</span>
+<button type="button" class="qty-btn"onclick="plus('vanilla')">+</button>
+</div>
+</div>
 
-<label class="flavor-card center-card">
-<input type="radio" name="flavor1" value="กล้วย">
-<img src="https://panida11880-cmd.github.io/form-web11/images/banana.jpg">
-<span>บอดี้คีย์รสชาติกล้วย</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizecoffee.jpg">
+<span>กาแฟ</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('coffee')">-</button>
+<span id="coffee">0</span>
+<button type="button" class="qty-btn"onclick="plus('coffee')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizerichcocoa.jpg">
+<span>โกโก้เข้มข้น</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('cocoa')">-</button>
+<span id="cocoa">0</span>
+<button type="button" class="qty-btn"onclick="plus('cocoa')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizemixedberries.jpg">
+<span>มิกซ์เบอร์รี่</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('mixberry')">-</button>
+<span id="mixberry">0</span>
+<button type="button" class="qty-btn"onclick="plus('mixberry')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizethaitea.jpg">
+<span>ชาไทย</span>
+<div>
+<button type="button" class="qty-btn"onclick="minus('thaitea')">-</button>
+<span id="thaitea">0</span>
+<button type="button" class="qty-btn"onclick="plus('thaitea')">+</button>
+</div>
+</div>
 
 </div>
 
-<center><h4>กล่องที่ 2</h4></center>
-
-<div class="flavor-grid">
-
-<label class="flavor-card">
-<input type="radio" name="flavor2" value="เบอร์รี่">
-<img src="https://panida11880-cmd.github.io/form-web11/images/berry.jpg">
-<span>บอดี้คีย์รสชาติเบอร์รี่</span>
-</label>
-
-<label class="flavor-card">
-<input type="radio" name="flavor2" value="กาแฟ">
-<img src="https://panida11880-cmd.github.io/form-web11/images/coffee.jpg">
-<span>บอดี้คีย์รสชาติกาแฟ</span>
-</label>
-
-<label class="flavor-card">
-<input type="radio" name="flavor2" value="โกโก้">
-<img src="https://panida11880-cmd.github.io/form-web11/images/cocoa.jpg">
-<span>บอดี้คีย์รสชาติโกโก้</span>
-</label>
-
-<label class="flavor-card">
-<input type="radio" name="flavor2" value="ชาไทย">
-<img src="https://panida11880-cmd.github.io/form-web11/images/thaitea.jpg">
-<span>บอดี้คีย์รสชาติชานม</span>
-</label>
-
-<label class="flavor-card center-card">
-<input type="radio" name="flavor2" value="กล้วย">
-<img src="https://panida11880-cmd.github.io/form-web11/images/banana.jpg">
-<span>บอดี้คีย์รสชาติกล้วย</span>
-</label>
-
-</div>
+<button type="button" id="nextBtn" style="display:none" onclick="goStep2()">
+ไปกรอกข้อมูล
+</button>
 
 </div>
 
 <!-- STEP2 -->
-<button type="button" class="glass-back" onclick="backStep()">← กลับไปเลือกรสชาติ</button>
+
 <div id="step2" style="display:none">
+  <button type="button" class="glass-back"  onclick="backStep()">← กลับไปเลือกรสชาติ</button>
 <center>
 <h3>ข้อมูลผู้รับสิทธิ์</h3></center>
 
@@ -752,14 +843,71 @@ animation:pop .4s ease;
 <div class="popup-card">
 <h3>ตรวจสอบข้อมูล</h3>
 <div id="preview"></div>
-<button onclick="send()">ยืนยันข้อมูล</button>
+<button class="glass-back2" onclick="send()">ยืนยันข้อมูล</button>
 </div>
 </div>
 
 <div class="success" id="success"></div>
 
 <script>
+function showRequestBar(id){
 
+document.getElementById("requestBar").style.display="block"
+document.getElementById("requestIdText").innerText=id
+
+}
+
+
+
+function minus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(val <= 0) return
+
+val--
+total--
+
+el.innerText = val
+updateCounter()
+
+}
+
+function updateCounter(){
+
+document.getElementById("counter").innerText =
+"เลือกแล้ว "+total+" / 12"
+
+if(total === 12){
+
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+hideLoader()
+
+},1000)
+
+}
+
+}
+
+function goStep2(){
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+}
 const scriptURL="https://script.google.com/macros/s/AKfycbzWJzT6LNg-641tRWECvcIIXJaAvZbHW9lYO7h8pfcG_gsVLl5Owguy_KzAxq0i9Rg/exec";
 
 const radios=document.querySelectorAll("input[type=radio]")
@@ -790,6 +938,26 @@ hideLoader()
 }
 })
 }); 
+
+
+function plus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(total >= max) return
+
+val++
+total++
+
+el.innerText = val
+
+navigator.vibrate(30)
+
+updateCounter()
+
+}
+
 
 function preview(){
 
@@ -822,10 +990,22 @@ document.getElementById("popup").style.display="flex"
 }
 
 function send(){
+
 showProLoader("กำลังส่งข้อมูล...")
+
 const form=document.getElementById("form")
 
-document.getElementById("popup").style.display="none"
+let flavorText =
+"ช็อกโกแลต:"+document.getElementById("choco").innerText+" "+
+"สตรอเบอร์รี่:"+document.getElementById("straw").innerText+" "+
+"มัทฉะ:"+document.getElementById("matcha").innerText+" "+
+"วานิลลา:"+document.getElementById("vanilla").innerText+" "+
+"กาแฟ:"+document.getElementById("coffee").innerText+" "+
+"โกโก้เข้ม:"+document.getElementById("cocoa").innerText+" "+
+"มิกซ์เบอร์รี่:"+document.getElementById("mixberry").innerText+" "+
+"ชาไทย:"+document.getElementById("thaitea").innerText
+
+document.getElementById("flavors").value = flavorText
 
 fetch(scriptURL,{
 method:"POST",
@@ -838,36 +1018,50 @@ successProLoader()
 
 const id=data.requestId
 
-document.getElementById("success").innerHTML=
+localStorage.setItem("choize_request_id", id)
 
-"<div class='check'>✔</div>"+
-"<p>ส่งคำขอเรียบร้อย</p>"+
-"<b>เลขคำขอ : "+id+"</b>"
+showRequestBar(id)
+
+
+/* รีเซ็ตฟอร์ม */
+form.reset()
+
+/* รีเซ็ตจำนวนรสชาติ */
+const ids = ["choco","straw","matcha","vanilla","coffee","cocoa","mixberry","thaitea"]
+
+ids.forEach(i=>{
+document.getElementById(i).innerText = "0"
+})
+
+/* รีเซ็ตตัวนับ */
+total = 0
+updateCounter()
+
+/* กลับไปหน้าเลือกรสชาติ */
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+document.getElementById("s1").classList.add("active")
+document.getElementById("s2").classList.remove("active")
+
+/* ปิด popup */
+document.getElementById("popup").style.display="none"
+
+})
 
 .catch(err=>{
 alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
 document.getElementById("proLoader").style.display="none"
 })
 
-
-document.getElementById("success").style.display="block"
-
-showTopPopup(id)
-
-form.reset()
-
-document.getElementById("step1").style.display="block"
-document.getElementById("step2").style.display="none"
-
-})
-
 }
+
 
 function showTopPopup(id){
 
 const toast=document.getElementById("toast")
 
-toast.innerHTML="ส่งคำขอสำเร็จ เลขคำขอ : "+id
+toast.innerHTML="คุณได้ใช้สิทธิ์แล้ว<br>เลขคำขอ : "+id
 toast.style.display="block"
 
 setTimeout(()=>{
@@ -905,7 +1099,11 @@ document.getElementById("step1").style.display="block"
 
 document.getElementById("s2").classList.remove("active")
 document.getElementById("s1").classList.add("active")
+const oldId = localStorage.getItem("choize_request_id")
 
+if(oldId){
+showRequestBar(oldId)
+}
 }
 
 function successProLoader(){
@@ -940,6 +1138,18 @@ document.getElementById("loaderBox").style.display="none"
 
 }
 
+window.addEventListener("load",function(){
+
+const oldId = localStorage.getItem("choize_request_id")
+
+if(oldId){
+
+showTopPopup(oldId)
+
+}
+
+})
+
 </script>
 
 <!-- POPUP BENEFIT -->
@@ -954,13 +1164,12 @@ document.getElementById("loaderBox").style.display="none"
 
 <!--<img src="images/benefit.jpg" class="popup-img"> -->
 
-<p>
-ควบคุมน้ำหนัก อิ่มนาน ใยอาหารสูง<br>
-ให้สารอาหารครบ โปรตีน วิตามิน แร่ธาตุ<br>
-ช่วยขับถ่าย ลดท้องผูก<br>
-ลดความเสี่ยงโรคหัวใจ,เบาหวาน,ระบบทางเดินอาหาร<br>
-ปราศจากสีและวัตถุกันเสีย
-</p>
+<p>ช่วยคุมน้ำหนักได้อย่างสมดุล อิ่มท้องนาน ลดความอยากอาหารจุกจิก<br>
+อุดมไปด้วยโปรตีนและสารอาหารที่ครบครัน ส่งเสริมการสร้างกล้ามเนื้อ<br>
+เติมพลังงานระหว่างวัน ให้ความสดชื่น กระปรี้กระเปร่า หมดกังวลเรื่องความเหนื่อยล้า<br>
+มีไฟเบอร์สูง ช่วยให้ระบบย่อยอาหารทำงานได้อย่างมีประสิทธิภาพ<br>
+เสริมวิตามินและสารต้านอนุมูลอิสระ ดูแลเซลล์ พร้อมช่วยชะลอวัย<br>
+ปลอดสารอันตราย มั่นใจได้ทั้งมาตรฐาน อย. และ ฮาลาล</p>
 
 </div>
 
@@ -980,9 +1189,12 @@ document.getElementById("loaderBox").style.display="none"
 <!-- <img src="images/how.jpg" class="popup-img"> -->
 
 <p>
-1.เท 1 ซอง ลงในน้ำหรือนมพร่องมันเนย 250 มล.<br>
-2.คนหรือเขย่าให้ละลายเป็นเนื้อเดียว<br>
-3.ดื่มแทนมื้ออาหารได้เลย<br>
+1.เปิดฝา: เปิดขวด Choize ออก<br>
+2.เติมน้ำ: เติมน้ำเย็นหรือน้ำอุณหภูมิห้อง ลงไปจนถึงขีดที่กำหนด (ขีดที่ 1)<br>
+3.คว่ำขวด: เทคนิคสำคัญ ให้คว่ำขวดลงแล้วเขย่า เพื่อไม่ให้ผงติดก้นขวด<br>
+4.เขย่า: เขย่าให้เข้ากันจนเนื้อเนียน<br>
+5.เติมน้ำเพิ่ม: เติมน้ำอีกครั้งจนถึงขีดที่ 2 แล้วเขย่าตามปกติ<br>
+6.ดื่ม: ดื่มได้ทันที ควรดื่มให้หมดภายในครั้งเดียว หรือเก็บในตู้เย็นได้ไม่เกิน 24 ชั่วโมง<br>
 </p>
 
 </div>
@@ -1023,4 +1235,5 @@ gap:12px;
 </div>
 
 </body>
+
 </html>
