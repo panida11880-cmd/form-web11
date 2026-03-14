@@ -53,8 +53,10 @@ font-weight:500;
 }
 
 .app{
+padding-top: 11%;
 width:100%;
 max-width:420px;
+margin:auto;
 }
 
 .card{
@@ -585,7 +587,63 @@ animation:pop .4s ease;
   0%,49.9%{background-position:0 0,100% 0,100% 100%}
   50%,100%{background-position:100% 0,100% 100%,0 100%}
 }
+#requestBar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
 
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+padding:14px;
+
+font-size:17px;
+font-weight:600;
+
+color:white;
+
+background:linear-gradient(135deg,#2e8b57,#3fbf7f);
+
+box-shadow:0 5px 20px rgba(0,0,0,0.25);
+
+z-index:99999;
+
+animation:slideDown .6s ease;
+}
+
+#requestBar .icon{
+font-size:20px;
+}
+
+#requestBar .badge{
+
+background:white;
+color:#2e8b57;
+
+padding:4px 10px;
+border-radius:20px;
+
+font-weight:700;
+
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+@keyframes slideDown{
+
+from{
+transform:translateY(-100%);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
 
 
 </style>
@@ -593,22 +651,14 @@ animation:pop .4s ease;
 
 <body>
 
-<div id="requestBar" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:#2e8b57;
-color:white;
-text-align:center;
-padding:14px;
-font-size:18px;
-font-weight:bold;
-z-index:99999;
-box-shadow:0 3px 10px rgba(0,0,0,0.2);
-">
-คุณได้ใช้สิทธิ์แล้ว • เลขคำขอ : <span id="requestIdText"></span>
+<div id="requestBar" style="display:none">
+
+<span class="icon">✔</span>
+
+<span>คุณได้ใช้สิทธิ์แล้ว</span>
+
+<span class="badge" id="requestIdText"></span>
+
 </div>
 
 <div id="proLoader" class="pro-loader">
