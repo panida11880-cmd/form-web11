@@ -16,7 +16,7 @@ font-family:'SFThonburi',sans-serif;
 
 body{
 margin:0;
-padding-top:60px;
+padding:80px 12px 20px 12px;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -24,9 +24,8 @@ linear-gradient(180deg,#eaf5ee,#dbe8e0);
 
 display:flex;
 justify-content:center;
-padding:20px;
 
-backdrop-filter: blur(20px);
+overflow-x:hidden;
 }
 
 @font-face{
@@ -222,7 +221,6 @@ font-weight:500;
 }
 
 .app{
-padding-top: 11%;
 width:100%;
 max-width:420px;
 margin:auto;
@@ -742,6 +740,23 @@ animation:pop .4s ease;
 
 }
 
+@media (max-width:480px){
+
+.card{
+padding:18px;
+border-radius:18px;
+}
+
+.flavor-card{
+padding:8px;
+}
+
+.flavor-card img{
+height:100px;
+}
+
+}
+  
 @keyframes pop{
 
 0%{transform:scale(.6);opacity:0}
