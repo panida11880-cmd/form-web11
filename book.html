@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ลงทะเบียนรับ book</title>
+<title>ลงทะเบียนรับ Choize</title>
 
 
 <style>
@@ -16,7 +16,7 @@ font-family:'SFThonburi',sans-serif;
 
 body{
 margin:0;
-padding-top:10px;
+padding:80px 12px 20px 12px;
 background:
 radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
 radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
@@ -24,13 +24,8 @@ linear-gradient(180deg,#eaf5ee,#dbe8e0);
 
 display:flex;
 justify-content:center;
-padding:20px;
 
-backdrop-filter: blur(20px);
-}
-
-p {
-  line-height: 1.7;
+overflow-x:hidden;
 }
 
 @font-face{
@@ -38,70 +33,185 @@ font-family:'SFThonburi';
 src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
 }
 
-#requestBar{
-position:fixed;
-top:0;
-left:0;
+p {
+  line-height: 1.7;
+}
+.glass-back{
+
 width:100%;
 
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
+padding:12px;
 
-padding:14px;
+border-radius:14px;
 
-font-size:17px;
+border:1px solid rgba(255,255,255,0.6);
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
 font-weight:600;
 
-color:white;
+cursor:pointer;
 
-background:linear-gradient(135deg,#2e8b57,#3fbf7f);
+transition: all .25s ease;
 
-box-shadow:0 5px 20px rgba(0,0,0,0.25);
+margin-bottom:10px;
 
-z-index:99999;
-
-animation:slideDown .6s ease;
 }
 
-#requestBar .icon{
-font-size:20px;
+/* ป้องกันเว็บล้นจอ */
+*{
+box-sizing:border-box;
 }
 
-#requestBar .badge{
+body{
+margin:0;
+padding:0;
+overflow-x:hidden;
+}
 
+/* กล่องหลัก */
+.container{
+max-width:480px;
+margin:auto;
+padding:15px;
+}
+
+/* กริดสินค้า */
+.flavor-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:14px;
+width:100%;
+}
+
+/* การ์ดสินค้า */
+.flavor-card{
 background:white;
-color:#2e8b57;
-
-padding:4px 10px;
-border-radius:20px;
-
-font-weight:700;
-
-box-shadow:0 3px 10px rgba(0,0,0,0.2);
+border-radius:18px;
+padding:14px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+text-align:center;
+width:100%;
 }
 
-@keyframes slideDown{
-
-from{
-transform:translateY(-100%);
-opacity:0;
+/* รูปสินค้า */
+.flavor-card img{
+width:100%;
+height:auto;
+border-radius:12px;
 }
 
-to{
-transform:translateY(0);
-opacity:1;
+/* ชื่อสินค้า */
+.flavor-card span{
+display:block;
+margin-top:8px;
+font-size:16px;
+font-weight:500;
 }
+
+/* ปุ่มเลือกจำนวน */
+.qty-control{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+margin-top:10px;
+}
+
+/* ปุ่ม + - */
+.qty-btn{
+width:44px;
+height:44px;
+border:none;
+border-radius:12px;
+background:#2e8b57;
+color:white;
+font-size:20px;
+cursor:pointer;
+}
+
+/* ตัวเลข */
+.qty-control span{
+width:30px;
+text-align:center;
+font-size:18px;
+font-weight:600;
+}
+
+/* มือถือเล็ก */
+@media (max-width:480px){
+
+.container{
+padding:12px;
+}
+
+.flavor-grid{
+gap:12px;
+}
+
+.qty-btn{
+width:40px;
+height:40px;
+}
+
+}
+
+/* Tablet */
+@media (min-width:768px){
+
+.container{
+max-width:700px;
+}
+
+.flavor-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+/* คอม */
+@media (min-width:1024px){
+
+.container{
+max-width:900px;
+}
+
+.flavor-grid{
+grid-template-columns:repeat(4,1fr);
+}
+
+}
+
+.glass-back:hover{
+
+transform: translateY(-2px);
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+.glass-back2{
+
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgb(16 16 16 / 60%);
+    background: rgb(152 152 152 / 35%);
+    backdrop-filter: blur(20px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
+    margin-bottom: 10px;
 
 }
 
 .toast{
 position:fixed;
-top:20px;
+top:10px;
 left:50%;
 transform:translateX(-50%);
-background:#ff4d4f;   /* สีแดง */
+background:#ff0000d8;   /* สีแดง */
 color:white;
 padding:12px 20px;
 border-radius:8px;
@@ -194,53 +304,6 @@ box-shadow:
 
 }
 
-.glass-back{
-
-width:100%;
-
-padding:12px;
-
-border-radius:14px;
-
-border:1px solid rgba(255,255,255,0.6);
-
-background: rgba(255,255,255,0.35);
-
-backdrop-filter: blur(20px);
-
-font-weight:600;
-
-cursor:pointer;
-
-transition: all .25s ease;
-
-margin-bottom:10px;
-
-}
-
-.glass-back:hover{
-
-transform: translateY(-2px);
-
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-
-}
-
-.glass-back2{
-
-    width: 100%;
-    padding: 12px;
-    border-radius: 14px;
-    border: 1px solid rgb(16 16 16 / 60%);
-    background: rgb(152 152 152 / 35%);
-    backdrop-filter: blur(20px);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
-    margin-bottom: 10px;
-
-}
-
 .flavor-card:hover{
 
 transform: translateY(-3px);
@@ -311,6 +374,75 @@ color:#000000;
 font-size:16px;
 margin-top:10px;
 }
+/* ปุ่ม + - */
+
+.qty-btn{
+
+width:60px;
+height:35px;
+
+border-radius:8px;
+
+border:none;
+
+background:#2e8b57;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition: all .15s ease;
+
+}
+
+/* กดแล้วเด้ง */
+
+.qty-btn:active{
+
+transform:scale(0.85);
+
+box-shadow: inset 0 3px 6px rgba(0,0,0,0.25);
+
+}
+
+/* hover */
+
+.qty-btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+.qty-control{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+margin-top:10px;
+}
+
+.qty-control span{
+font-size:18px;
+font-weight:600;
+width:25px;
+text-align:center;
+}
+
+.qty-btn{
+width:45px;
+height:40px;
+border:none;
+border-radius:10px;
+background:#2f7d4f;
+color:white;
+font-size:20px;
+font-weight:bold;
+cursor:pointer;
+}
 
 .popup{
 position:fixed;
@@ -324,9 +456,12 @@ align-items:center;
 justify-content:center;
 }
 
+  input:-webkit-autofill{
+-webkit-box-shadow:0 0 0px 1000px white inset;
+}
+
 .popup-card{
 background:white;
-border: 1px solid rgb(16 16 16 / 60%);
 padding:20px;
 border-radius:14px;
 width:90%;
@@ -605,6 +740,23 @@ animation:pop .4s ease;
 
 }
 
+@media (max-width:480px){
+
+.card{
+padding:18px;
+border-radius:18px;
+}
+
+.flavor-card{
+padding:8px;
+}
+
+.flavor-card img{
+height:100px;
+}
+
+}
+  
 @keyframes pop{
 
 0%{transform:scale(.6);opacity:0}
@@ -643,6 +795,20 @@ animation:pop .4s ease;
 @keyframes l16-2 {
   0%,49.9%{background-position:0 0,100% 0,100% 100%}
   50%,100%{background-position:100% 0,100% 100%,0 100%}
+}
+.request-bar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+background:#2e8b57;
+color:#fff;
+font-weight:600;
+text-align:center;
+padding:14px;
+z-index:9999;
+font-size:18px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
 
 #requestBar{
@@ -689,21 +855,6 @@ font-weight:700;
 box-shadow:0 3px 10px rgba(0,0,0,0.2);
 }
 
-@keyframes slideDown{
-
-from{
-transform:translateY(-100%);
-opacity:0;
-}
-
-to{
-transform:translateY(0);
-opacity:1;
-}
-
-}
-
-
 </style>
 </head>
 
@@ -734,6 +885,7 @@ opacity:1;
 </div>
   
 
+<div class="toast" id="toast"></div>
 
 <div class="app">
 
@@ -748,63 +900,131 @@ opacity:1;
 </div>
 
 <form id="form">
-<input type="hidden" name="product" value="book">
-<input type="hidden" name="source" value="bookflavor">
+<input type="hidden" name="product" value="Choize">
+<input type="hidden" name="source" value="choize_12_flavor">
 <input type="hidden" name="flavors" id="flavors">
+
 <!-- STEP1 -->
+
 <div id="step1">
+
+<center><h3>เลือกรสชาติ Choize Clean Meal Drink</h3></center>
+<div class="info-buttons">
+
+<button class="glass-btn" onclick="openPopup('benefitPopup')">
+ประโยชน์ Choize
+</button>
+
+<button class="glass-btn" onclick="openPopup('howPopup')">
+วิธีรับประทาน Choize
+</button>
+
+</div>
+
+<p style="text-align:center">
+เลือกได้ทั้งหมด <b>12 ขวด</b> (เลือกรสซ้ำได้)
+</p>
+
+<div id="counter" style="text-align:center;margin-bottom:15px;font-weight:bold">
+เลือกแล้ว 0 / 12
+</div>
 
 <div class="flavor-grid">
 
-<label class="flavor-card">
-<input type="radio" name="book" value="หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop">
-<img src="/images/BOOK1.jpg">
-<span>หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizechocolate.jpg">
+<span>ช็อกโกแลต</span>
+<div class="qty-control">
+<button type="button" class="qty-btn" onclick="minus('choco')">-</button>
+<span id="choco">0</span>
+<button type="button" class="qty-btn" onclick="plus('choco')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="book" value="ทำนายหน้า TikTok ด้วย AI">
-<img src="/images/BOOK2.jpg">
-<span>ทำนายหน้า TikTok ด้วย AI</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizestrawberries.jpg">
+<span>สตรอเบอร์รี่</span>
+<div class="qty-control">
+<button type="button" class="qty-btn" onclick="minus('straw')">-</button>
+<span id="straw">0</span>
+<button type="button" class="qty-btn" onclick="plus('straw')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="book" value="Money Summary">
-<img src="/images/BOOK3.jpg">
-<span>Money Summary</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizematcha.jpg">
+<span>มัทฉะ</span>
+<div class="qty-control">
+<button type="button" class="qty-btn" onclick="minus('matcha')">-</button>
+<span id="matcha">0</span>
+<button type="button"class="qty-btn" onclick="plus('matcha')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="book" value="Money 101">
-<img src="/images/BOOK4.jpg">
-<span>Money 101</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizevanilla.jpg">
+<span>วานิลลา</span>
+<div class="qty-control">
+<button type="button" class="qty-btn"onclick="minus('vanilla')">-</button>
+<span id="vanilla">0</span>
+<button type="button" class="qty-btn"onclick="plus('vanilla')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="book" value="Passive Income">
-<img src="/images/BOOK5.jpg">
-<span>Passive Income</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizecoffee.jpg">
+<span>กาแฟ</span>
+<div class="qty-control">
+<button type="button" class="qty-btn"onclick="minus('coffee')">-</button>
+<span id="coffee">0</span>
+<button type="button" class="qty-btn"onclick="plus('coffee')">+</button>
+</div>
+</div>
 
-<label class="flavor-card">
-<input type="radio" name="book" value="เปลี่ยนหนี้เป็นอิสระภาพการเงิน">
-<img src="/images/BOOK6.jpg">
-<span>เปลี่ยนหนี้เป็นอิสระภาพการเงิน</span>
-</label>
+<div class="flavor-card">
+<img src="images/choizerichcocoa.jpg">
+<span>โกโก้เข้มข้น</span>
+<div class="qty-control">
+<button type="button" class="qty-btn"onclick="minus('cocoa')">-</button>
+<span id="cocoa">0</span>
+<button type="button" class="qty-btn"onclick="plus('cocoa')">+</button>
+</div>
+</div>
 
+<div class="flavor-card">
+<img src="images/choizemixedberries.jpg">
+<span>มิกซ์เบอร์รี่</span>
+<div class="qty-control">
+<button type="button" class="qty-btn"onclick="minus('mixberry')">-</button>
+<span id="mixberry">0</span>
+<button type="button" class="qty-btn"onclick="plus('mixberry')">+</button>
+</div>
+</div>
+
+<div class="flavor-card">
+<img src="images/choizethaitea.jpg">
+<span>ชาไทย</span>
+<div class="qty-control">
+<button type="button" class="qty-btn"onclick="minus('thaitea')">-</button>
+<span id="thaitea">0</span>
+<button type="button" class="qty-btn"onclick="plus('thaitea')">+</button>
+</div>
 </div>
 
 </div>
 
+<button type="button" id="nextBtn" style="display:none" onclick="goStep2()">
+ไปกรอกข้อมูล
+</button>
+
+</div>
 
 <!-- STEP2 -->
+
 <div id="step2" style="display:none">
-
-<button type="button" class="glass-back" onclick="backStep()">← กลับไปเลือกหนังสือ</button>
-
+  <button type="button" class="glass-back"  onclick="backStep()">← กลับไปเลือกรสชาติ</button>
 <center>
-<h3>ข้อมูลผู้รับสิทธิ์</h3>
-</center>
+<h3>ข้อมูลผู้รับสิทธิ์</h3></center>
 
 <label>ชื่อ</label>
 <input name="firstname" required>
@@ -824,7 +1044,7 @@ opacity:1;
 <label>บ้านเลขที่</label>
 <input name="house" required>
 
-<label>หมู่ที่</label>
+<label>หมู่ที่ (กรอกเพิ่มเติมได้ที่นี่)</label>
 <input name="village">
 
 <label>ตำบล</label>
@@ -857,11 +1077,15 @@ opacity:1;
 <div class="success" id="success"></div>
 
 <script>
-document.addEventListener("copy", function(e){
+
+let total = 0
+let max = 12
+
+  document.addEventListener("copy", function(e){
 
 let text = window.getSelection().toString();
 
-let addText = "\n\nที่มา：book";
+let addText = "\n\nที่มา： Choize Clean Meal";
 
 e.clipboardData.setData("text/plain", text + addText);
 
@@ -876,17 +1100,79 @@ document.getElementById("requestIdText").innerText=id
 
 }
 
-const scriptURL="https://script.google.com/macros/s/AKfycbzLskGZ6bPLLZdSVCcK7caHszb6kQrhTMA7M5h87i7t9u2n92vd-PlKB58zYBYxLqCr/exec";
 
-const radios=document.querySelectorAll("input[name=book]")
+
+function minus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(val <= 0) return
+
+val--
+total--
+
+el.innerText = val
+updateCounter()
+
+}
+
+function updateCounter(){
+
+document.getElementById("counter").innerText =
+"เลือกแล้ว "+total+" / 12"
+
+if(total === 12){
+
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+hideLoader()
+
+},1000)
+
+}
+
+}
+
+function showRequestBar(id){
+
+const bar = document.getElementById("requestBar")
+const text = document.getElementById("requestIdText")
+
+text.innerText = id
+bar.style.display = "block"
+
+}
+
+function goStep2(){
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+}
+const scriptURL="https://script.google.com/macros/s/AKfycby-_ds8J662DnFVjTVMSDtAmjUSy16jlqCY-2jtIY9PLRUbCMrRMDIU4vsudoBpv7T0/exec";
+
+const radios=document.querySelectorAll("input[type=radio]")
 
 radios.forEach(r=>{
 
 r.addEventListener("change",()=>{
 
-const book=document.querySelector("input[name=book]:checked")
+const f1=document.querySelector("input[name=flavor1]:checked")
+const f2=document.querySelector("input[name=flavor2]:checked")
 
-if(book){
+if(f1 && f2){
 
 showLoader("กำลังไปหน้ากรอกข้อมูล...")
 
@@ -905,6 +1191,26 @@ hideLoader()
 }
 })
 }); 
+
+
+function plus(id){
+
+let el = document.getElementById(id)
+let val = parseInt(el.innerText)
+
+if(total >= max) return
+
+val++
+total++
+
+el.innerText = val
+
+navigator.vibrate(30)
+
+updateCounter()
+
+}
+
 
 function preview(){
 
@@ -937,10 +1243,22 @@ document.getElementById("popup").style.display="flex"
 }
 
 function send(){
+
 showProLoader("กำลังส่งข้อมูล...")
+
 const form=document.getElementById("form")
 
-document.getElementById("popup").style.display="none"
+let flavorText =
+"ช็อกโกแลต:"+document.getElementById("choco").innerText+" "+
+"สตรอเบอร์รี่:"+document.getElementById("straw").innerText+" "+
+"มัทฉะ:"+document.getElementById("matcha").innerText+" "+
+"วานิลลา:"+document.getElementById("vanilla").innerText+" "+
+"กาแฟ:"+document.getElementById("coffee").innerText+" "+
+"โกโก้เข้ม:"+document.getElementById("cocoa").innerText+" "+
+"มิกซ์เบอร์รี่:"+document.getElementById("mixberry").innerText+" "+
+"ชาไทย:"+document.getElementById("thaitea").innerText
+
+document.getElementById("flavors").value = flavorText
 
 fetch(scriptURL,{
 method:"POST",
@@ -951,22 +1269,31 @@ body:new FormData(form)
 
 successProLoader()
 
-const id = data.requestId
+const id=data.requestId
 
-/* บันทึกเลขคำขอ */
-localStorage.setItem("book_request_id", id)
+localStorage.setItem("choize_request_id", id)
 
-/* แสดงเลขคำขอด้านบน */
 showRequestBar(id)
+
 
 /* รีเซ็ตฟอร์ม */
 form.reset()
+
+/* รีเซ็ตจำนวนรสชาติ */
+const ids = ["choco","straw","matcha","vanilla","coffee","cocoa","mixberry","thaitea"]
+
+ids.forEach(i=>{
+document.getElementById(i).innerText = "0"
+})
+
+/* รีเซ็ตตัวนับ */
+total = 0
+updateCounter()
 
 /* กลับไปหน้าเลือกรสชาติ */
 document.getElementById("step1").style.display="block"
 document.getElementById("step2").style.display="none"
 
-/* รีเซ็ต Step */
 document.getElementById("s1").classList.add("active")
 document.getElementById("s2").classList.remove("active")
 
@@ -975,14 +1302,26 @@ document.getElementById("popup").style.display="none"
 
 })
 
-document.getElementById("step1").style.display="block"
-document.getElementById("step2").style.display="none"
+.catch(err=>{
+alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
+document.getElementById("proLoader").style.display="none"
+})
 
 }
 
 
+function showTopPopup(id){
 
+const toast=document.getElementById("toast")
 
+toast.innerHTML="คุณได้ใช้สิทธิ์แล้ว<br>เลขคำขอ : "+id
+toast.style.display="block"
+
+setTimeout(()=>{
+toast.style.display="none"
+},4000)
+
+}
 
 
 function openPopup(id){
@@ -1018,7 +1357,6 @@ const oldId = localStorage.getItem("choize_request_id")
 if(oldId){
 showRequestBar(oldId)
 }
-
 }
 
 function successProLoader(){
@@ -1055,25 +1393,17 @@ document.getElementById("loaderBox").style.display="none"
 
 window.addEventListener("load",function(){
 
-const oldId = localStorage.getItem("book_request_id")
+const oldId = localStorage.getItem("choize_request_id")
 
 if(oldId){
 
 showTopPopup(oldId)
+showRequestBar(oldId)   // เพิ่มบรรทัดนี้
 
 }
 
 })
 
-window.addEventListener("load",function(){
-
-const oldId = localStorage.getItem("book_request_id")
-
-if(oldId){
-showRequestBar(oldId)
-}
-
-})
 
 </script>
 
@@ -1085,17 +1415,16 @@ showRequestBar(oldId)
 
 <button class="close-btn" onclick="closePopup()">✕</button>
 
-<h3>ประโยชน์ book</h3>
+<h3>ประโยชน์ Choize</h3>
 
 <!--<img src="images/benefit.jpg" class="popup-img"> -->
 
-<p>
-ควบคุมน้ำหนัก อิ่มนาน ใยอาหารสูง<br>
-ให้สารอาหารครบ โปรตีน วิตามิน แร่ธาตุ<br>
-ช่วยขับถ่าย ลดท้องผูก<br>
-ลดความเสี่ยงโรคหัวใจ,เบาหวาน,ระบบทางเดินอาหาร<br>
-ปราศจากสีและวัตถุกันเสีย
-</p>
+<p>ช่วยคุมน้ำหนักได้อย่างสมดุล อิ่มท้องนาน ลดความอยากอาหารจุกจิก<br>
+อุดมไปด้วยโปรตีนและสารอาหารที่ครบครัน ส่งเสริมการสร้างกล้ามเนื้อ<br>
+เติมพลังงานระหว่างวัน ให้ความสดชื่น กระปรี้กระเปร่า หมดกังวลเรื่องความเหนื่อยล้า<br>
+มีไฟเบอร์สูง ช่วยให้ระบบย่อยอาหารทำงานได้อย่างมีประสิทธิภาพ<br>
+เสริมวิตามินและสารต้านอนุมูลอิสระ ดูแลเซลล์ พร้อมช่วยชะลอวัย<br>
+ปลอดสารอันตราย มั่นใจได้ทั้งมาตรฐาน อย. และ ฮาลาล</p>
 
 </div>
 
@@ -1110,14 +1439,17 @@ showRequestBar(oldId)
 
 <button class="close-btn" onclick="closePopup()">✕</button>
 
-<h3>วิธีรับประทาน book</h3>
+<h3>วิธีรับประทาน Choize</h3>
 
 <!-- <img src="images/how.jpg" class="popup-img"> -->
 
 <p>
-1.เท 1 ซอง ลงในน้ำหรือนมพร่องมันเนย 250 มล.<br>
-2.คนหรือเขย่าให้ละลายเป็นเนื้อเดียว<br>
-3.ดื่มแทนมื้ออาหารได้เลย<br>
+1.เปิดฝา: เปิดขวด Choize ออก<br>
+2.เติมน้ำ: เติมน้ำเย็นหรือน้ำอุณหภูมิห้อง ลงไปจนถึงขีดที่กำหนด (ขีดที่ 1)<br>
+3.คว่ำขวด: เทคนิคสำคัญ ให้คว่ำขวดลงแล้วเขย่า เพื่อไม่ให้ผงติดก้นขวด<br>
+4.เขย่า: เขย่าให้เข้ากันจนเนื้อเนียน<br>
+5.เติมน้ำเพิ่ม: เติมน้ำอีกครั้งจนถึงขีดที่ 2 แล้วเขย่าตามปกติ<br>
+6.ดื่ม: ดื่มได้ทันที ควรดื่มให้หมดภายในครั้งเดียว หรือเก็บในตู้เย็นได้ไม่เกิน 24 ชั่วโมง<br>
 </p>
 
 </div>
@@ -1158,4 +1490,6 @@ gap:12px;
 </div>
 
 </body>
+
 </html>
+
