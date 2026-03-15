@@ -797,7 +797,7 @@
       </div>
 
       <form id="form">
-        <input type="hidden" name="product" value="book(MC)">
+        <input type="hidden" name="product" value="book">
         <input type="hidden" name="source" value="bookflavor">
         <input type="hidden" name="flavors" id="flavors">
         <!-- STEP1 -->
@@ -805,43 +805,49 @@
 
           <div class="flavor-grid">
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK1.jpg">
-              <span>หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop">
+<img src="/images/BOOK1.jpg">
+<span>หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop</span>
+<button type="button" class="glass-btn" onclick="openPopup('book1')">ดูรายละเอียด</button>
+</label>
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="ทำนายหน้า TikTok ด้วย AI">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK2.jpg">
-              <span>ทำนายหน้า TikTok ด้วย AI</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="ทำนายหน้า TikTok ด้วย AI">
+<img src="/images/BOOK2.jpg">
+<span>ทำนายหน้า TikTok ด้วย AI</span>
+<button type="button" class="glass-btn" onclick="openPopup('book2')">ดูรายละเอียด</button>
+</label>
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="Money Summary">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK1.jpg">
-              <span>Money Summary</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="Money Summary">
+<img src="/images/BOOK3.jpg">
+<span>Money Summary</span>
+<button type="button" class="glass-btn" onclick="openPopup('book3')">ดูรายละเอียด</button>
+</label>
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="Money 101">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK4.jpg">
-              <span>Money 101</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="Money 101">
+<img src="/images/BOOK4.jpg">
+<span>Money 101</span>
+<button type="button" class="glass-btn" onclick="openPopup('book4')">ดูรายละเอียด</button>
+</label>
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="Passive Income">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK5.jpg">
-              <span>Passive Income</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="Passive Income">
+<img src="/images/BOOK5.jpg">
+<span>Passive Income</span>
+<button type="button" class="glass-btn" onclick="openPopup('book5')">ดูรายละเอียด</button>
+</label>
 
-            <label class="flavor-card">
-              <input type="radio" name="book" value="เปลี่ยนหนี้เป็นอิสระภาพการเงิน">
-              <img src="https://panida11880-cmd.github.io/form-web11/images/BOOK6.jpg">
-              <span>เปลี่ยนหนี้เป็นอิสระภาพการเงิน</span>
-            </label>
+<label class="flavor-card">
+<input type="radio" name="book" value="เปลี่ยนหนี้เป็นอิสระภาพการเงิน">
+<img src="/images/BOOK6.jpg">
+<span>เปลี่ยนหนี้เป็นอิสระภาพการเงิน</span>
+<button type="button" class="glass-btn" onclick="openPopup('book6')">ดูรายละเอียด</button>
+</label>
 
-          </div>
+</div>
 
         </div>
 
@@ -925,7 +931,7 @@
 
     }
 
-    const scriptURL = "https://script.google.com/macros/s/AKfycby-_ds8J662DnFVjTVMSDtAmjUSy16jlqCY-2jtIY9PLRUbCMrRMDIU4vsudoBpv7T0/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzLskGZ6bPLLZdSVCcK7caHszb6kQrhTMA7M5h87i7t9u2n92vd-PlKB58zYBYxLqCr/exec";
 
     const radios = document.querySelectorAll("input[name=book]")
 
@@ -1205,6 +1211,110 @@ gap:12px;
     </div>
 
   </div>
+
+<div id="book1" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>หาเงินจาก TikTok Shop</h3>
+
+<p>
+✬ ไม่ต้องมีทุนเยอะก็เริ่มทำได้<br>
+✬ เรียนรู้การสร้างรายได้จาก TikTok โดยใช้ AI<br>
+✬ วิธีเลือกสินค้าและตลาดให้มีกำไร<br>
+✬ เทคนิคทำคอนเทนต์แบบไม่ต้องออกหน้ากล้อง<br>
+✬ วางแนวทางต่อยอดรายได้ให้เติบโตยั่งยืน<br>
+</p>
+
+</div>
+</div>
+<div id="book2" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>ชีวิตที่ใช่ ไม่ต้องใหญ่ แต่ต้องใช่สำหรับเรา</h3>
+
+<p>
+
+✬ ปลดล็อกความเชื่อว่าต้องเหนื่อยมากถึงจะมีคุณค่า<br>
+✬ สร้างนิยามคำว่า “พอ” ของตัวเอง<br>
+✬ เข้าใจว่าการใช้ชีวิตช้าๆ ไม่ได้แปลว่าแพ้<br>
+✬ ความสำเร็จไม่ใช่การมีทุกอย่าง แต่คือการไม่ขาดตัวตน<br>
+
+</p>
+
+</div>
+</div>
+
+<div id="book3" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>Money Summary</h3>
+
+<p>
+
+✬ สรุปแนวคิดการเงินเข้าใจง่าย<br>
+✬ เหมาะกับคนที่อยากจัดระบบการเงิน<br>
+✬ ช่วยให้เห็นภาพรวมรายรับรายจ่าย<br>
+✬ ปรับแนวคิดการใช้เงินให้มีวินัยมากขึ้น<br>
+
+</p>
+
+</div>
+</div>
+
+<div id="book4" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>MONEY 101</h3>
+
+<p>
+✬ วางพื้นฐานการเงินตั้งแต่ต้น<br>
+✬ สอนจัดการรายรับ–รายจ่ายจากชีวิตจริง<br>
+✬ แก้พฤติกรรมการใช้เงิน<br>
+✬ ทำให้การออมเกิดขึ้นจริง<br>
+✬ หยุดวงจรเงินเดือนชนเดือน<br>
+
+</p>
+
+</div>
+</div>
+
+<div id="book5" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>Passive Income</h3>
+
+<p>
+✬ เปิดมุมมองเรื่องรายได้หลายทาง<br>
+✬ Passive Income ไม่ใช่เรื่องเพ้อฝัน<br>
+✬ ให้เงินทำงานแทนเรา<br>
+✬ วางแผนการเงินระยะยาว<br>
+
+</p>
+
+</div>
+</div>
+
+<div id="book6" class="glass-popup">
+<div class="glass-content">
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>เปลี่ยนหนี้เป็นอิสรภาพการเงิน</h3>
+
+<p>
+✬ ปรับมุมมองเรื่องหนี้<br>
+✬ วิธีจัดการหนี้จากชีวิตจริง<br>
+✬ แก้พฤติกรรมการใช้เงิน<br>
+✬ วางแผนชีวิตการเงินระยะยาว<br>
+
+</p>
+
+</div>
+</div>
 
 </body>
 
