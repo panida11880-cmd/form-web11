@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ลงทะเบียนรับ book</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:'SFThonburi',sans-serif;
+}
+
+body{
+margin:0;
+padding-top:10px;
+background:
+radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
+radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
+linear-gradient(180deg,#eaf5ee,#dbe8e0);
+
+display:flex;
+justify-content:center;
+padding:20px;
+
+backdrop-filter: blur(20px);
+}
+
+p {
+  line-height: 1.7;
+}
+
+@font-face{
+font-family:'SFThonburi';
+src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
+}
+
+#requestBar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+padding:14px;
+
+font-size:17px;
+font-weight:600;
+
+color:white;
+
+background:linear-gradient(135deg,#2e8b57,#3fbf7f);
+
+box-shadow:0 5px 20px rgba(0,0,0,0.25);
+
+z-index:99999;
+
+animation:slideDown .6s ease;
+}
+
+#requestBar .icon{
+font-size:20px;
+}
+
+#requestBar .badge{
+
+background:white;
+color:#2e8b57;
+
+padding:4px 10px;
+border-radius:20px;
+
+font-weight:700;
+
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+@keyframes slideDown{
+
+from{
+transform:translateY(-100%);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+.toast{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:#ff4d4f;   /* สีแดง */
+color:white;
+padding:12px 20px;
+border-radius:8px;
+display:none;
+z-index:999;
+font-weight:500;
+}
+
+.app{
+width:100%;
+max-width:420px;
+margin:auto;
+}
+
+.card{
+
+background: rgba(255,255,255,0.35);
+
+border-radius:22px;
+
+padding:25px;
+
+backdrop-filter: blur(25px);
+-webkit-backdrop-filter: blur(25px);
+
+border:1px solid rgba(255,255,255,0.6);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.15),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+}
+.step{
+display:flex;
+justify-content:center;
+margin-bottom:25px;
+gap:10px;
+}
+
+.circle{
+width:34px;
+height:34px;
+border-radius:50%;
+background:#d9d9d9;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:500;
+}
+
+.circle.active{
+background:#2e8b57;
+color:white;
+}
+
+.line{
+width:40px;
+height:3px;
+background:#ddd;
+margin-top:15px;
+}
+
+.flavor-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:15px;
+}
+
+.flavor-card{
+
+background: rgba(255,255,255,0.35);
+
+border-radius:16px;
+
+padding:10px;
+
+cursor:pointer;
+
+text-align:center;
+
+border:1px solid rgba(255,255,255,0.5);
+
+backdrop-filter: blur(15px);
+
+transition: all .25s ease;
+
+box-shadow:
+0 6px 15px rgba(0,0,0,0.08);
+
+}
+
+.glass-back{
+
+width:100%;
+
+padding:12px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+font-weight:600;
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+margin-bottom:10px;
+
+}
+
+.glass-back:hover{
+
+transform: translateY(-2px);
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+
+.glass-back2{
+
+    width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgb(16 16 16 / 60%);
+    background: rgb(152 152 152 / 35%);
+    backdrop-filter: blur(20px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
+    margin-bottom: 10px;
+
+}
+
+.flavor-card:hover{
+
+transform: translateY(-3px);
+
+box-shadow:
+0 12px 25px rgba(0,0,0,0.15);
+
+}
+
+.flavor-card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:6px;
+}
+
+.flavor-card span{
+font-weight:500;
+}
+
+.flavor-card input{
+display:none;
+}
+
+.flavor-card:has(input:checked){
+border:2px solid #2e8b57;
+background:#eaf5ee;
+}
+
+label{
+font-size:14px;
+font-weight:500;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:15px;
+}
+
+input:focus{
+outline:none;
+border:1px solid #2e8b57;
+}
+
+input:invalid{
+border:1px solid #ff4d4f;
+background:#fff5f5;
+}
+
+input.error{
+border:2px solid #ff4d4f;
+background:#fff1f0;
+}
+
+button{
+width:100%;
+padding:6px;
+border:none;
+border-radius:10px;
+background:#2e8b57;
+color:#000000;
+font-size:16px;
+margin-top:10px;
+}
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.popup-card{
+background:white;
+border: 1px solid rgb(16 16 16 / 60%);
+padding:20px;
+border-radius:14px;
+width:90%;
+max-width:350px;
+}
+
+.success{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border-radius:16px;
+display:none;
+text-align:center;
+}
+
+.check{
+font-size:60px;
+color:#2e8b57;
+}
+.center-card{
+  grid-column: 1 / span 2;
+  justify-self: center;
+  max-width: 200px;
+}
+
+.info-buttons{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.glass-btn{
+
+flex:1;
+
+padding:12px;
+
+border-radius:16px;
+
+border:1px solid rgba(255,255,255,0.6);
+
+font-weight:600;
+
+color:#111;
+
+background: rgba(255,255,255,0.35);
+
+backdrop-filter: blur(20px);
+
+box-shadow:
+0 8px 20px rgba(0,0,0,0.12),
+inset 0 1px 0 rgba(255,255,255,0.7);
+
+cursor:pointer;
+
+transition: all .25s ease;
+
+}
+
+.glass-btn:hover{
+
+transform: translateY(-2px);
+
+box-shadow:
+0 12px 30px rgba(0,0,0,0.18);
+
+}
+
+.glass-btn:hover{
+transform:scale(1.03);
+}
+
+
+.glass-popup{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.25);
+
+backdrop-filter:blur(10px);
+-webkit-backdrop-filter:blur(10px);
+
+z-index:9999;
+
+padding:20px;
+
+}
+
+
+.glass-content{
+
+position:relative;
+
+width:100%;
+max-width:380px;
+
+max-height:80vh;
+
+overflow:auto;
+
+margin:auto;
+
+padding:25px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,0.35);
+
+backdrop-filter:blur(30px);
+
+box-shadow:0 25px 60px rgba(0,0,0,0.25);
+
+text-align:center;
+
+animation:popup 0.25s ease;
+
+}
+
+@keyframes popup{
+
+from{
+transform:scale(0.9);
+opacity:0;
+}
+
+to{
+transform:scale(1);
+opacity:1;
+}
+
+}
+
+
+.close-btn{
+
+position:absolute;
+
+top:10px;
+right:10px;
+
+width:32px;
+height:32px;
+
+border-radius:50%;
+
+border:none;
+
+background: rgba(63, 63, 63, 0.5);
+
+backdrop-filter: blur(10px);
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+
+.popup-img{
+
+width:100%;
+border-radius:12px;
+margin:10px 0;
+
+}
+
+/* สำหรับมือถือ */
+@media (max-width:768px){
+
+.glass-popup{
+backdrop-filter:none;
+-webkit-backdrop-filter:none;
+background:rgba(0,0,0,0.45);
+}
+
+.glass-content{
+
+background:white;
+
+backdrop-filter:none;
+-webkit-backdrop-filter:none;
+
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+
+}
+
+}
+
+.pro-loader{
+
+position:fixed;
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+display:none;
+
+align-items:center;
+justify-content:center;
+
+background:rgba(0,0,0,0.35);
+
+z-index:99999;
+
+}
+
+.loader-card{
+
+background: rgba(255,255,255,0.85);
+
+padding:35px;
+
+border-radius:22px;
+
+text-align:center;
+
+box-shadow:0 20px 60px rgba(0,0,0,0.25);
+
+width:260px;
+
+}
+
+.loader-logo{
+
+width:90px;
+margin-bottom:10px;
+
+}
+
+.loader-spinner{
+
+width:48px;
+height:48px;
+
+border:4px solid #e3e3e3;
+border-top:4px solid #2e8b57;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:10px;
+
+}
+
+@keyframes spin{
+
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+
+}
+
+.loader-check{
+
+font-size:55px;
+color:#2e8b57;
+
+animation:pop .4s ease;
+
+}
+
+@keyframes pop{
+
+0%{transform:scale(.6);opacity:0}
+100%{transform:scale(1);opacity:1}
+
+}
+
+.loader {
+  width: 60px;
+  height: 16px;
+  display: grid;
+    margin:auto;
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  --c:no-repeat linear-gradient(#00ffdd 0 0);
+  background: var(--c), var(--c), var(--c);
+  animation: l16-1 1.5s infinite linear, l16-2 1.5s infinite linear;
+  transform: scale(var(--s,1)) translate(3px,-3px);
+}
+.loader:after {
+  --s:-1;
+}
+@keyframes l16-1 {
+  0%,3%{background-size:0 4px,4px 0,0 4px}
+  16.67%{background-size:100% 4px,4px 0,0 4px}
+  33.33%{background-size:100% 4px,4px 100%,0 4px}
+  46%,54%{background-size:100% 4px,4px 100%,100% 4px}
+  66.67%{background-size:0 4px,4px 100%,100% 4px}
+  83.33%{background-size:0 4px,4px 0,100% 4px}
+  96%,100%{background-size:0 4px,4px 0,0 4px}
+}
+@keyframes l16-2 {
+  0%,49.9%{background-position:0 0,100% 0,100% 100%}
+  50%,100%{background-position:100% 0,100% 100%,0 100%}
+}
+
+#requestBar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+padding:14px;
+
+font-size:17px;
+font-weight:600;
+
+color:white;
+
+background:linear-gradient(135deg,#2e8b57,#3fbf7f);
+
+box-shadow:0 5px 20px rgba(0,0,0,0.25);
+
+z-index:99999;
+
+animation:slideDown .6s ease;
+}
+
+#requestBar .icon{
+font-size:20px;
+}
+
+#requestBar .badge{
+
+background:white;
+color:#2e8b57;
+
+padding:4px 10px;
+border-radius:20px;
+
+font-weight:700;
+
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+@keyframes slideDown{
+
+from{
+transform:translateY(-100%);
+opacity:0;
+}
+
+to{
+transform:translateY(0);
+opacity:1;
+}
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div id="requestBar" style="display:none">
+
+<span class="icon">✔️</span>
+
+<span>คุณได้ใช้สิทธิ์แล้ว</span>
+
+<span class="badge" id="requestIdText"></span>
+
+</div>
+
+<div id="proLoader" class="pro-loader">
+
+<div class="loader-card">
+
+<img src="https://panida11880-cmd.github.io/form-web11/images/logo.png" class="loader-logo">
+
+<div class="loader-spinner"></div>
+
+<div id="loaderMessage">กำลังประมวลผล...</div>
+
+</div>
+
+</div>
+  
+
+
+<div class="app">
+
+<div class="card">
+
+<div class="step">
+
+<div id="s1" class="circle active">1</div>
+<div class="line"></div>
+<div id="s2" class="circle">2</div>
+
+</div>
+
+<form id="form">
+<input type="hidden" name="product" value="book">
+<input type="hidden" name="source" value="bookflavor">
+<input type="hidden" name="flavors" id="flavors">
+<!-- STEP1 -->
+
+<div id="step1">
+
+<div class="flavor-grid">
+
+<label class="flavor-card">
+<input type="radio" name="book" value="หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop">
+<img src="/images/BOOK1.png">
+<span>หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="book" value="ทำนายหน้า TikTok ด้วย AI">
+<img src="/images/BOOK2.png">
+<span>ทำนายหน้า TikTok ด้วย AI</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="book" value="Money Summary">
+<img src="/images/BOOK3.png">
+<span>Money Summary</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="book" value="Money 101">
+<img src="/images/BOOK1.png">
+<span>Money 101</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="book" value="Passive Income">
+<img src="/images/BOOK5.png">
+<span>Passive Income</span>
+</label>
+
+<label class="flavor-card">
+<input type="radio" name="book" value="เปลี่ยนหนี้เป็นอิสระภาพการเงิน">
+<img src="/images/BOOK6.png">
+<span>เปลี่ยนหนี้เป็นอิสระภาพการเงิน</span>
+</label>
+
+</div>
+</div>
+</div>
+
+<!-- STEP2 -->
+ <div id="step2" style="display:none">
+<button type="button" class="glass-back" onclick="backStep()">← กลับไปเลือกหนังสือ</button>
+
+<center>
+<h3>ข้อมูลผู้รับสิทธิ์</h3></center>
+
+<label>ชื่อ</label>
+<input name="firstname" required>
+
+<label>นามสกุล</label>
+<input name="lastname" required>
+
+<label>ชื่อเล่น</label>
+<input name="nickname">
+
+<label>อายุ</label>
+<input name="age" maxlength="2" required>
+
+<label>เบอร์โทร</label>
+<input name="phone" maxlength="10" required>
+
+<label>บ้านเลขที่</label>
+<input name="house" required>
+
+<label>หมู่ที่ (กรอกเพิ่มเติมได้ที่นี่)</label>
+<input name="village">
+
+<label>ตำบล</label>
+<input name="subdistrict" required>
+
+<label>อำเภอ</label>
+<input name="district" required>
+
+<label>จังหวัด</label>
+<input name="province" required>
+
+<button type="button" class="glass-back" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="popup" id="popup">
+<div class="popup-card">
+<h3>ตรวจสอบข้อมูล</h3>
+<div id="preview"></div>
+<button class="glass-back2" onclick="send()">ยืนยันข้อมูล</button>
+</div>
+</div>
+
+<div class="success" id="success"></div>
+
+<script>
+document.addEventListener("copy", function(e){
+
+let text = window.getSelection().toString();
+
+let addText = "\n\nที่มา：book";
+
+e.clipboardData.setData("text/plain", text + addText);
+
+e.preventDefault();
+
+});
+
+function showRequestBar(id){
+
+document.getElementById("requestBar").style.display="block"
+document.getElementById("requestIdText").innerText=id
+
+}
+
+const scriptURL="https://script.google.com/macros/s/AKfycbzLskGZ6bPLLZdSVCcK7caHszb6kQrhTMA7M5h87i7t9u2n92vd-PlKB58zYBYxLqCr/exec";
+
+const radios=document.querySelectorAll("input[name=book]")
+
+radios.forEach(r=>{
+
+r.addEventListener("change",()=>{
+
+const book=document.querySelector("input[name=book]:checked")
+
+if(book){
+
+showLoader("กำลังไปหน้ากรอกข้อมูล...")
+
+setTimeout(()=>{
+
+document.getElementById("step1").style.display="none"
+document.getElementById("step2").style.display="block"
+
+document.getElementById("s1").classList.remove("active")
+document.getElementById("s2").classList.add("active")
+
+hideLoader()
+
+},800)
+
+}
+})
+}); 
+
+function preview(){
+
+const form=document.getElementById("form")
+
+if(!form.checkValidity()){
+
+showTopPopup("กรุณากรอกข้อมูลให้ครบ")
+
+form.querySelectorAll("input").forEach(i=>{
+if(!i.checkValidity()){
+i.classList.add("error")
+}
+})
+
+return
+}
+
+const data=new FormData(form)
+
+let html=""
+
+for(let [k,v] of data){
+html+=k+" : "+v+"<br>"
+}
+
+document.getElementById("preview").innerHTML=html
+document.getElementById("popup").style.display="flex"
+
+}
+
+function send(){
+showProLoader("กำลังส่งข้อมูล...")
+const form=document.getElementById("form")
+
+document.getElementById("popup").style.display="none"
+
+fetch(scriptURL,{
+method:"POST",
+body:new FormData(form)
+})
+.then(res=>res.json())
+.then(data=>{
+
+successProLoader()
+
+const id = data.requestId
+
+/* บันทึกเลขคำขอ */
+localStorage.setItem("book_request_id", id)
+
+/* แสดงเลขคำขอด้านบน */
+showRequestBar(id)
+
+/* รีเซ็ตฟอร์ม */
+form.reset()
+
+/* กลับไปหน้าเลือกรสชาติ */
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+/* รีเซ็ต Step */
+document.getElementById("s1").classList.add("active")
+document.getElementById("s2").classList.remove("active")
+
+/* ปิด popup */
+document.getElementById("popup").style.display="none"
+
+})
+
+document.getElementById("step1").style.display="block"
+document.getElementById("step2").style.display="none"
+
+}
+
+
+
+
+
+
+function openPopup(id){
+
+document.getElementById(id).style.display="flex"
+
+}
+
+function closePopup(){
+
+document.querySelectorAll(".glass-popup").forEach(p=>{
+p.style.display="none"
+})
+
+}
+
+function showProLoader(text){
+
+document.getElementById("proLoader").style.display="flex"
+document.getElementById("loaderMessage").innerHTML=text
+
+}
+
+function backStep(){
+
+document.getElementById("step2").style.display="none"
+document.getElementById("step1").style.display="block"
+
+document.getElementById("s2").classList.remove("active")
+document.getElementById("s1").classList.add("active")
+const oldId = localStorage.getItem("choize_request_id")
+
+if(oldId){
+showRequestBar(oldId)
+}
+
+}
+
+function successProLoader(){
+
+document.querySelector(".loader-spinner").style.display="none"
+
+document.getElementById("loaderMessage").innerHTML=
+"<div class='loader-check'>✔</div>สำเร็จ"
+
+setTimeout(()=>{
+
+document.getElementById("proLoader").style.display="none"
+
+document.querySelector(".loader-spinner").style.display="block"
+
+document.getElementById("loaderMessage").innerHTML="กำลังประมวลผล..."
+
+},1200)
+
+}
+
+function showLoader(text){
+
+document.getElementById("loaderText").innerText=text
+document.getElementById("loaderBox").style.display="flex"
+
+}
+
+function hideLoader(){
+
+document.getElementById("loaderBox").style.display="none"
+
+}
+
+window.addEventListener("load",function(){
+
+const oldId = localStorage.getItem("book_request_id")
+
+if(oldId){
+
+showTopPopup(oldId)
+
+}
+
+})
+
+window.addEventListener("load",function(){
+
+const oldId = localStorage.getItem("book_request_id")
+
+if(oldId){
+showRequestBar(oldId)
+}
+
+})
+
+</script>
+
+<!-- POPUP BENEFIT -->
+
+<div id="benefitPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>ประโยชน์ book</h3>
+
+<!--<img src="images/benefit.jpg" class="popup-img"> -->
+
+<p>
+ควบคุมน้ำหนัก อิ่มนาน ใยอาหารสูง<br>
+ให้สารอาหารครบ โปรตีน วิตามิน แร่ธาตุ<br>
+ช่วยขับถ่าย ลดท้องผูก<br>
+ลดความเสี่ยงโรคหัวใจ,เบาหวาน,ระบบทางเดินอาหาร<br>
+ปราศจากสีและวัตถุกันเสีย
+</p>
+
+</div>
+
+</div>
+
+
+<!-- POPUP HOW TO EAT -->
+
+<div id="howPopup" class="glass-popup">
+
+<div class="glass-content">
+
+<button class="close-btn" onclick="closePopup()">✕</button>
+
+<h3>วิธีรับประทาน book</h3>
+
+<!-- <img src="images/how.jpg" class="popup-img"> -->
+
+<p>
+1.เท 1 ซอง ลงในน้ำหรือนมพร่องมันเนย 250 มล.<br>
+2.คนหรือเขย่าให้ละลายเป็นเนื้อเดียว<br>
+3.ดื่มแทนมื้ออาหารได้เลย<br>
+</p>
+
+</div>
+
+</div>
+<div id="loaderBox" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.4);
+z-index:99999;
+">
+
+<div style="
+padding:30px 40px;
+border-radius:16px;
+text-align:center;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:12px;
+">
+
+<div class="loader"></div>
+
+<p id="loaderText" style="color: #ffffff;margin-top:10px;font-weight:500">
+กำลังประมวลผล...
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
+
+
+
+
