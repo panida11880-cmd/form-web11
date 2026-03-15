@@ -1,1461 +1,1178 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>ลงทะเบียนรับ Choize</title>
+  <title>ลงทะเบียนรับ book</title>
 
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'SFThonburi', sans-serif;
+    }
 
-*{
-box-sizing:border-box;
-font-family:'SFThonburi',sans-serif;
-}
+    body {
+      margin: 0;
+      padding-top: 10px;
+      background:
+        radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
+        linear-gradient(180deg, #eaf5ee, #dbe8e0);
 
-body{
-margin:0;
-padding:80px 12px 20px 12px;
-background:
-radial-gradient(circle at 20% 20%, #ffffff55 0%, transparent 40%),
-radial-gradient(circle at 80% 30%, #ffffff33 0%, transparent 40%),
-linear-gradient(180deg,#eaf5ee,#dbe8e0);
-
-display:flex;
-justify-content:center;
-
-overflow-x:hidden;
-}
-
-@font-face{
-font-family:'SFThonburi';
-src:url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
-}
-
-p {
-  line-height: 1.7;
-}
-.glass-back{
-
-width:100%;
-
-padding:12px;
-
-border-radius:14px;
-
-border:1px solid rgba(255,255,255,0.6);
-
-background: rgba(255,255,255,0.35);
-
-backdrop-filter: blur(20px);
-
-font-weight:600;
-
-cursor:pointer;
-
-transition: all .25s ease;
-
-margin-bottom:10px;
-
-}
-
-/* ป้องกันเว็บล้นจอ */
-*{
-box-sizing:border-box;
-}
-
-body{
-margin:0;
-padding:0;
-overflow-x:hidden;
-}
-
-/* กล่องหลัก */
-.container{
-max-width:480px;
-margin:auto;
-padding:15px;
-}
-
-/* กริดสินค้า */
-.flavor-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:14px;
-width:100%;
-}
-
-/* การ์ดสินค้า */
-.flavor-card{
-background:white;
-border-radius:18px;
-padding:14px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-text-align:center;
-width:100%;
-}
-
-/* รูปสินค้า */
-.flavor-card img{
-width:100%;
-height:auto;
-border-radius:12px;
-}
-
-/* ชื่อสินค้า */
-.flavor-card span{
-display:block;
-margin-top:8px;
-font-size:16px;
-font-weight:500;
-}
-
-/* ปุ่มเลือกจำนวน */
-.qty-control{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:12px;
-margin-top:10px;
-}
-
-/* ปุ่ม + - */
-.qty-btn{
-width:44px;
-height:44px;
-border:none;
-border-radius:12px;
-background:#2e8b57;
-color:white;
-font-size:20px;
-cursor:pointer;
-}
-
-/* ตัวเลข */
-.qty-control span{
-width:30px;
-text-align:center;
-font-size:18px;
-font-weight:600;
-}
-
-/* มือถือเล็ก */
-@media (max-width:480px){
-
-.container{
-padding:12px;
-}
-
-.flavor-grid{
-gap:12px;
-}
-
-.qty-btn{
-width:40px;
-height:40px;
-}
-
-}
-
-/* Tablet */
-@media (min-width:768px){
-
-.container{
-max-width:700px;
-}
-
-.flavor-grid{
-grid-template-columns:repeat(3,1fr);
-}
-
-}
-
-/* คอม */
-@media (min-width:1024px){
-
-.container{
-max-width:900px;
-}
-
-.flavor-grid{
-grid-template-columns:repeat(4,1fr);
-}
-
-}
-
-.glass-back:hover{
-
-transform: translateY(-2px);
-
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-
-}
-.glass-back2{
-
-    width: 100%;
-    padding: 12px;
-    border-radius: 14px;
-    border: 1px solid rgb(16 16 16 / 60%);
-    background: rgb(152 152 152 / 35%);
-    backdrop-filter: blur(20px);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .25s cubic-bezier(0.4, 0, 1, 1);
-    margin-bottom: 10px;
-
-}
-
-.toast{
-position:fixed;
-top:10px;
-left:50%;
-transform:translateX(-50%);
-background:#ff0000d8;   /* สีแดง */
-color:white;
-padding:12px 20px;
-border-radius:8px;
-display:none;
-z-index:999;
-font-weight:500;
-}
-
-.app{
-width:100%;
-max-width:420px;
-margin:auto;
-}
-
-.card{
-
-background: rgba(255,255,255,0.35);
-
-border-radius:22px;
-
-padding:25px;
-
-backdrop-filter: blur(25px);
--webkit-backdrop-filter: blur(25px);
-
-border:1px solid rgba(255,255,255,0.6);
-
-box-shadow:
-0 10px 30px rgba(0,0,0,0.15),
-inset 0 1px 0 rgba(255,255,255,0.7);
-
-}
-.step{
-display:flex;
-justify-content:center;
-margin-bottom:25px;
-gap:10px;
-}
-
-.circle{
-width:34px;
-height:34px;
-border-radius:50%;
-background:#d9d9d9;
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:500;
-}
-
-.circle.active{
-background:#2e8b57;
-color:white;
-}
-
-.line{
-width:40px;
-height:3px;
-background:#ddd;
-margin-top:15px;
-}
-
-.flavor-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-margin-bottom:15px;
-}
-
-.flavor-card{
-
-background: rgba(255,255,255,0.35);
-
-border-radius:16px;
-
-padding:10px;
-
-cursor:pointer;
-
-text-align:center;
-
-border:1px solid rgba(255,255,255,0.5);
-
-backdrop-filter: blur(15px);
-
-transition: all .25s ease;
-
-box-shadow:
-0 6px 15px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: center;
+      padding: 20px;
 
-}
+      backdrop-filter: blur(20px);
+    }
 
-.flavor-card:hover{
+    p {
+      line-height: 1.7;
+    }
 
-transform: translateY(-3px);
+    @font-face {
+      font-family: 'SFThonburi';
+      src: url('https://panida11880-cmd.github.io/form-web11/fonts/SFThonburi-Semibold.ttf') format('truetype');
+    }
 
-box-shadow:
-0 12px 25px rgba(0,0,0,0.15);
+    #requestBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
 
-}
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
 
-.flavor-card img{
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:10px;
-margin-bottom:6px;
-}
+      padding: 14px;
 
-.flavor-card span{
-font-weight:500;
-}
+      font-size: 17px;
+      font-weight: 600;
 
-.flavor-card input{
-display:none;
-}
+      color: white;
 
-.flavor-card:has(input:checked){
-border:2px solid #2e8b57;
-background:#eaf5ee;
-}
+      background: linear-gradient(135deg, #2e8b57, #3fbf7f);
 
-label{
-font-size:14px;
-font-weight:500;
-}
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
 
-input,select{
-width:100%;
-padding:12px;
-margin-top:6px;
-margin-bottom:12px;
-border-radius:8px;
-border:1px solid #ddd;
-font-size:15px;
-}
-
-input:focus{
-outline:none;
-border:1px solid #2e8b57;
-}
-
-input:invalid{
-border:1px solid #ff4d4f;
-background:#fff5f5;
-}
-
-input.error{
-border:2px solid #ff4d4f;
-background:#fff1f0;
-}
-
-button{
-width:100%;
-padding:6px;
-border:none;
-border-radius:10px;
-background:#2e8b57;
-color:#000000;
-font-size:16px;
-margin-top:10px;
-}
-/* ปุ่ม + - */
-
-.qty-btn{
-
-width:60px;
-height:35px;
-
-border-radius:8px;
-
-border:none;
-
-background:#2e8b57;
-
-color:white;
-
-font-size:18px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition: all .15s ease;
-
-}
-
-/* กดแล้วเด้ง */
-
-.qty-btn:active{
-
-transform:scale(0.85);
-
-box-shadow: inset 0 3px 6px rgba(0,0,0,0.25);
-
-}
-
-/* hover */
-
-.qty-btn:hover{
-
-transform:translateY(-2px);
-
-}
-
-.qty-control{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:12px;
-margin-top:10px;
-}
-
-.qty-control span{
-font-size:18px;
-font-weight:600;
-width:25px;
-text-align:center;
-}
+      z-index: 99999;
 
-.qty-btn{
-width:45px;
-height:40px;
-border:none;
-border-radius:10px;
-background:#2f7d4f;
-color:white;
-font-size:20px;
-font-weight:bold;
-cursor:pointer;
-}
+      animation: slideDown .6s ease;
+    }
 
-.popup{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.4);
-display:none;
-align-items:center;
-justify-content:center;
-}
+    #requestBar .icon {
+      font-size: 20px;
+    }
 
-  input:-webkit-autofill{
--webkit-box-shadow:0 0 0px 1000px white inset;
-}
+    #requestBar .badge {
 
-.popup-card{
-background:white;
-padding:20px;
-border-radius:14px;
-width:90%;
-max-width:350px;
-}
+      background: white;
+      color: #2e8b57;
 
-.success{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:30px;
-border-radius:16px;
-display:none;
-text-align:center;
-}
+      padding: 4px 10px;
+      border-radius: 20px;
 
-.check{
-font-size:60px;
-color:#2e8b57;
-}
-.center-card{
-  grid-column: 1 / span 2;
-  justify-self: center;
-  max-width: 200px;
-}
+      font-weight: 700;
 
-.info-buttons{
-display:flex;
-gap:10px;
-margin-bottom:15px;
-}
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.glass-btn{
+    @keyframes slideDown {
 
-flex:1;
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
 
-padding:12px;
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
 
-border-radius:16px;
+    }
 
-border:1px solid rgba(255,255,255,0.6);
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4d4f;
+      /* สีแดง */
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      display: none;
+      z-index: 999;
+      font-weight: 500;
+    }
 
-font-weight:600;
+    .app {
+      width: 100%;
+      max-width: 420px;
+      margin: auto;
+    }
 
-color:#111;
+    .card {
 
-background: rgba(255,255,255,0.35);
+      background: rgba(255, 255, 255, 0.35);
 
-backdrop-filter: blur(20px);
+      border-radius: 22px;
 
-box-shadow:
-0 8px 20px rgba(0,0,0,0.12),
-inset 0 1px 0 rgba(255,255,255,0.7);
+      padding: 25px;
 
-cursor:pointer;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
 
-transition: all .25s ease;
+      border: 1px solid rgba(255, 255, 255, 0.6);
 
-}
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
-.glass-btn:hover{
+    }
 
-transform: translateY(-2px);
+    .step {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+      gap: 10px;
+    }
 
-box-shadow:
-0 12px 30px rgba(0,0,0,0.18);
+    .circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #d9d9d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
 
-}
+    .circle.active {
+      background: #2e8b57;
+      color: white;
+    }
 
-.glass-btn:hover{
-transform:scale(1.03);
-}
+    .line {
+      width: 40px;
+      height: 3px;
+      background: #ddd;
+      margin-top: 15px;
+    }
 
+    .flavor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
 
-.glass-popup{
+    .flavor-card {
 
-position:fixed;
-top:0;
-left:0;
+      background: rgba(255, 255, 255, 0.35);
 
-width:100vw;
-height:100vh;
+      border-radius: 16px;
 
-display:none;
+      padding: 10px;
 
-align-items:center;
-justify-content:center;
+      cursor: pointer;
 
-background:rgba(0,0,0,0.25);
+      text-align: center;
 
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
 
-z-index:9999;
+      backdrop-filter: blur(15px);
 
-padding:20px;
+      transition: all .25s ease;
 
-}
+      box-shadow:
+        0 6px 15px rgba(0, 0, 0, 0.08);
 
+    }
 
-.glass-content{
+    .glass-back {
 
-position:relative;
+      width: 100%;
 
-width:100%;
-max-width:380px;
+      padding: 12px;
 
-max-height:80vh;
+      border-radius: 14px;
 
-overflow:auto;
+      border: 1px solid rgba(255, 255, 255, 0.6);
 
-margin:auto;
+      background: rgba(255, 255, 255, 0.35);
 
-padding:25px;
+      backdrop-filter: blur(20px);
 
-border-radius:22px;
+      font-weight: 600;
 
-background:rgba(255,255,255,0.35);
+      cursor: pointer;
 
-backdrop-filter:blur(30px);
+      transition: all .25s ease;
 
-box-shadow:0 25px 60px rgba(0,0,0,0.25);
+      margin-bottom: 10px;
 
-text-align:center;
+    }
 
-animation:popup 0.25s ease;
+    .glass-back:hover {
 
-}
+      transform: translateY(-2px);
 
-@keyframes popup{
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 
-from{
-transform:scale(0.9);
-opacity:0;
-}
+    }
 
-to{
-transform:scale(1);
-opacity:1;
-}
+    .glass-back2 {
 
-}
+      width: 100%;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgb(16 16 16 / 60%);
+      background: rgb(152 152 152 / 35%);
+      backdrop-filter: blur(20px);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .25s cubic-bezier(0.4, 0, 1, 1);
+      margin-bottom: 10px;
 
+    }
 
-.close-btn{
+    .flavor-card:hover {
 
-position:absolute;
+      transform: translateY(-3px);
 
-top:10px;
-right:10px;
+      box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.15);
 
-width:32px;
-height:32px;
+    }
+
+    .flavor-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+
+    .flavor-card span {
+      font-weight: 500;
+    }
+
+    .flavor-card input {
+      display: none;
+    }
+
+    .flavor-card:has(input:checked) {
+      border: 2px solid #2e8b57;
+      background: #eaf5ee;
+    }
 
-border-radius:50%;
+    label {
+      font-size: 14px;
+      font-weight: 500;
+    }
 
-border:none;
+    input,
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
 
-background: rgba(63, 63, 63, 0.5);
+    input:focus {
+      outline: none;
+      border: 1px solid #2e8b57;
+    }
 
-backdrop-filter: blur(10px);
+    input:invalid {
+      border: 1px solid #ff4d4f;
+      background: #fff5f5;
+    }
 
-font-size:16px;
+    input.error {
+      border: 2px solid #ff4d4f;
+      background: #fff1f0;
+    }
 
-cursor:pointer;
+    button {
+      width: 100%;
+      padding: 6px;
+      border: none;
+      border-radius: 10px;
+      background: #2e8b57;
+      color: #000000;
+      font-size: 16px;
+      margin-top: 10px;
+    }
 
-}
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
 
+    .popup-card {
+      background: white;
+      border: 1px solid rgb(16 16 16 / 60%);
+      padding: 20px;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 350px;
+    }
 
-.popup-img{
+    .success {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      display: none;
+      text-align: center;
+    }
 
-width:100%;
-border-radius:12px;
-margin:10px 0;
+    .check {
+      font-size: 60px;
+      color: #2e8b57;
+    }
 
-}
+    .center-card {
+      grid-column: 1 / span 2;
+      justify-self: center;
+      max-width: 200px;
+    }
 
-/* สำหรับมือถือ */
-@media (max-width:768px){
+    .info-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
 
-.glass-popup{
-backdrop-filter:none;
--webkit-backdrop-filter:none;
-background:rgba(0,0,0,0.45);
-}
+    .glass-btn {
 
-.glass-content{
+      flex: 1;
 
-background:white;
+      padding: 12px;
 
-backdrop-filter:none;
--webkit-backdrop-filter:none;
+      border-radius: 16px;
 
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255, 255, 255, 0.6);
 
-}
+      font-weight: 600;
 
-}
+      color: #111;
 
-.pro-loader{
+      background: rgba(255, 255, 255, 0.35);
 
-position:fixed;
-top:0;
-left:0;
+      backdrop-filter: blur(20px);
 
-width:100%;
-height:100%;
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
 
-display:none;
+      cursor: pointer;
 
-align-items:center;
-justify-content:center;
+      transition: all .25s ease;
 
-background:rgba(0,0,0,0.35);
+    }
 
-z-index:99999;
+    .glass-btn:hover {
 
-}
+      transform: translateY(-2px);
 
-.loader-card{
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.18);
 
-background: rgba(255,255,255,0.85);
+    }
 
-padding:35px;
+    .glass-btn:hover {
+      transform: scale(1.03);
+    }
 
-border-radius:22px;
 
-text-align:center;
+    .glass-popup {
 
-box-shadow:0 20px 60px rgba(0,0,0,0.25);
+      position: fixed;
+      top: 0;
+      left: 0;
 
-width:260px;
+      width: 100vw;
+      height: 100vh;
 
-}
+      display: none;
 
-.loader-logo{
+      align-items: center;
+      justify-content: center;
 
-width:90px;
-margin-bottom:10px;
+      background: rgba(0, 0, 0, 0.25);
 
-}
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
 
-.loader-spinner{
+      z-index: 9999;
 
-width:48px;
-height:48px;
+      padding: 20px;
 
-border:4px solid #e3e3e3;
-border-top:4px solid #2e8b57;
+    }
 
-border-radius:50%;
 
-margin:auto;
+    .glass-content {
 
-animation:spin 1s linear infinite;
+      position: relative;
 
-margin-bottom:10px;
+      width: 100%;
+      max-width: 380px;
 
-}
+      max-height: 80vh;
 
-@keyframes spin{
+      overflow: auto;
 
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+      margin: auto;
 
-}
+      padding: 25px;
 
-.loader-check{
+      border-radius: 22px;
 
-font-size:55px;
-color:#2e8b57;
+      background: rgba(255, 255, 255, 0.35);
 
-animation:pop .4s ease;
+      backdrop-filter: blur(30px);
 
-}
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
 
-@media (max-width:480px){
+      text-align: center;
 
-.card{
-padding:18px;
-border-radius:18px;
-}
+      animation: popup 0.25s ease;
 
-.flavor-card{
-padding:8px;
-}
+    }
 
-.flavor-card img{
-height:100px;
-}
+    @keyframes popup {
 
-}
-  
-@keyframes pop{
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
 
-0%{transform:scale(.6);opacity:0}
-100%{transform:scale(1);opacity:1}
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
 
-}
+    }
 
-.loader {
-  width: 60px;
-  height: 16px;
-  display: grid;
-    margin:auto;
-}
 
-.loader:before,
-.loader:after {
-  content: "";
-  grid-area: 1/1;
-  --c:no-repeat linear-gradient(#00ffdd 0 0);
-  background: var(--c), var(--c), var(--c);
-  animation: l16-1 1.5s infinite linear, l16-2 1.5s infinite linear;
-  transform: scale(var(--s,1)) translate(3px,-3px);
-}
-.loader:after {
-  --s:-1;
-}
-@keyframes l16-1 {
-  0%,3%{background-size:0 4px,4px 0,0 4px}
-  16.67%{background-size:100% 4px,4px 0,0 4px}
-  33.33%{background-size:100% 4px,4px 100%,0 4px}
-  46%,54%{background-size:100% 4px,4px 100%,100% 4px}
-  66.67%{background-size:0 4px,4px 100%,100% 4px}
-  83.33%{background-size:0 4px,4px 0,100% 4px}
-  96%,100%{background-size:0 4px,4px 0,0 4px}
-}
-@keyframes l16-2 {
-  0%,49.9%{background-position:0 0,100% 0,100% 100%}
-  50%,100%{background-position:100% 0,100% 100%,0 100%}
-}
-.request-bar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-background:#2e8b57;
-color:#fff;
-font-weight:600;
-text-align:center;
-padding:14px;
-z-index:9999;
-font-size:18px;
-box-shadow:0 4px 10px rgba(0,0,0,0.15);
-}
+    .close-btn {
 
-#requestBar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
+      position: absolute;
 
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
+      top: 10px;
+      right: 10px;
 
-padding:14px;
+      width: 32px;
+      height: 32px;
 
-font-size:17px;
-font-weight:600;
+      border-radius: 50%;
 
-color:white;
+      border: none;
 
-background:linear-gradient(135deg,#2e8b57,#3fbf7f);
+      background: rgba(63, 63, 63, 0.5);
 
-box-shadow:0 5px 20px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
 
-z-index:99999;
+      font-size: 16px;
 
-animation:slideDown .6s ease;
-}
+      cursor: pointer;
 
-#requestBar .icon{
-font-size:20px;
-}
+    }
 
-#requestBar .badge{
 
-background:white;
-color:#2e8b57;
+    .popup-img {
 
-padding:4px 10px;
-border-radius:20px;
+      width: 100%;
+      border-radius: 12px;
+      margin: 10px 0;
 
-font-weight:700;
+    }
 
-box-shadow:0 3px 10px rgba(0,0,0,0.2);
-}
+    /* สำหรับมือถือ */
+    @media (max-width:768px) {
 
-</style>
+      .glass-popup {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .glass-content {
+
+        background: white;
+
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+      }
+
+    }
+
+    .pro-loader {
+
+      position: fixed;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(0, 0, 0, 0.35);
+
+      z-index: 99999;
+
+    }
+
+    .loader-card {
+
+      background: rgba(255, 255, 255, 0.85);
+
+      padding: 35px;
+
+      border-radius: 22px;
+
+      text-align: center;
+
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+      width: 260px;
+
+    }
+
+    .loader-logo {
+
+      width: 90px;
+      margin-bottom: 10px;
+
+    }
+
+    .loader-spinner {
+
+      width: 48px;
+      height: 48px;
+
+      border: 4px solid #e3e3e3;
+      border-top: 4px solid #2e8b57;
+
+      border-radius: 50%;
+
+      margin: auto;
+
+      animation: spin 1s linear infinite;
+
+      margin-bottom: 10px;
+
+    }
+
+    @keyframes spin {
+
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+
+    }
+
+    .loader-check {
+
+      font-size: 55px;
+      color: #2e8b57;
+
+      animation: pop .4s ease;
+
+    }
+
+    @keyframes pop {
+
+      0% {
+        transform: scale(.6);
+        opacity: 0
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1
+      }
+
+    }
+
+    .loader {
+      width: 60px;
+      height: 16px;
+      display: grid;
+      margin: auto;
+    }
+
+    .loader:before,
+    .loader:after {
+      content: "";
+      grid-area: 1/1;
+      --c: no-repeat linear-gradient(#00ffdd 0 0);
+      background: var(--c), var(--c), var(--c);
+      animation: l16-1 1.5s infinite linear, l16-2 1.5s infinite linear;
+      transform: scale(var(--s, 1)) translate(3px, -3px);
+    }
+
+    .loader:after {
+      --s: -1;
+    }
+
+    @keyframes l16-1 {
+
+      0%,
+      3% {
+        background-size: 0 4px, 4px 0, 0 4px
+      }
+
+      16.67% {
+        background-size: 100% 4px, 4px 0, 0 4px
+      }
+
+      33.33% {
+        background-size: 100% 4px, 4px 100%, 0 4px
+      }
+
+      46%,
+      54% {
+        background-size: 100% 4px, 4px 100%, 100% 4px
+      }
+
+      66.67% {
+        background-size: 0 4px, 4px 100%, 100% 4px
+      }
+
+      83.33% {
+        background-size: 0 4px, 4px 0, 100% 4px
+      }
+
+      96%,
+      100% {
+        background-size: 0 4px, 4px 0, 0 4px
+      }
+    }
+
+    @keyframes l16-2 {
+
+      0%,
+      49.9% {
+        background-position: 0 0, 100% 0, 100% 100%
+      }
+
+      50%,
+      100% {
+        background-position: 100% 0, 100% 100%, 0 100%
+      }
+    }
+
+    #requestBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      padding: 14px;
+
+      font-size: 17px;
+      font-weight: 600;
+
+      color: white;
+
+      background: linear-gradient(135deg, #2e8b57, #3fbf7f);
+
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+
+      z-index: 99999;
+
+      animation: slideDown .6s ease;
+    }
+
+    #requestBar .icon {
+      font-size: 20px;
+    }
+
+    #requestBar .badge {
+
+      background: white;
+      color: #2e8b57;
+
+      padding: 4px 10px;
+      border-radius: 20px;
+
+      font-weight: 700;
+
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes slideDown {
+
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="requestBar" style="display:none">
+  <div id="requestBar" style="display:none">
 
-<span class="icon">✔️</span>
+    <span class="icon">✔️</span>
 
-<span>คุณได้ใช้สิทธิ์แล้ว</span>
+    <span>คุณได้ใช้สิทธิ์แล้ว</span>
 
-<span class="badge" id="requestIdText"></span>
+    <span class="badge" id="requestIdText"></span>
 
-</div>
+  </div>
 
-<div id="proLoader" class="pro-loader">
+  <div id="proLoader" class="pro-loader">
 
-<div class="loader-card">
+    <div class="loader-card">
 
-<img src="https://panida11880-cmd.github.io/form-web11/images/logo.png" class="loader-logo">
+      <img src="https://panida11880-cmd.github.io/form-web11/images/logo.png" class="loader-logo">
 
-<div class="loader-spinner"></div>
+      <div class="loader-spinner"></div>
 
-<div id="loaderMessage">กำลังประมวลผล...</div>
+      <div id="loaderMessage">กำลังประมวลผล...</div>
 
-</div>
+    </div>
 
-</div>
-  
+  </div>
 
-<div class="toast" id="toast"></div>
 
-<div class="app">
 
-<div class="card">
+  <div class="app">
 
-<div class="step">
+    <div class="card">
 
-<div id="s1" class="circle active">1</div>
-<div class="line"></div>
-<div id="s2" class="circle">2</div>
+      <div class="step">
 
-</div>
-
-<form id="form">
-<input type="hidden" name="product" value="Choize">
-<input type="hidden" name="source" value="choize_12_flavor">
-<input type="hidden" name="flavors" id="flavors">
-
-<!-- STEP1 -->
-
-<div id="step1">
-
-<center><h3>เลือกรสชาติ Choize Clean Meal Drink</h3></center>
-<div class="info-buttons">
-
-<button class="glass-btn" onclick="openPopup('benefitPopup')">
-ประโยชน์ Choize
-</button>
-
-<button class="glass-btn" onclick="openPopup('howPopup')">
-วิธีรับประทาน Choize
-</button>
-
-</div>
-
-<p style="text-align:center">
-เลือกได้ทั้งหมด <b>12 ขวด</b> (เลือกรสซ้ำได้)
-</p>
-
-<div id="counter" style="text-align:center;margin-bottom:15px;font-weight:bold">
-เลือกแล้ว 0 / 12
-</div>
-
-<div class="flavor-grid">
-
-<div class="flavor-card">
-<img src="images/choizechocolate.jpg">
-<span>ช็อกโกแลต</span>
-<div class="qty-control">
-<button type="button" class="qty-btn" onclick="minus('choco')">-</button>
-<span id="choco">0</span>
-<button type="button" class="qty-btn" onclick="plus('choco')">+</button>
-</div>
-</div>
+        <div id="s1" class="circle active">1</div>
+        <div class="line"></div>
+        <div id="s2" class="circle">2</div>
 
-<div class="flavor-card">
-<img src="images/choizestrawberries.jpg">
-<span>สตรอเบอร์รี่</span>
-<div class="qty-control">
-<button type="button" class="qty-btn" onclick="minus('straw')">-</button>
-<span id="straw">0</span>
-<button type="button" class="qty-btn" onclick="plus('straw')">+</button>
-</div>
-</div>
+      </div>
 
-<div class="flavor-card">
-<img src="images/choizematcha.jpg">
-<span>มัทฉะ</span>
-<div class="qty-control">
-<button type="button" class="qty-btn" onclick="minus('matcha')">-</button>
-<span id="matcha">0</span>
-<button type="button"class="qty-btn" onclick="plus('matcha')">+</button>
-</div>
-</div>
+      <form id="form">
+        <input type="hidden" name="product" value="book">
+        <input type="hidden" name="source" value="bookflavor">
+        <input type="hidden" name="flavors" id="flavors">
+        <!-- STEP1 -->
+        <div id="step1">
 
-<div class="flavor-card">
-<img src="images/choizevanilla.jpg">
-<span>วานิลลา</span>
-<div class="qty-control">
-<button type="button" class="qty-btn"onclick="minus('vanilla')">-</button>
-<span id="vanilla">0</span>
-<button type="button" class="qty-btn"onclick="plus('vanilla')">+</button>
-</div>
-</div>
-
-<div class="flavor-card">
-<img src="images/choizecoffee.jpg">
-<span>กาแฟ</span>
-<div class="qty-control">
-<button type="button" class="qty-btn"onclick="minus('coffee')">-</button>
-<span id="coffee">0</span>
-<button type="button" class="qty-btn"onclick="plus('coffee')">+</button>
-</div>
-</div>
-
-<div class="flavor-card">
-<img src="images/choizerichcocoa.jpg">
-<span>โกโก้เข้มข้น</span>
-<div class="qty-control">
-<button type="button" class="qty-btn"onclick="minus('cocoa')">-</button>
-<span id="cocoa">0</span>
-<button type="button" class="qty-btn"onclick="plus('cocoa')">+</button>
-</div>
-</div>
+          <div class="flavor-grid">
 
-<div class="flavor-card">
-<img src="images/choizemixedberries.jpg">
-<span>มิกซ์เบอร์รี่</span>
-<div class="qty-control">
-<button type="button" class="qty-btn"onclick="minus('mixberry')">-</button>
-<span id="mixberry">0</span>
-<button type="button" class="qty-btn"onclick="plus('mixberry')">+</button>
-</div>
-</div>
+            <label class="flavor-card">
+              <input type="radio" name="book" value="หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop">
+              <img src="/images/BOOK1.jpg">
+              <span>หาเงิน 1,000,000 ง่ายๆ ด้วย TikTok Shop</span>
+            </label>
 
-<div class="flavor-card">
-<img src="images/choizethaitea.jpg">
-<span>ชาไทย</span>
-<div class="qty-control">
-<button type="button" class="qty-btn"onclick="minus('thaitea')">-</button>
-<span id="thaitea">0</span>
-<button type="button" class="qty-btn"onclick="plus('thaitea')">+</button>
-</div>
-</div>
+            <label class="flavor-card">
+              <input type="radio" name="book" value="ทำนายหน้า TikTok ด้วย AI">
+              <img src="/images/BOOK2.jpg">
+              <span>ทำนายหน้า TikTok ด้วย AI</span>
+            </label>
 
-</div>
+            <label class="flavor-card">
+              <input type="radio" name="book" value="Money Summary">
+              <img src="/images/BOOK3.jpg">
+              <span>Money Summary</span>
+            </label>
 
-<button type="button" id="nextBtn" style="display:none" onclick="goStep2()">
-ไปกรอกข้อมูล
-</button>
+            <label class="flavor-card">
+              <input type="radio" name="book" value="Money 101">
+              <img src="/images/BOOK4.jpg">
+              <span>Money 101</span>
+            </label>
 
-</div>
+            <label class="flavor-card">
+              <input type="radio" name="book" value="Passive Income">
+              <img src="/images/BOOK5.jpg">
+              <span>Passive Income</span>
+            </label>
 
-<!-- STEP2 -->
+            <label class="flavor-card">
+              <input type="radio" name="book" value="เปลี่ยนหนี้เป็นอิสระภาพการเงิน">
+              <img src="/images/BOOK6.jpg">
+              <span>เปลี่ยนหนี้เป็นอิสระภาพการเงิน</span>
+            </label>
 
-<div id="step2" style="display:none">
-  <button type="button" class="glass-back"  onclick="backStep()">← กลับไปเลือกรสชาติ</button>
-<center>
-<h3>ข้อมูลผู้รับสิทธิ์</h3></center>
+          </div>
 
-<label>ชื่อ</label>
-<input name="firstname" required>
+        </div>
 
-<label>นามสกุล</label>
-<input name="lastname" required>
 
-<label>ชื่อเล่น</label>
-<input name="nickname">
+        <!-- STEP2 -->
+        <div id="step2" style="display:none">
 
-<label>อายุ</label>
-<input name="age" maxlength="2" required>
+          <button type="button" class="glass-back" onclick="backStep()">← กลับไปเลือกหนังสือ</button>
 
-<label>เบอร์โทร</label>
-<input name="phone" maxlength="10" required>
+          <center>
+            <h3>ข้อมูลผู้รับสิทธิ์</h3>
+          </center>
 
-<label>บ้านเลขที่</label>
-<input name="house" required>
+          <label>ชื่อ</label>
+          <input name="firstname" required>
 
-<label>หมู่ที่ (กรอกเพิ่มเติมได้ที่นี่)</label>
-<input name="village">
+          <label>นามสกุล</label>
+          <input name="lastname" required>
 
-<label>ตำบล</label>
-<input name="subdistrict" required>
+          <label>ชื่อเล่น</label>
+          <input name="nickname">
 
-<label>อำเภอ</label>
-<input name="district" required>
+          <label>อายุ</label>
+          <input name="age" maxlength="2" required>
 
-<label>จังหวัด</label>
-<input name="province" required>
+          <label>เบอร์โทร</label>
+          <input name="phone" maxlength="10" required>
 
-<button type="button" class="glass-back" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
+          <label>บ้านเลขที่</label>
+          <input name="house" required>
 
-</div>
+          <label>หมู่ที่</label>
+          <input name="village">
 
-</form>
+          <label>ตำบล</label>
+          <input name="subdistrict" required>
 
-</div>
+          <label>อำเภอ</label>
+          <input name="district" required>
 
-</div>
+          <label>จังหวัด</label>
+          <input name="province" required>
 
-<div class="popup" id="popup">
-<div class="popup-card">
-<h3>ตรวจสอบข้อมูล</h3>
-<div id="preview"></div>
-<button class="glass-back2" onclick="send()">ยืนยันข้อมูล</button>
-</div>
-</div>
+          <button type="button" class="glass-back" onclick="preview()">ยืนยันการใช้สิทธิ์</button>
 
-<div class="success" id="success"></div>
+        </div>
 
-<script>
+      </form>
 
-let total = 0
-let max = 12
+    </div>
 
-  document.addEventListener("copy", function(e){
+  </div>
 
-let text = window.getSelection().toString();
+  <div class="popup" id="popup">
+    <div class="popup-card">
+      <h3>ตรวจสอบข้อมูล</h3>
+      <div id="preview"></div>
+      <button class="glass-back2" onclick="send()">ยืนยันข้อมูล</button>
+    </div>
+  </div>
 
-let addText = "\n\nที่มา： Choize Clean Meal";
+  <div class="success" id="success"></div>
 
-e.clipboardData.setData("text/plain", text + addText);
+  <script>
+    document.addEventListener("copy", function (e) {
 
-e.preventDefault();
+      let text = window.getSelection().toString();
 
-});
+      let addText = "\n\nที่มา：book";
 
-function showRequestBar(id){
+      e.clipboardData.setData("text/plain", text + addText);
 
-document.getElementById("requestBar").style.display="block"
-document.getElementById("requestIdText").innerText=id
+      e.preventDefault();
 
-}
+    });
 
+    function showRequestBar(id) {
 
+      document.getElementById("requestBar").style.display = "block"
+      document.getElementById("requestIdText").innerText = id
 
-function minus(id){
+    }
 
-let el = document.getElementById(id)
-let val = parseInt(el.innerText)
+    const scriptURL = "https://script.google.com/macros/s/AKfycby-_ds8J662DnFVjTVMSDtAmjUSy16jlqCY-2jtIY9PLRUbCMrRMDIU4vsudoBpv7T0/exec";
 
-if(val <= 0) return
+    const radios = document.querySelectorAll("input[name=book]")
 
-val--
-total--
+    radios.forEach(r => {
 
-el.innerText = val
-updateCounter()
+      r.addEventListener("change", () => {
 
-}
+        const book = document.querySelector("input[name=book]:checked")
 
-function updateCounter(){
+        if (book) {
 
-document.getElementById("counter").innerText =
-"เลือกแล้ว "+total+" / 12"
+          showLoader("กำลังไปหน้ากรอกข้อมูล...")
 
-if(total === 12){
+          setTimeout(() => {
 
-showLoader("กำลังไปหน้ากรอกข้อมูล...")
+            document.getElementById("step1").style.display = "none"
+            document.getElementById("step2").style.display = "block"
 
-setTimeout(()=>{
+            document.getElementById("s1").classList.remove("active")
+            document.getElementById("s2").classList.add("active")
 
-document.getElementById("step1").style.display="none"
-document.getElementById("step2").style.display="block"
+            hideLoader()
 
-document.getElementById("s1").classList.remove("active")
-document.getElementById("s2").classList.add("active")
+          }, 800)
 
-hideLoader()
+        }
+      })
+    });
 
-},1000)
+    function preview() {
 
-}
+      const form = document.getElementById("form")
 
-}
+      if (!form.checkValidity()) {
 
-function showRequestBar(id){
+        showTopPopup("กรุณากรอกข้อมูลให้ครบ")
 
-const bar = document.getElementById("requestBar")
-const text = document.getElementById("requestIdText")
+        form.querySelectorAll("input").forEach(i => {
+          if (!i.checkValidity()) {
+            i.classList.add("error")
+          }
+        })
 
-text.innerText = id
-bar.style.display = "block"
+        return
+      }
 
-}
+      const data = new FormData(form)
 
-function goStep2(){
+      let html = ""
 
-document.getElementById("step1").style.display="none"
-document.getElementById("step2").style.display="block"
+      for (let [k, v] of data) {
+        html += k + " : " + v + "<br>"
+      }
 
-document.getElementById("s1").classList.remove("active")
-document.getElementById("s2").classList.add("active")
+      document.getElementById("preview").innerHTML = html
+      document.getElementById("popup").style.display = "flex"
 
-}
-const scriptURL="https://script.google.com/macros/s/AKfycby-_ds8J662DnFVjTVMSDtAmjUSy16jlqCY-2jtIY9PLRUbCMrRMDIU4vsudoBpv7T0/exec";
+    }
 
-const radios=document.querySelectorAll("input[type=radio]")
+    function send() {
+      showProLoader("กำลังส่งข้อมูล...")
+      const form = document.getElementById("form")
 
-radios.forEach(r=>{
+      document.getElementById("popup").style.display = "none"
 
-r.addEventListener("change",()=>{
+      fetch(scriptURL, {
+        method: "POST",
+        body: new FormData(form)
+      })
+        .then(res => res.json())
+        .then(data => {
 
-const f1=document.querySelector("input[name=flavor1]:checked")
-const f2=document.querySelector("input[name=flavor2]:checked")
+          successProLoader()
 
-if(f1 && f2){
+          const id = data.requestId
 
-showLoader("กำลังไปหน้ากรอกข้อมูล...")
+          /* บันทึกเลขคำขอ */
+          localStorage.setItem("book_request_id", id)
 
-setTimeout(()=>{
+          /* แสดงเลขคำขอด้านบน */
+          showRequestBar(id)
 
-document.getElementById("step1").style.display="none"
-document.getElementById("step2").style.display="block"
+          /* รีเซ็ตฟอร์ม */
+          form.reset()
 
-document.getElementById("s1").classList.remove("active")
-document.getElementById("s2").classList.add("active")
+          /* กลับไปหน้าเลือกรสชาติ */
+          document.getElementById("step1").style.display = "block"
+          document.getElementById("step2").style.display = "none"
 
-hideLoader()
+          /* รีเซ็ต Step */
+          document.getElementById("s1").classList.add("active")
+          document.getElementById("s2").classList.remove("active")
 
-},800)
+          /* ปิด popup */
+          document.getElementById("popup").style.display = "none"
 
-}
-})
-}); 
+        })
 
+      document.getElementById("step1").style.display = "block"
+      document.getElementById("step2").style.display = "none"
 
-function plus(id){
+    }
 
-let el = document.getElementById(id)
-let val = parseInt(el.innerText)
 
-if(total >= max) return
 
-val++
-total++
 
-el.innerText = val
 
-navigator.vibrate(30)
 
-updateCounter()
+    function openPopup(id) {
 
-}
+      document.getElementById(id).style.display = "flex"
 
+    }
 
-function preview(){
+    function closePopup() {
 
-const form=document.getElementById("form")
+      document.querySelectorAll(".glass-popup").forEach(p => {
+        p.style.display = "none"
+      })
 
-if(!form.checkValidity()){
+    }
 
-showTopPopup("กรุณากรอกข้อมูลให้ครบ")
+    function showProLoader(text) {
 
-form.querySelectorAll("input").forEach(i=>{
-if(!i.checkValidity()){
-i.classList.add("error")
-}
-})
+      document.getElementById("proLoader").style.display = "flex"
+      document.getElementById("loaderMessage").innerHTML = text
 
-return
-}
+    }
 
-const data=new FormData(form)
+    function backStep() {
 
-let html=""
+      document.getElementById("step2").style.display = "none"
+      document.getElementById("step1").style.display = "block"
 
-for(let [k,v] of data){
-html+=k+" : "+v+"<br>"
-}
+      document.getElementById("s2").classList.remove("active")
+      document.getElementById("s1").classList.add("active")
+      const oldId = localStorage.getItem("choize_request_id")
 
-document.getElementById("preview").innerHTML=html
-document.getElementById("popup").style.display="flex"
+      if (oldId) {
+        showRequestBar(oldId)
+      }
 
-}
+    }
 
-function send(){
+    function successProLoader() {
 
-showProLoader("กำลังส่งข้อมูล...")
+      document.querySelector(".loader-spinner").style.display = "none"
 
-const form=document.getElementById("form")
+      document.getElementById("loaderMessage").innerHTML =
+        "<div class='loader-check'>✔</div>สำเร็จ"
 
-let flavorText =
-"ช็อกโกแลต:"+document.getElementById("choco").innerText+" "+
-"สตรอเบอร์รี่:"+document.getElementById("straw").innerText+" "+
-"มัทฉะ:"+document.getElementById("matcha").innerText+" "+
-"วานิลลา:"+document.getElementById("vanilla").innerText+" "+
-"กาแฟ:"+document.getElementById("coffee").innerText+" "+
-"โกโก้เข้ม:"+document.getElementById("cocoa").innerText+" "+
-"มิกซ์เบอร์รี่:"+document.getElementById("mixberry").innerText+" "+
-"ชาไทย:"+document.getElementById("thaitea").innerText
+      setTimeout(() => {
 
-document.getElementById("flavors").value = flavorText
+        document.getElementById("proLoader").style.display = "none"
 
-fetch(scriptURL,{
-method:"POST",
-body:new FormData(form)
-})
-.then(res=>res.json())
-.then(data=>{
+        document.querySelector(".loader-spinner").style.display = "block"
 
-successProLoader()
+        document.getElementById("loaderMessage").innerHTML = "กำลังประมวลผล..."
 
-const id=data.requestId
+      }, 1200)
 
-localStorage.setItem("choize_request_id", id)
+    }
 
-showRequestBar(id)
+    function showLoader(text) {
 
+      document.getElementById("loaderText").innerText = text
+      document.getElementById("loaderBox").style.display = "flex"
 
-/* รีเซ็ตฟอร์ม */
-form.reset()
+    }
 
-/* รีเซ็ตจำนวนรสชาติ */
-const ids = ["choco","straw","matcha","vanilla","coffee","cocoa","mixberry","thaitea"]
+    function hideLoader() {
 
-ids.forEach(i=>{
-document.getElementById(i).innerText = "0"
-})
+      document.getElementById("loaderBox").style.display = "none"
 
-/* รีเซ็ตตัวนับ */
-total = 0
-updateCounter()
+    }
 
-/* กลับไปหน้าเลือกรสชาติ */
-document.getElementById("step1").style.display="block"
-document.getElementById("step2").style.display="none"
+    window.addEventListener("load", function () {
 
-document.getElementById("s1").classList.add("active")
-document.getElementById("s2").classList.remove("active")
+      const oldId = localStorage.getItem("book_request_id")
 
-/* ปิด popup */
-document.getElementById("popup").style.display="none"
+      if (oldId) {
 
-})
+        showTopPopup(oldId)
 
-.catch(err=>{
-alert("เกิดข้อผิดพลาด กรุณาลองใหม่")
-document.getElementById("proLoader").style.display="none"
-})
+      }
 
-}
+    })
 
+    window.addEventListener("load", function () {
 
-function showTopPopup(id){
+      const oldId = localStorage.getItem("book_request_id")
 
-const toast=document.getElementById("toast")
+      if (oldId) {
+        showRequestBar(oldId)
+      }
 
-toast.innerHTML="คุณได้ใช้สิทธิ์แล้ว<br>เลขคำขอ : "+id
-toast.style.display="block"
+    })
 
-setTimeout(()=>{
-toast.style.display="none"
-},4000)
+  </script>
 
-}
+  <!-- POPUP BENEFIT -->
 
+  <div id="benefitPopup" class="glass-popup">
 
-function openPopup(id){
+    <div class="glass-content">
 
-document.getElementById(id).style.display="flex"
+      <button class="close-btn" onclick="closePopup()">✕</button>
 
-}
+      <h3>ประโยชน์ book</h3>
 
-function closePopup(){
+      <!--<img src="images/benefit.jpg" class="popup-img"> -->
 
-document.querySelectorAll(".glass-popup").forEach(p=>{
-p.style.display="none"
-})
+      <p>
+        ควบคุมน้ำหนัก อิ่มนาน ใยอาหารสูง<br>
+        ให้สารอาหารครบ โปรตีน วิตามิน แร่ธาตุ<br>
+        ช่วยขับถ่าย ลดท้องผูก<br>
+        ลดความเสี่ยงโรคหัวใจ,เบาหวาน,ระบบทางเดินอาหาร<br>
+        ปราศจากสีและวัตถุกันเสีย
+      </p>
 
-}
+    </div>
 
-function showProLoader(text){
+  </div>
 
-document.getElementById("proLoader").style.display="flex"
-document.getElementById("loaderMessage").innerHTML=text
 
-}
+  <!-- POPUP HOW TO EAT -->
 
-function backStep(){
+  <div id="howPopup" class="glass-popup">
 
-document.getElementById("step2").style.display="none"
-document.getElementById("step1").style.display="block"
+    <div class="glass-content">
 
-document.getElementById("s2").classList.remove("active")
-document.getElementById("s1").classList.add("active")
-const oldId = localStorage.getItem("choize_request_id")
+      <button class="close-btn" onclick="closePopup()">✕</button>
 
-if(oldId){
-showRequestBar(oldId)
-}
-}
+      <h3>วิธีรับประทาน book</h3>
 
-function successProLoader(){
+      <!-- <img src="images/how.jpg" class="popup-img"> -->
 
-document.querySelector(".loader-spinner").style.display="none"
+      <p>
+        1.เท 1 ซอง ลงในน้ำหรือนมพร่องมันเนย 250 มล.<br>
+        2.คนหรือเขย่าให้ละลายเป็นเนื้อเดียว<br>
+        3.ดื่มแทนมื้ออาหารได้เลย<br>
+      </p>
 
-document.getElementById("loaderMessage").innerHTML=
-"<div class='loader-check'>✔</div>สำเร็จ"
+    </div>
 
-setTimeout(()=>{
-
-document.getElementById("proLoader").style.display="none"
-
-document.querySelector(".loader-spinner").style.display="block"
-
-document.getElementById("loaderMessage").innerHTML="กำลังประมวลผล..."
-
-},1200)
-
-}
-
-function showLoader(text){
-
-document.getElementById("loaderText").innerText=text
-document.getElementById("loaderBox").style.display="flex"
-
-}
-
-function hideLoader(){
-
-document.getElementById("loaderBox").style.display="none"
-
-}
-
-window.addEventListener("load",function(){
-
-const oldId = localStorage.getItem("choize_request_id")
-
-if(oldId){
-
-showTopPopup(oldId)
-showRequestBar(oldId)   // เพิ่มบรรทัดนี้
-
-}
-
-})
-
-
-</script>
-
-<!-- POPUP BENEFIT -->
-
-<div id="benefitPopup" class="glass-popup">
-
-<div class="glass-content">
-
-<button class="close-btn" onclick="closePopup()">✕</button>
-
-<h3>ประโยชน์ Choize</h3>
-
-<!--<img src="images/benefit.jpg" class="popup-img"> -->
-
-<p>ช่วยคุมน้ำหนักได้อย่างสมดุล อิ่มท้องนาน ลดความอยากอาหารจุกจิก<br>
-อุดมไปด้วยโปรตีนและสารอาหารที่ครบครัน ส่งเสริมการสร้างกล้ามเนื้อ<br>
-เติมพลังงานระหว่างวัน ให้ความสดชื่น กระปรี้กระเปร่า หมดกังวลเรื่องความเหนื่อยล้า<br>
-มีไฟเบอร์สูง ช่วยให้ระบบย่อยอาหารทำงานได้อย่างมีประสิทธิภาพ<br>
-เสริมวิตามินและสารต้านอนุมูลอิสระ ดูแลเซลล์ พร้อมช่วยชะลอวัย<br>
-ปลอดสารอันตราย มั่นใจได้ทั้งมาตรฐาน อย. และ ฮาลาล</p>
-
-</div>
-
-</div>
-
-
-<!-- POPUP HOW TO EAT -->
-
-<div id="howPopup" class="glass-popup">
-
-<div class="glass-content">
-
-<button class="close-btn" onclick="closePopup()">✕</button>
-
-<h3>วิธีรับประทาน Choize</h3>
-
-<!-- <img src="images/how.jpg" class="popup-img"> -->
-
-<p>
-1.เปิดฝา: เปิดขวด Choize ออก<br>
-2.เติมน้ำ: เติมน้ำเย็นหรือน้ำอุณหภูมิห้อง ลงไปจนถึงขีดที่กำหนด (ขีดที่ 1)<br>
-3.คว่ำขวด: เทคนิคสำคัญ ให้คว่ำขวดลงแล้วเขย่า เพื่อไม่ให้ผงติดก้นขวด<br>
-4.เขย่า: เขย่าให้เข้ากันจนเนื้อเนียน<br>
-5.เติมน้ำเพิ่ม: เติมน้ำอีกครั้งจนถึงขีดที่ 2 แล้วเขย่าตามปกติ<br>
-6.ดื่ม: ดื่มได้ทันที ควรดื่มให้หมดภายในครั้งเดียว หรือเก็บในตู้เย็นได้ไม่เกิน 24 ชั่วโมง<br>
-</p>
-
-</div>
-
-</div>
-<div id="loaderBox" style="
+  </div>
+  <div id="loaderBox" style="
 position:fixed;
 top:0;
 left:0;
@@ -1468,7 +1185,7 @@ background:rgba(0,0,0,0.4);
 z-index:99999;
 ">
 
-<div style="
+    <div style="
 padding:30px 40px;
 border-radius:16px;
 text-align:center;
@@ -1479,17 +1196,16 @@ justify-content:center;
 gap:12px;
 ">
 
-<div class="loader"></div>
+      <div class="loader"></div>
 
-<p id="loaderText" style="color: #ffffff;margin-top:10px;font-weight:500">
-กำลังประมวลผล...
-</p>
+      <p id="loaderText" style="color: #ffffff;margin-top:10px;font-weight:500">
+        กำลังประมวลผล...
+      </p>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </body>
 
 </html>
-
