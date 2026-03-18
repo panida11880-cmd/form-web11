@@ -204,7 +204,7 @@ input, select{
         <div id="userText">User: -</div>
     </div>
 
-    <img src="ims/กรอบ.png" class="frame-bg">
+    <img src="/images/กรอบ.png" class="frame-bg">
     <img id="resultImg" class="frame-img">
 </div>
 
@@ -257,7 +257,7 @@ async function copyImage() {
     const frame = new Image();
     const slip = new Image();
 
-    frame.src = "/ims/กรอบ.png";
+    frame.src = "/images/กรอบ.png";
     slip.src = uploadedImage;
 
     await Promise.all([
@@ -362,7 +362,7 @@ function downloadImage() {
     const frame = new Image();
     const slip = new Image();
 
-    frame.src = "ims/กรอบ.png";
+    frame.src = "/images/กรอบ.png";
     slip.src = uploadedImage;
 
     Promise.all([
