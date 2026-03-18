@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<title>ตรวจสอบสลิป</title>
+
+<style>
+
+    *{
+  box-sizing: border-box;
+}
+
+body{
+  margin:0;
+  overflow-x:hidden;
+  font-family: 'Arimo', sans-serif;
+}
+
+
+
+/* กล่องหลัก */
+.container{
+    padding:20px;
+}
+
+/* input */
+input, select{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    border:none;
+}
+
+
+
+.upload-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* ปุ่ม */
+.btn{
+    margin-top:15px;
+    width:100%;
+    padding:14px;
+    background:#ff9800;
+    border:none;
+    border-radius:10px;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.top-text{
+    position:absolute;
+    top:85px;
+    width:100%;
+    text-align:center;
+    color:#2b3442;
+    font-weight:bold;
+}
+
+#titleText{
+    font-size:16px;
+    font-family: 'Arimo', sans-serif;
+}
+
+#userText{
+    font-size:13px;
+    margin-top:5.5px;
+}
+/* ===== MODAL ===== */
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal-box{
+    background:#fff;
+    color:#000;
+    width:90%;
+    max-width:400px;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.modal img{
+    width:200px;
+    margin-top:10px;
+}
+.wrapper{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ซ้าย */
+.left{
+    width:70%;
+    background:#f5f5f5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* ขวา */
+.right{
+    width:30%;
+    padding:20px;
+    background:#2f4553;
+    color:#fff;
+}
+
+/* กล่อง frame */
+.frame{
+    position:relative;
+    width:400px;
+}
+
+/* รูปกรอบ */
+.frame-bg{
+    width:100%;
+    display:block;
+}
+
+/* รูปที่แปะลงช่องดำ */
+.frame-img{
+    position:absolute;
+    top:27.5%;   /* 🔥 ปรับตรงนี้ */
+    left:31.8%;  /* 🔥 ปรับตรงนี้ */
+
+    width:35%;
+    height:40%;
+
+    object-fit: cover;
+    transform:none; /* ❌ เอา translate ออก */
+}
+/* ข้อความใต้รูป */
+.note{
+    text-align:center;
+    color:rgb(255, 255, 255);
+    font-size:14px;
+    margin-top:10px;
+}
+
+.upload-box{
+    margin-top:10px;
+    height:150px;
+    border:2px dashed #ccc;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    background:#fff;
+    color:#000;
+    position:relative;
+}
+
+.upload-box span{
+    position:absolute;
+}
+
+</style>
+</head>
+
+<body>
+
+
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h2>ผลการตรวจสอบ</h2>
+        <p>User: 1QM9142</p>
+    
+        <p style="color:rgb(19, 0, 0);margin-top:10px;">
+        หมายเหตุ: ระบบ AI SMART CONTRACT ไม่สามารถอ่านค่าของสลิปได้
+        </p> 
+
+        <button class="btn" onclick="closeModal()">ปิด</button>
+    </div>
+</div>
+<div class="wrapper">
+
+    <!-- ฝั่งซ้าย -->
+    <div class="left">
+        <div>
+            <div class="frame">
+
+    <div class="top-text">
+        <div id="titleText">ผลการตรวจสอบ</div>
+        <div id="userText">User: -</div>
+    </div>
+
+    <img src="ims/กรอบ.png" class="frame-bg">
+    <img id="resultImg" class="frame-img">
+</div>
+
+            <div id="noteText" class="note">
+                หมายเหตุ: ระบบ AI SMART CONTRACT ไม่สามารถอ่านค่าสลิปได้
+            </div>
+        </div>
+    </div>
+
+    <!-- ฝั่งขวา -->
+    <div class="right">
+
+        <h2>IOS – (2)</h2>
+
+        <label>รายการ</label>
+        <select>
+            <option>BTC</option>
+        </select>
+
+        <input type="text" placeholder="https://loremlpsumth.vip">
+        
+        <label>user</label>
+        <input type="text" id="userInput" placeholder="ใส่ user">
+
+        <label>QRCode</label>
+
+        <div class="upload-box" onclick="document.getElementById('file').click()">
+            <span id="text">วางรูปภาพที่นี่</span>
+            <img id="preview" style="display:none;">
+        </div>
+
+        <input type="file" id="file" accept="image/*" hidden>
+
+        <button class="btn" onclick="downloadImage()">ดาวน์โหลดรูป</button>
+        <button class="btn" onclick="copyImage()">คัดลอกรูป</button>
+    </div>
+
+</div>
+
+
+<script>
+
+async function copyImage() {
+
+    if(!uploadedImage){
+        alert("ยังไม่มีรูป");
+        return;
+    }
+
+    const frame = new Image();
+    const slip = new Image();
+
+    frame.src = "/ims/กรอบ.png";
+    slip.src = uploadedImage;
+
+    await Promise.all([
+        new Promise(res => frame.onload = res),
+        new Promise(res => slip.onload = res)
+    ]);
+
+   const frameElement = document.querySelector(".frame-bg");
+
+const canvas = document.createElement("canvas");
+canvas.width = frame.width;
+canvas.height = frame.height;
+await document.fonts.load("bold 30px Arimo");
+    const ctx = canvas.getContext("2d");
+
+    // 🔥 วาดพื้นก่อน
+    ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+
+    // 🔥 ดึง user จาก input
+    const user = "User: " + document.getElementById("userInput").value;
+
+    ctx.textAlign = "center";
+
+// 🔹 หัวข้อ
+ctx.textAlign = "center";
+ctx.font = "bold 32px sans-serif";   // ใหญ่กว่า
+ctx.fillStyle = "#2b3442";           // สีหลัก
+ctx.fillText("ผลการตรวจสอบ", canvas.width / 2, 200);
+
+// 🔹 user
+ctx.font = "bold 22px sans-serif"; // เล็กลง
+ctx.fillStyle = "#515152";              // สีอ่อนลง
+ctx.fillText(user, canvas.width / 2, 250);
+
+ctx.font = "18px sans-serif";
+    // 🔥 ตำแหน่งรูป (เลื่อนลงแล้ว)
+const x = canvas.width * 0.315;
+const y = canvas.height * 0.27;
+const drawW = canvas.width * 0.35;
+const drawH = canvas.height * 0.40;
+
+    // 🔥 crop แบบ cover
+    const imgRatio = slip.width / slip.height;
+    const boxRatio = drawW / drawH;
+
+    let sx, sy, sWidth, sHeight;
+
+    if (imgRatio > boxRatio) {
+        sHeight = slip.height;
+        sWidth = sHeight * boxRatio;
+        sx = (slip.width - sWidth) / 2;
+        sy = 0;
+    } else {
+        sWidth = slip.width;
+        sHeight = sWidth / boxRatio;
+        sx = 0;
+        sy = (slip.height - sHeight) / 2;
+    }
+
+    // 🔥 วาดรูป
+    ctx.drawImage(
+        slip,
+        sx, sy, sWidth, sHeight,
+        x, y, drawW, drawH
+    );
+
+    // 🔥 note ใต้รูป
+const note = document.getElementById("noteText").innerText;
+
+// 🔥 ต้องมีบรรทัดนี้
+const startY = y + drawH + (canvas.height * 0.05);
+
+ctx.font = "bold 18px sans-serif";
+ctx.fillStyle = "#ff0000";
+ctx.textAlign = "center";
+
+const maxWidth = canvas.width * 0.7;
+
+drawTextWrap(ctx, note, canvas.width / 2, startY, maxWidth, 24);
+
+    // 🔥 copy
+    const blob = await new Promise(resolve => canvas.toBlob(resolve));
+
+    try {
+        await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": blob })
+        ]);
+        alert("คัดลอกสำเร็จแล้ว ✅");
+    } catch (err) {
+        alert("คัดลอกไม่ได้ ❌ ใช้ดาวน์โหลดแทน");
+    }
+}
+
+
+function downloadImage() {
+
+    if(!uploadedImage){
+        alert("ยังไม่มีรูป");
+        return;
+    }
+
+    const frame = new Image();
+    const slip = new Image();
+
+    frame.src = "ims/กรอบ.png";
+    slip.src = uploadedImage;
+
+    Promise.all([
+        new Promise(res => frame.onload = res),
+        new Promise(res => slip.onload = res)
+    ]).then(() => {
+
+       const frameElement = document.querySelector(".frame-bg");
+
+const canvas = document.createElement("canvas");
+canvas.width = frame.width;
+canvas.height = frame.height;
+
+        const ctx = canvas.getContext("2d");
+
+        // 🔥 วาดพื้นก่อน
+        ctx.drawImage(frame, 0, 0, canvas.width, canvas.height);
+
+        const user = "User: " + document.getElementById("userInput").value;
+
+        // 🔥 ข้อความบน
+        ctx.textAlign = "center";
+
+ctx.font = "bold 26px sans-serif";
+ctx.fillStyle = "#000";
+ctx.fillText("ผลการตรวจสอบ", canvas.width / 2, 85);
+ctx.fillText(user, canvas.width / 2, 110);
+
+ctx.font = "18px sans-serif";
+        const x = canvas.width * 0.318;
+        const y = canvas.height * 0.275;
+        const drawW = canvas.width * 0.35;
+        const drawH = canvas.height * 0.40;
+
+        const imgRatio = slip.width / slip.height;
+        const boxRatio = drawW / drawH;
+
+        let sx, sy, sWidth, sHeight;
+
+        if (imgRatio > boxRatio) {
+            sHeight = slip.height;
+            sWidth = sHeight * boxRatio;
+            sx = (slip.width - sWidth) / 2;
+            sy = 0;
+        } else {
+            sWidth = slip.width;
+            sHeight = sWidth / boxRatio;
+            sx = 0;
+            sy = (slip.height - sHeight) / 2;
+        }
+
+        ctx.drawImage(
+            slip,
+            sx, sy, sWidth, sHeight,
+            x, y, drawW, drawH
+        );
+
+        const note = document.getElementById("noteText").innerText;
+const startY = y + drawH + (canvas.height * 0.05);
+
+        ctx.font = "bold 18px sans-serif";
+        ctx.fillStyle = "#ff0000";
+        ctx.textAlign = "center";
+
+        const maxWidth = canvas.width * 0.7;
+
+        drawTextWrap(ctx, note, canvas.width / 2, startY, maxWidth, 24);
+
+        // 🔥 ดาวน์โหลด
+        const link = document.createElement("a");
+        link.download = "result.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
+
+function drawTextWrap(ctx, text, x, y, maxWidth, lineHeight) {
+    let line = "";
+    let lines = [];
+
+    for(let i = 0; i < text.length; i++){
+        let testLine = line + text[i];
+        let testWidth = ctx.measureText(testLine).width;
+
+        if(testWidth > maxWidth && line !== ""){
+            lines.push(line);
+            line = text[i];
+        } else {
+            line = testLine;
+        }
+    }
+    lines.push(line);
+
+    lines.forEach((l, i) => {
+        ctx.fillText(l, x, y + (i * lineHeight));
+    });
+}
+
+let uploadedImage = null;
+
+const fileInput = document.getElementById("file");
+const preview = document.getElementById("preview");
+const text = document.getElementById("text");
+
+fileInput.addEventListener("change", function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(event){
+        uploadedImage = event.target.result;
+
+        preview.src = uploadedImage;
+        preview.style.display = "block";
+        text.style.display = "none";
+
+        // 🔥 ใส่ลงกรอบ
+        document.getElementById("resultImg").src = uploadedImage;
+    };
+
+    reader.readAsDataURL(file);
+});
+
+document.getElementById("userInput").addEventListener("input", function(){
+    document.getElementById("userText").innerText = "User: " + this.value;
+});
+
+document.addEventListener("paste", function(e){
+    const items = e.clipboardData.items;
+
+    for(let i = 0; i < items.length; i++){
+        if(items[i].type.indexOf("image") !== -1){
+
+            const file = items[i].getAsFile();
+            const reader = new FileReader();
+
+            reader.onload = function(event){
+                uploadedImage = event.target.result;
+
+                // preview
+                preview.src = uploadedImage;
+                preview.style.display = "block";
+                text.style.display = "none";
+
+                // ใส่ลงกรอบ
+                document.getElementById("resultImg").src = uploadedImage;
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
