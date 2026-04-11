@@ -28,6 +28,21 @@
             padding: 20px;
             transition: 0.3s;
         }
+html {
+    scroll-behavior: smooth;
+}
+.box:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+#categoryButtons.active-drag {
+    cursor: grabbing;
+}
+
+#categoryButtons {
+    cursor: grab;
+}
 
         /* กล่อง */
         .box {
@@ -315,30 +330,32 @@
         }
 
         #categoryButtons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1px;
-            margin-bottom: 1px;
-        }
+    display: flex;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 6px;
+    margin-bottom: 10px;
 
-        .cat-btn {
-            flex: 1 1 auto;
-            min-width: 140px;
-            text-align: center;
-        }
+    scroll-behavior: smooth;
+}
 
-        #categoryButtons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1px;
-            margin-bottom: 15px;
-        }
+/* ซ่อน scrollbar ให้ดูเนียน */
+#categoryButtons::-webkit-scrollbar {
+    height: 6px;
+}
+#categoryButtons::-webkit-scrollbar-thumb {
+    background: #22c55e;
+    border-radius: 999px;
+}
 
-        .cat-btn {
-            flex: 1 1 auto;
-            min-width: 140px;
-            text-align: center;
-        }
+/* ปุ่มหมวด */
+.cat-btn {
+    flex: 0 0 auto;
+    min-width: 120px;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+}
 
         .cat-btn.active {
             background: #22c55e;
@@ -356,10 +373,13 @@
         }
 
         .header-bar {
-            position: sticky;
-            top: 10px;
-            z-index: 999;
-        }
+    position: sticky;
+    top: 0;
+    z-index: 999;
+
+    padding: 8px 12px;
+    border-radius: 12px;
+}
 
         /* ครอบทั้งหมด */
         .color-wrap {
@@ -635,7 +655,7 @@
 
         <h1 class="title">
             <span class="logo-title">
-                <img src="https://i.ibb.co/HTdk1skX/image.png" class="logo">
+                <img src="https://i.ibb.co/27BhqP5n/image.png" class="logo">
                 สคริปต์ของ 林凡
             </span>
 
@@ -662,7 +682,17 @@
             <span class="slider"></span>
         </label>
     </div>
-
+<input id="searchCat" placeholder="🔍 ค้นหาหมวด..." 
+style="
+width:100%;
+padding:10px;
+margin-bottom:10px;
+border-radius:10px;
+border:none;
+outline:none;
+background:var(--card);
+color:var(--text);
+">
     </div>
 
 
@@ -937,7 +967,66 @@
                 behavior: "smooth"
             });
         };
+const searchInput = document.getElementById("searchCat");
 
+searchInput.oninput = () => {
+    const keyword = searchInput.value.toLowerCase();
+
+    document.querySelectorAll(".cat-btn").forEach(btn => {
+        const text = btn.innerText.toLowerCase();
+
+        if (text.includes(keyword)) {
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    });
+};
+const slider = document.getElementById("categoryButtons");
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    slider.classList.add("active-drag");
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener("mouseleave", () => {
+    isDown = false;
+});
+
+slider.addEventListener("mouseup", () => {
+    isDown = false;
+});
+
+slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 2; // ความเร็วลาก (ปรับได้)
+    slider.scrollLeft = scrollLeft - walk;
+});
+
+const catScroll = document.getElementById("categoryButtons");
+
+catScroll.addEventListener("wheel", (e) => {
+    e.preventDefault();
+
+    // เลื่อนซ้าย-ขวาแทนขึ้น-ลง
+    catScroll.scrollLeft += e.deltaY;
+});
+
+catScroll.addEventListener("wheel", (e) => {
+    e.preventDefault();
+
+    const speed = 1.5; // ปรับความเร็วได้
+    catScroll.scrollLeft += e.deltaY * speed;
+});
     </script>
 
 </body>
