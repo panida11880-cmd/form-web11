@@ -78,7 +78,14 @@ html {
             display: inline-block;
             margin-bottom: 6px;
         }
+#categoryButtons {
+    position: sticky;
+    top: 70px; /* ปรับตามความสูง header */
+    z-index: 998;
 
+    background: var(--bg);
+    padding: 6px;
+}
         /* รูป */
         .preview {
             width: 110px;
@@ -702,286 +709,254 @@ color:var(--text);
     <div id="modal"><img id="modalImg"></div>
     <div class="toast" id="toast">คัดลอกแล้ว!</div>
 
-    <script>
-        const selectBtn = document.getElementById("selectBtn");
-        const globalColor = document.getElementById("globalColor");
-        const colorDisplay = document.getElementById("colorDisplay");
+<script>
+let scrollMemory = {};
+const savedCategory = localStorage.getItem("lastCategory");
 
-        // sync สี
-        colorDisplay.style.background = globalColor.value;
+const selectBtn = document.getElementById("selectBtn");
+const globalColor = document.getElementById("globalColor");
+const colorDisplay = document.getElementById("colorDisplay");
 
-        globalColor.oninput = () => {
+let selectedBoxes = new Set();
+let selectMode = false;
 
-            colorDisplay.style.background = globalColor.value;
+// ================= COLOR =================
+colorDisplay.style.background = globalColor.value;
 
-            if (selectedBoxes.size === 0) {
-                showToast("เลือกก่อนนะ");
-                return;
+globalColor.oninput = () => {
+    if (selectedBoxes.size === 0) {
+        showToast("เลือกก่อนนะ");
+        return;
+    }
+
+    selectedBoxes.forEach(box => {
+        const tag = box.querySelector(".tag");
+        tag.style.background = globalColor.value;
+        tag.style.color = getTextColor(globalColor.value);
+
+        const title = tag.innerText;
+        localStorage.setItem(title, globalColor.value);
+    });
+
+    colorDisplay.style.background = globalColor.value;
+    showToast("เปลี่ยนสีแล้ว");
+};
+
+// ================= SELECT MODE =================
+selectBtn.onclick = () => {
+    selectMode = !selectMode;
+
+    selectedBoxes.clear();
+    document.querySelectorAll(".box").forEach(b => b.classList.remove("selectMode"));
+
+    selectBtn.classList.toggle("active");
+    showToast(selectMode ? "โหมดเลือกเปิด" : "โหมดเลือกปิด");
+};
+
+// ================= THEME =================
+const themeToggle = document.getElementById("themeToggle");
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+    document.body.classList.add("light");
+    themeToggle.checked = true;
+}
+
+themeToggle.onchange = () => {
+    document.body.classList.toggle("light");
+    localStorage.setItem("theme", themeToggle.checked ? "light" : "dark");
+};
+
+// ================= UTILS =================
+function getTextColor(bgColor) {
+    const r = parseInt(bgColor.substr(1, 2), 16);
+    const g = parseInt(bgColor.substr(3, 2), 16);
+    const b = parseInt(bgColor.substr(5, 2), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness < 140 ? "#fff" : "#000";
+}
+
+function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.innerText = msg;
+    t.style.display = "block";
+    setTimeout(() => t.style.display = "none", 1500);
+}
+
+// ================= COPY =================
+function copyText(text) {
+    navigator.clipboard.writeText(text);
+    showToast("คัดลอกข้อความแล้ว!");
+}
+
+async function copyImage(url) {
+    try {
+        const res = await fetch(url);
+        const blob = await res.blob();
+
+        await navigator.clipboard.write([
+            new ClipboardItem({ [blob.type]: blob })
+        ]);
+
+        showToast("คัดลอกรูปแล้ว!");
+    } catch {
+        showToast("❌ คัดลอกไม่ได้ → ลากแทน");
+    }
+}
+
+// ================= IMAGE MODAL =================
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+
+function openImage(url) {
+    modalImg.src = url;
+    modal.style.display = "flex";
+    showToast("กดรูปเพื่อคัดลอก");
+}
+
+modal.onclick = () => modal.style.display = "none";
+
+modalImg.onclick = async (e) => {
+    e.stopPropagation();
+    await copyImage(modalImg.src);
+};
+
+// ================= DATA =================
+const SHEET_ID = "175r9pm8jKYcyvoET1UMuwa7S2ZJI51XAu7yABBxKppY";
+const API = `https://opensheet.elk.sh/${SHEET_ID}/ชีต1`;
+
+fetch(API)
+.then(res => res.json())
+.then(data => {
+
+    const app = document.getElementById("app");
+    const btnArea = document.getElementById("categoryButtons");
+
+    const cats = [...new Set(data.map(r => r["หมวดใหญ่"]))];
+
+    cats.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.className = "cat-btn";
+        btn.innerText = cat;
+
+        btn.onclick = () => {
+
+            // จำ scroll หมวดก่อนหน้า
+            const activeBtn = document.querySelector(".cat-btn.active");
+            if (activeBtn) {
+                scrollMemory[activeBtn.innerText] = window.scrollY;
+                localStorage.setItem("scroll_" + activeBtn.innerText, window.scrollY);
             }
 
-            selectedBoxes.forEach(box => {
-                const tag = box.querySelector(".tag");
-                tag.style.background = globalColor.value;
+            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
 
-                const title = tag.innerText;
-                localStorage.setItem(title, globalColor.value);
-            });
+            localStorage.setItem("lastCategory", cat);
 
-            showToast("เปลี่ยนสีแล้ว");
-        };
-        let selectedBoxes = new Set();
-        let selectMode = false;
-
-        selectBtn.onclick = () => {
-            selectMode = !selectMode;
-
-            selectedBoxes.clear();
-
-            document.querySelectorAll(".box").forEach(b => {
-                b.classList.remove("selectMode");
-            });
-
-            // เพิ่ม animation ตอนเปิด
-            selectBtn.classList.toggle("active");
-
-            showToast(selectMode ? "โหมดเลือกเปิด" : "โหมดเลือกปิด");
+            render(cat);
         };
 
-        const themeToggle = document.getElementById("themeToggle");
+        btnArea.appendChild(btn);
+    });
 
-        // โหลดค่าเดิม
-        const savedTheme = localStorage.getItem("theme");
+    function render(selected) {
+        app.innerHTML = "";
 
-        if (savedTheme === "light") {
-            document.body.classList.add("light");
-            themeToggle.checked = true;
-        }
+        data.forEach(row => {
+            if (row["หมวดใหญ่"] !== selected) return;
 
-        // สลับโหมด
-        themeToggle.onchange = () => {
-            document.body.classList.toggle("light");
+            const title = row["หัวข้อ"] || "";
+            const text = row["ข้อความ"] || "";
+            const img = row["รูป"] || "";
 
-            if (themeToggle.checked) {
-                localStorage.setItem("theme", "light");
-            } else {
-                localStorage.setItem("theme", "dark");
-            }
-        };
-        // ออกโหมดอัตโนมัติหลังเปลี่ยนสี
-        selectedBoxes.clear();
-        document.querySelectorAll(".box").forEach(b => {
-            b.classList.remove("selectMode");
-        });
-        selectMode = false;
-        function getTextColor(bgColor) {
-            // แปลง hex → rgb
-            const r = parseInt(bgColor.substr(1, 2), 16);
-            const g = parseInt(bgColor.substr(3, 2), 16);
-            const b = parseInt(bgColor.substr(5, 2), 16);
+            const box = document.createElement("div");
+            box.className = "box";
 
-            // คำนวณความสว่าง (luminance)
-            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            box.innerHTML = `
+                <div class="text">
+                    <div class="tag">${title}</div>
+                    <div>${text}</div>
+                </div>
+                ${img ? `<img src="${img}" class="preview">` : ""}
+            `;
 
-            // ถ้ามืด → ขาว / ถ้าสว่าง → ดำ
-            return brightness < 140 ? "#fff" : "#000";
-        }
+            const tag = box.querySelector(".tag");
 
-        // เลือกสี
-        globalColor.oninput = () => {
-            if (selectedBoxes.size === 0) {
-                showToast("เลือกก่อนนะ");
-                return;
+            const saved = localStorage.getItem(title);
+            if (saved) {
+                tag.style.background = saved;
+                tag.style.color = getTextColor(saved);
             }
 
-            selectedBoxes.forEach(box => {
-                const tag = box.querySelector(".tag");
-                tag.style.background = globalColor.value;
-                tag.style.color = getTextColor(globalColor.value);
-
-                const title = tag.innerText;
-                localStorage.setItem(title, globalColor.value);
-            });
-
-            showToast("เปลี่ยนสีแล้ว");
-        };
-
-
-        const SHEET_ID = "175r9pm8jKYcyvoET1UMuwa7S2ZJI51XAu7yABBxKppY";
-        const API = `https://opensheet.elk.sh/${SHEET_ID}/ชีต1`;
-
-        const modal = document.getElementById("modal");
-        const modalImg = document.getElementById("modalImg");
-
-        // เปิดรูป
-        function openImage(url) {
-            modalImg.src = url;
-            modal.style.display = "flex";
-            showToast("กดรูปเพื่อคัดลอก");
-        }
-
-        // ปิด modal
-        modal.onclick = () => modal.style.display = "none";
-
-        // กดรูปใหญ่ = copy
-        modalImg.onclick = async (e) => {
-            e.stopPropagation();
-            await copyImage(modalImg.src);
-        };
-
-        // copy ข้อความ
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            showToast("คัดลอกข้อความแล้ว!");
-        }
-
-        // copy รูป
-        async function copyImage(url) {
-            try {
-                const res = await fetch(url);
-                const blob = await res.blob();
-
-                await navigator.clipboard.write([
-                    new ClipboardItem({
-                        [blob.type]: blob
-                    })
-                ]);
-
-                showToast("คัดลอกรูปแล้ว!");
-            } catch {
-                showToast("❌ คัดลอกไม่ได้ → ลากแทน");
-            }
-        }
-
-        // toast
-        function showToast(msg) {
-            const t = document.getElementById("toast");
-            t.innerText = msg;
-            t.style.display = "block";
-            setTimeout(() => t.style.display = "none", 1500);
-        }
-
-        // โหลดข้อมูล
-        fetch(API)
-            .then(res => res.json())
-            .then(data => {
-
-                const app = document.getElementById("app");
-                const btnArea = document.getElementById("categoryButtons");
-
-                const cats = [...new Set(data.map(r => r["หมวดใหญ่"]))];
-
-                cats.forEach(cat => {
-                    const btn = document.createElement("button");
-                    btn.className = "cat-btn";
-                    btn.innerText = cat;
-
-                    btn.onclick = () => {
-                        document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-                        btn.classList.add("active");
-                        render(cat);
-                    };
-
-                    btnArea.appendChild(btn);
-                });
-
-                function render(selected) {
-                    app.innerHTML = "";
-
-                    data.forEach(row => {
-                        if (row["หมวดใหญ่"] !== selected) return;
-
-                        const title = row["หัวข้อ"] || "";
-                        const text = row["ข้อความ"] || "";
-                        const img = row["รูป"] || "";
-                        const box = document.createElement("div");
-                        box.className = "box";
-
-                        box.innerHTML = `
-        <div class="text">
-          <div class="tag">${title}</div>
-          <div>${text}</div>
-        </div>
-        ${img ? `<img src="${img}" class="preview">` : ""}
-      `;
-                        const tag = box.querySelector(".tag");
-
-                        const saved = localStorage.getItem(title);
-                        if (saved) {
-                            tag.style.background = saved;
-                            tag.style.color = getTextColor(saved);
-                        }
-                        // copy text
-                        box.onclick = () => {
-                            if (selectMode) {
-                                if (selectedBoxes.has(box)) {
-                                    selectedBoxes.delete(box);
-                                    box.classList.remove("selectMode");
-                                } else {
-                                    selectedBoxes.add(box);
-                                    box.classList.add("selectMode");
-                                }
-                            } else {
-                                copyText(text);
-                            }
-                        };
-                        if (img) {
-                            box.querySelector(".preview").onclick = (e) => {
-                                e.stopPropagation();
-                                openImage(img);
-                            };
-                        }
-
-
-
-                        app.appendChild(box);
-                    });
+            box.onclick = () => {
+                if (selectMode) {
+                    if (selectedBoxes.has(box)) {
+                        selectedBoxes.delete(box);
+                        box.classList.remove("selectMode");
+                    } else {
+                        selectedBoxes.add(box);
+                        box.classList.add("selectMode");
+                    }
+                } else {
+                    copyText(text);
                 }
+            };
 
-                // โหลดหมวดแรก
-                if (cats.length > 0) {
-                    document.querySelector(".cat-btn").click();
-                }
-
-            })
-            .catch(err => {
-                console.error(err);
-                alert("โหลดข้อมูลไม่สำเร็จ");
-            });
-        const scrollBtn = document.getElementById("scrollTopBtn");
-
-        // แสดงปุ่มเมื่อเลื่อนลง
-        window.addEventListener("scroll", () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-
-            if (scrollTop > 50) {
-                scrollBtn.style.display = "block";
-            } else {
-                scrollBtn.style.display = "none";
+            if (img) {
+                box.querySelector(".preview").onclick = (e) => {
+                    e.stopPropagation();
+                    openImage(img);
+                };
             }
+
+            app.appendChild(box);
         });
 
-        // กดแล้วเลื่อนขึ้นบน
-        scrollBtn.onclick = () => {
-            document.documentElement.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        };
+        // ✅ คืน scroll
+        setTimeout(() => {
+            let y = scrollMemory[selected];
+
+            if (y === undefined) {
+                y = localStorage.getItem("scroll_" + selected);
+            }
+
+            window.scrollTo(0, y || 0);
+        }, 50);
+    }
+
+    // โหลดหมวดล่าสุด
+    const first = savedCategory || cats[0];
+    const btn = [...document.querySelectorAll(".cat-btn")]
+        .find(b => b.innerText === first);
+
+    if (btn) btn.click();
+
+});
+
+// ================= SCROLL TOP =================
+const scrollBtn = document.getElementById("scrollTopBtn");
+
+window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop;
+    scrollBtn.style.display = scrollTop > 50 ? "block" : "none";
+});
+
+scrollBtn.onclick = () => {
+    document.documentElement.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// ================= SEARCH =================
 const searchInput = document.getElementById("searchCat");
 
 searchInput.oninput = () => {
     const keyword = searchInput.value.toLowerCase();
 
     document.querySelectorAll(".cat-btn").forEach(btn => {
-        const text = btn.innerText.toLowerCase();
-
-        if (text.includes(keyword)) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
+        btn.style.display = btn.innerText.toLowerCase().includes(keyword) ? "block" : "none";
     });
 };
+
+// ================= DRAG SCROLL =================
 const slider = document.getElementById("categoryButtons");
 
 let isDown = false;
@@ -995,39 +970,23 @@ slider.addEventListener("mousedown", (e) => {
     scrollLeft = slider.scrollLeft;
 });
 
-slider.addEventListener("mouseleave", () => {
-    isDown = false;
-});
-
-slider.addEventListener("mouseup", () => {
-    isDown = false;
-});
+slider.addEventListener("mouseleave", () => isDown = false);
+slider.addEventListener("mouseup", () => isDown = false);
 
 slider.addEventListener("mousemove", (e) => {
     if (!isDown) return;
     e.preventDefault();
 
     const x = e.pageX - slider.offsetLeft;
-    const walk = (x - startX) * 2; // ความเร็วลาก (ปรับได้)
+    const walk = (x - startX) * 2;
     slider.scrollLeft = scrollLeft - walk;
 });
 
-const catScroll = document.getElementById("categoryButtons");
-
-catScroll.addEventListener("wheel", (e) => {
+slider.addEventListener("wheel", (e) => {
     e.preventDefault();
-
-    // เลื่อนซ้าย-ขวาแทนขึ้น-ลง
-    catScroll.scrollLeft += e.deltaY;
+    slider.scrollLeft += e.deltaY * 1.5;
 });
-
-catScroll.addEventListener("wheel", (e) => {
-    e.preventDefault();
-
-    const speed = 1.5; // ปรับความเร็วได้
-    catScroll.scrollLeft += e.deltaY * speed;
-});
-    </script>
+</script>
 
 </body>
 
